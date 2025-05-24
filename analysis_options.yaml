@@ -1,0 +1,12 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  errors:
+    invalid_annotation_target: ignore
+
+linter:
+  rules:
+    avoid_print: true
+    constant_identifier_names: false
+    non_constant_identifier_names: false
+    prefer_single_quotes: true
