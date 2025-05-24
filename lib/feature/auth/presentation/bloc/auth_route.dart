@@ -1,0 +1,1 @@
+enum AuthRoute { signIn, signUp }

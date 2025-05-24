@@ -1,5 +1,5 @@
 sealed class RootEvent {}
 
-final class NavigateToAuth extends RootEvent {}
+final class EventNavigateToAuth extends RootEvent {}
 
-final class NavigateToMain extends RootEvent {}
+final class EventNavigateToMain extends RootEvent {}
