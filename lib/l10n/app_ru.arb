@@ -1,3 +1,10 @@
 {
-  "app_name": "Listy Chef"
+  "app_name": "Listy Chef",
+
+  "auth_welcome_title": "Добро пожаловать в Listy Chef!",
+  "auth_email_label": "Электронная почта",
+  "auth_nickname_label": "Никнейм",
+  "auth_password_label": "Пароль",
+  "auth_sign_in": "Войти",
+  "auth_sign_up": "Зарегистрироваться"
 }

@@ -1,4 +1,1 @@
-final class ImageAsset {
-  String value;
-  ImageAsset(this.value);
-}
+extension type ImageAsset(String value) {}

@@ -6,12 +6,12 @@ T platformCall<T>({
   required T macOS,
   required T linux,
   required T windows,
-  required T web,
+  T? web,
 }) {
   if (Platform.isAndroid) return android;
   if (Platform.isIOS) return iOS;
   if (Platform.isMacOS) return macOS;
   if (Platform.isLinux) return linux;
   if (Platform.isWindows) return windows;
-  return web;
+  return web ?? android;
 }

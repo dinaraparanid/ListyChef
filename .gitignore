@@ -48,3 +48,6 @@ pubspec.lock
 
 *.freezed.dart
 *.g.dart
+
+# FVM Version Cache
+.fvm/

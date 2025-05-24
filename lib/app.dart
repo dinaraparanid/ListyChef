@@ -24,10 +24,10 @@ final class App extends StatelessWidget {
       SystemUiOverlayStyle(
         systemNavigationBarColor: Colors.transparent,
         systemNavigationBarDividerColor: Colors.transparent,
-        systemNavigationBarIconBrightness: Brightness.light,
-        systemNavigationBarContrastEnforced: true,
-        statusBarIconBrightness: Brightness.light,
-        systemStatusBarContrastEnforced: true,
+        systemNavigationBarIconBrightness: Brightness.dark,
+        systemNavigationBarContrastEnforced: false,
+        statusBarIconBrightness: Brightness.dark,
+        systemStatusBarContrastEnforced: false,
       ),
     );
 
