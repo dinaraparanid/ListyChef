@@ -1,16 +1,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dartx/dartx.dart';
 import 'package:listy_chef/core/domain/text/text_change_use_case.dart';
-import 'package:listy_chef/feature/auth/child/sign_in/presentation/bloc/sign_in_event.dart';
-import 'package:listy_chef/feature/auth/child/sign_in/presentation/bloc/sign_in_result.dart';
-import 'package:listy_chef/feature/auth/child/sign_in/presentation/bloc/sign_in_state.dart';
+import 'package:listy_chef/feature/auth/child/sign_up/presentation/bloc/sign_up_result.dart';
+import 'package:listy_chef/feature/auth/child/sign_up/presentation/bloc/sign_up_event.dart';
+import 'package:listy_chef/feature/auth/child/sign_up/presentation/bloc/sign_up_state.dart';
 
-final class SignInBloc extends Bloc<SignInEvent, SignInState> {
-  SignInBloc({
+final class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
+  SignUpBloc({
     required TextChangeUseCase textChangeUseCase,
-    required void Function(SignInResult) onResult,
-  }) : super(SignInState()) {
-    on<EventSignUpClick>((event, emit) => onResult(ResultGoToSignUp()));
+    required void Function(SignUpResult) onResult,
+  }) : super(SignUpState()) {
+    on<EventBack>((event, emit) => onResult(ResultGoToSignIn()));
 
     on<EventConfirmClick>((event, emit) {
       // TODO
@@ -21,6 +21,14 @@ final class SignInBloc extends Bloc<SignInEvent, SignInState> {
         next: event.email,
         errorPredicate: (txt) => txt.isBlank,
         update: (textContainer) => emit(state.copyWith(email: textContainer)),
+      );
+    });
+
+    on<EventNicknameChange>((event, emit) {
+      textChangeUseCase.execute(
+        next: event.nickname,
+        errorPredicate: (txt) => txt.isBlank,
+        update: (textContainer) => emit(state.copyWith(nickname: textContainer)),
       );
     });
 

@@ -6,7 +6,6 @@ import 'package:listy_chef/feature/auth/child/sign_in/presentation/bloc/sign_in_
 extension SignInModule on GetIt {
   List<Type> registerSignInModule() => [
     provideSingleton(() => SignInBlocFactory(
-      router: di(),
       textChangeUseCase: di(),
     )),
   ];

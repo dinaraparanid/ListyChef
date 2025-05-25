@@ -1,7 +1,10 @@
+import 'package:fluent_ui/fluent_ui.dart' as win;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:listy_chef/core/di/di.dart';
+import 'package:listy_chef/core/presentation/foundation/platform_call.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/feature/root/presentation/bloc/mod.dart';
@@ -35,15 +38,37 @@ final class App extends StatelessWidget {
       theme: theme,
       child: BlocProvider(
         create: (_) => rootBlocFactory.create(),
-        child: MaterialApp.router(
-          routerConfig: router.value,
-          theme: ThemeData(
-            highlightColor: Colors.transparent,
-          ),
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-        ),
+        child: platformCall(
+          android: MaterialUi,
+          iOS: CupertinoUi,
+          macOS: CupertinoUi,
+          linux: MaterialUi,
+          windows: FluentUi,
+        )(),
       ),
     );
   }
+
+  Widget MaterialUi() => MaterialApp.router(
+    routerConfig: router.value,
+    theme: ThemeData(
+      highlightColor: Colors.transparent,
+    ),
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+  );
+
+  Widget CupertinoUi() => CupertinoApp.router(
+    routerConfig: router.value,
+    theme: CupertinoThemeData(),
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+  );
+
+  Widget FluentUi() => win.FluentApp.router(
+    routerConfig: router.value,
+    theme: win.FluentThemeData(),
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+  );
 }

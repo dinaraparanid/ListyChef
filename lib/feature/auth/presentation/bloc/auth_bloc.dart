@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:listy_chef/feature/auth/child/sign_in/presentation/bloc/sign_in_result.dart' as sign_in_result;
+import 'package:listy_chef/feature/auth/child/sign_up/presentation/bloc/sign_up_result.dart' as sign_up_result;
 import 'package:listy_chef/feature/auth/presentation/bloc/auth_event.dart';
 import 'package:listy_chef/feature/auth/presentation/bloc/auth_route.dart';
 import 'package:listy_chef/feature/auth/presentation/bloc/auth_state.dart';
@@ -14,13 +16,27 @@ final class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({
     required AppRouter router,
   }) : _router = router, super(AuthState()) {
-    on<NavigateToSignIn>((event, emit) =>
+    on<EventNavigateToSignIn>((event, emit) =>
       emit(state.copyWith(route: AuthRoute.signIn)),
     );
 
-    on<NavigateToSignUp>((event, emit) =>
+    on<EventNavigateToSignUp>((event, emit) =>
       emit(state.copyWith(route: AuthRoute.signUp)),
     );
+
+    on<EventNavigateToMain>((event, emit) =>
+      router.value.goNamed(AppRoute.main.name),
+    );
+
+    on<EventHandleSignInResult>((event, emit) => switch (event.result) {
+      sign_in_result.ResultGoToSignUp() => add(EventNavigateToSignUp()),
+      sign_in_result.ResultGoToMain() => add(EventNavigateToMain()),
+    });
+
+    on<EventHandleSignUpResult>((event, emit) => switch (event.result) {
+      sign_up_result.ResultGoToSignIn() => add(EventNavigateToSignIn()),
+      sign_up_result.ResultGoToMain() => add(EventNavigateToMain()),
+    });
 
     _listenRouteChanges();
   }

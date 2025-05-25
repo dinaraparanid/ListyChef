@@ -49,11 +49,15 @@ final class AppBackgroundColors {
 final class AppButtonColors {
   final Color primary;
   final Color disabled;
+  final Color textEnabled;
+  final Color textDisabled;
   final Color ripple;
 
   const AppButtonColors({
     this.primary = _InterdimensionalBlue,
     this.disabled = _InterdimensionalBlue50,
+    this.textEnabled = _InterdimensionalBlue,
+    this.textDisabled = _Gray,
     this.ripple = _InterdimensionalBlue75,
   });
 }

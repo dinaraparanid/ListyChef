@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:listy_chef/core/di/di.dart';
 import 'package:listy_chef/feature/auth/child/sign_in/presentation/sign_in_screen.dart';
+import 'package:listy_chef/feature/auth/child/sign_up/presentation/sign_up_screen.dart';
 import 'package:listy_chef/feature/auth/presentation/auth_screen.dart';
 import 'package:listy_chef/feature/root/presentation/root_screen.dart';
 import 'package:listy_chef/navigation/app_route.dart';
@@ -59,7 +60,7 @@ final class AppRouter {
               GoRoute(
                 path: AppRoute.signUp.path,
                 name: AppRoute.signUp.name,
-                builder: (context, state) => Text('TODO: SignUpScreen'),
+                builder: (context, state) => SignUpScreen(blocFactory: di()),
               ),
             ],
           ),

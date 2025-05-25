@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:listy_chef/core/presentation/foundation/app_button.dart';
+import 'package:listy_chef/core/presentation/foundation/app_filled_button.dart';
 import 'package:listy_chef/core/presentation/foundation/app_outlined_text_field.dart';
+import 'package:listy_chef/core/presentation/foundation/app_text_button.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
 import 'package:listy_chef/feature/auth/child/sign_in/presentation/bloc/mod.dart';
@@ -72,13 +73,24 @@ final class SignInContent extends StatelessWidget {
           SizedBox(height: theme.dimensions.padding.extraMedium),
 
           CommonDimensions(
-            child: AppButton(
+            child: AppFilledButton(
               text: strings.auth_sign_in,
               isEnabled: state.isConfirmButtonEnabled,
               isLoading: state.isConfirmButtonLoading,
               onClick: () => BlocProvider
                 .of<SignInBloc>(context)
                 .add(EventConfirmClick()),
+            ),
+          ),
+
+          SizedBox(height: theme.dimensions.padding.extraMedium),
+
+          CommonDimensions(
+            child: AppTextButton(
+              text: strings.auth_sign_up,
+              onClick: () => BlocProvider
+                .of<SignInBloc>(context)
+                .add(EventSignUpClick()),
             ),
           ),
 
