@@ -51,3 +51,6 @@ pubspec.lock
 
 # FVM Version Cache
 .fvm/
+
+firebase.json
+firebase_options.dart
