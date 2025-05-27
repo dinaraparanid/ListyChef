@@ -1,12 +1,12 @@
 import 'package:get_it/get_it.dart';
-import 'package:listy_chef/core/di/di.dart';
 import 'package:listy_chef/core/di/provide.dart';
 import 'package:listy_chef/feature/auth/child/sign_in/presentation/bloc/sign_in_bloc_factory.dart';
 
 extension SignInModule on GetIt {
   List<Type> registerSignInModule() => [
     provideSingleton(() => SignInBlocFactory(
-      textChangeUseCase: di(),
+      signInUseCase: this(),
+      textChangeUseCase: this(),
     )),
   ];
 }
