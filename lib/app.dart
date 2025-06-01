@@ -10,6 +10,7 @@ import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/feature/root/presentation/bloc/mod.dart';
 import 'package:listy_chef/l10n/app_localizations.dart';
 import 'package:listy_chef/navigation/app_router.dart';
+import 'package:yaru/settings.dart';
 
 final class App extends StatelessWidget {
   final router = di<AppRouter>();
@@ -42,7 +43,7 @@ final class App extends StatelessWidget {
           android: MaterialUi,
           iOS: CupertinoUi,
           macOS: CupertinoUi,
-          linux: MaterialUi,
+          linux: YaruUi,
           windows: FluentUi,
         )(),
       ),
@@ -65,9 +66,13 @@ final class App extends StatelessWidget {
     supportedLocales: AppLocalizations.supportedLocales,
   );
 
+  Widget YaruUi() => YaruTheme(builder: (context, _, _) => MaterialUi());
+
   Widget FluentUi() => win.FluentApp.router(
     routerConfig: router.value,
-    theme: win.FluentThemeData(),
+    theme: win.FluentThemeData(
+      brightness: Brightness.light,
+    ),
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
   );

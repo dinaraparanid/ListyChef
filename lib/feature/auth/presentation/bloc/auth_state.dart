@@ -6,6 +6,6 @@ part 'auth_state.freezed.dart';
 @freezed
 abstract class AuthState with _$AuthState {
   const factory AuthState({
-    @Default(AuthRoute.signIn) AuthRoute route,
+    @Default(AuthRoute.signIn()) AuthRoute route,
   }) = _AuthState;
 }

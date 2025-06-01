@@ -14,6 +14,7 @@ final class SignInBlocFactory {
     _textChangeUseCase = textChangeUseCase;
 
   SignInBloc create({
+    String? email,
     required void Function(SignInResult) onResult,
   }) => SignInBloc(
     signInUseCase: _signInUseCase,

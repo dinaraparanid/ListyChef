@@ -55,12 +55,18 @@ final class AppRouter {
               GoRoute(
                 path: AppRoute.signIn.path,
                 name: AppRoute.signIn.name,
-                builder: (context, state) => SignInScreen(blocFactory: di()),
+                builder: (context, state) => SignInScreen(
+                  email: state.uri.queryParameters[AppRoute.queryEmail],
+                  blocFactory: di(),
+                ),
               ),
               GoRoute(
                 path: AppRoute.signUp.path,
                 name: AppRoute.signUp.name,
-                builder: (context, state) => SignUpScreen(blocFactory: di()),
+                builder: (context, state) => SignUpScreen(
+                  email: state.uri.queryParameters[AppRoute.queryEmail],
+                  blocFactory: di(),
+                ),
               ),
             ],
           ),

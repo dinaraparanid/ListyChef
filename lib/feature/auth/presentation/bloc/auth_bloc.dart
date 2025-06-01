@@ -17,11 +17,11 @@ final class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required AppRouter router,
   }) : _router = router, super(AuthState()) {
     on<EventNavigateToSignIn>((event, emit) =>
-      emit(state.copyWith(route: AuthRoute.signIn)),
+      emit(state.copyWith(route: AuthRoute.signIn(email: event.email))),
     );
 
     on<EventNavigateToSignUp>((event, emit) =>
-      emit(state.copyWith(route: AuthRoute.signUp)),
+      emit(state.copyWith(route: AuthRoute.signUp(email: event.email))),
     );
 
     on<EventNavigateToMain>((event, emit) =>
@@ -29,12 +29,16 @@ final class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
 
     on<EventHandleSignInResult>((event, emit) => switch (event.result) {
-      sign_in_result.ResultGoToSignUp() => add(EventNavigateToSignUp()),
+      sign_in_result.ResultGoToSignUp(email: final e) =>
+        add(EventNavigateToSignUp(email: e)),
+
       sign_in_result.ResultGoToMain() => add(EventNavigateToMain()),
     });
 
     on<EventHandleSignUpResult>((event, emit) => switch (event.result) {
-      sign_up_result.ResultGoToSignIn() => add(EventNavigateToSignIn()),
+      sign_up_result.ResultGoToSignIn(email: final e) =>
+        add(EventNavigateToSignIn(email: e)),
+
       sign_up_result.ResultGoToMain() => add(EventNavigateToMain()),
     });
 
@@ -56,7 +60,14 @@ final class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _navigateToAuthRoute(AuthRoute route) => switch (route) {
-    AuthRoute.signIn => _router.value.goNamed(AppRoute.signIn.name),
-    AuthRoute.signUp => _router.value.goNamed(AppRoute.signUp.name),
+    AuthRouteSignIn() => _router.value.goNamed(
+      AppRoute.signIn.name,
+      queryParameters: { AppRoute.queryEmail: route.email },
+    ),
+
+    AuthRouteSignUp() => _router.value.goNamed(
+      AppRoute.signUp.name,
+      queryParameters: { AppRoute.queryEmail: route.email },
+    ),
   };
 }

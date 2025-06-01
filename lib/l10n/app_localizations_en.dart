@@ -12,6 +12,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get app_name => 'Listy Chef';
 
   @override
+  String get ok => 'OK';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get error => 'Error';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get no => 'No';
+
+  @override
   String get auth_welcome_title => 'Welcome to Listy Chef!';
 
   @override
@@ -28,4 +43,50 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get auth_sign_up => 'Sign Up';
+
+  @override
+  String get auth_error_email_empty => 'Email must not be empty';
+
+  @override
+  String get auth_error_nickname_empty => 'Nickname must not be empty';
+
+  @override
+  String get auth_error_short_password => 'Password must contain at least 8 symbols';
+
+  @override
+  String get auth_error_invalid_email => 'Invalid email';
+
+  @override
+  String get auth_error_user_disabled => 'Your account is disabled';
+
+  @override
+  String get auth_error_wrong_password => 'Invalid password';
+
+  @override
+  String get auth_error_too_many_requests => 'Too many requests. Try again later';
+
+  @override
+  String get auth_error_user_token_expired => 'The maximum session duration has been exceeded. To continue, please log in again.';
+
+  @override
+  String get auth_error_network_request_failed => 'Failed to make a network request. Please, check your internet connection';
+
+  @override
+  String get auth_error_invalid_credential => 'Invalid credentials. Please, try again';
+
+  @override
+  String get auth_error_weak_password => 'Password must be stronger';
+
+  @override
+  String get auth_error_unknown => 'Unknown error. Please, try again';
+
+  @override
+  String auth_error_user_not_found(String email) {
+    return 'Account with email `$email` does not exist';
+  }
+
+  @override
+  String auth_error_email_already_in_use(String email) {
+    return 'User with email `$email` already exists. Do you want to sign in?';
+  }
 }

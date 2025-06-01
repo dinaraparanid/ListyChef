@@ -8,6 +8,7 @@ enum AppRoute {
   recipes(path: '/main/recipes'),
   profile(path: '/main/profile');
 
+  static const queryEmail = 'email';
 
   final String path;
   const AppRoute({required this.path});

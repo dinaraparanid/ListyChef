@@ -1,10 +1,43 @@
 {
   "app_name": "Listy Chef",
+  "ok": "ОК",
+  "cancel": "Отмена",
+  "error": "Ошибка",
+  "yes": "Да",
+  "no": "Нет",
 
   "auth_welcome_title": "Добро пожаловать в Listy Chef!",
   "auth_email_label": "Электронная почта",
   "auth_nickname_label": "Никнейм",
   "auth_password_label": "Пароль",
   "auth_sign_in": "Войти",
-  "auth_sign_up": "Зарегистрироваться"
+  "auth_sign_up": "Зарегистрироваться",
+  "auth_error_email_empty": "Электронная почта не должна быть пустой",
+  "auth_error_nickname_empty": "Никнейм не должен быть пустым",
+  "auth_error_short_password": "Пароль должен содержать от 8 символов",
+  "auth_error_invalid_email": "Неверный адрес электронной почты",
+  "auth_error_user_disabled": "Ваш аккаунт отключён",
+  "auth_error_wrong_password": "Неверный пароль",
+  "auth_error_too_many_requests": "Превышено количество запросов. Попробуйте снова позже",
+  "auth_error_user_token_expired": "Максимальная продолжительность сессии превышена. Для продолжения войдите повторно",
+  "auth_error_network_request_failed": "Ошибка сетевого соединения. Проверьте подключение к Интернету",
+  "auth_error_invalid_credential": "Недействительные данные для входа. Пожалуйста, попробуйте ещё раз",
+  "auth_error_weak_password": "Пароль недостаточно сложный",
+  "auth_error_unknown": "Неизвестная ошибка. Повторите попытку позднее",
+  "auth_error_user_not_found": "Аккаунта с указанным email {email} не существует",
+  "@auth_error_user_not_found": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "auth_error_email_already_in_use": "Пользователь с email `{email}` уже существует. Хотите войти?",
+  "@auth_error_email_already_in_use": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  }
 }

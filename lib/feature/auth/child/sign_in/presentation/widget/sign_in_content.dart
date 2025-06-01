@@ -5,11 +5,27 @@ import 'package:listy_chef/core/presentation/foundation/app_outlined_text_field.
 import 'package:listy_chef/core/presentation/foundation/app_text_button.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
+import 'package:listy_chef/core/utils/ext/bool_ext.dart';
 import 'package:listy_chef/feature/auth/child/sign_in/presentation/bloc/mod.dart';
 import 'package:listy_chef/feature/auth/presentation/widget/application_icon.dart';
 
-final class SignInContent extends StatelessWidget {
-  const SignInContent({super.key});
+final class SignInContent extends StatefulWidget {
+  final String? initialEmail;
+  const SignInContent({super.key, this.initialEmail});
+
+  @override
+  State<StatefulWidget> createState() => _SignInContentState();
+}
+
+final class _SignInContentState extends State<SignInContent> {
+
+  late TextEditingController controller;
+
+  @override
+  void initState() {
+    controller = TextEditingController(text: widget.initialEmail);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) => BlocBuilder<SignInBloc, SignInState>(
@@ -51,11 +67,13 @@ final class SignInContent extends StatelessWidget {
 
           CommonDimensions(
             child: AppOutlineTextField(
+              controller: controller,
               label: strings.auth_email_label,
+              error: state.email.error.ifTrue(strings.auth_error_email_empty),
               onChanged: (input) => BlocProvider
                 .of<SignInBloc>(context)
                 .add(EventEmailChange(email: input)),
-            )
+            ),
           ),
 
           SizedBox(height: theme.dimensions.padding.extraMedium),
@@ -64,6 +82,7 @@ final class SignInContent extends StatelessWidget {
             child: AppOutlineTextField(
               obscureText: true,
               label: strings.auth_password_label,
+              error: state.password.error.ifTrue(strings.auth_error_short_password),
               onChanged: (input) => BlocProvider
                 .of<SignInBloc>(context)
                 .add(EventPasswordChange(password: input)),

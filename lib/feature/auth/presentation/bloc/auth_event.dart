@@ -3,9 +3,15 @@ import 'package:listy_chef/feature/auth/child/sign_up/presentation/bloc/sign_up_
 
 sealed class AuthEvent {}
 
-final class EventNavigateToSignIn extends AuthEvent {}
+final class EventNavigateToSignIn extends AuthEvent {
+  final String? email;
+  EventNavigateToSignIn({this.email});
+}
 
-final class EventNavigateToSignUp extends AuthEvent {}
+final class EventNavigateToSignUp extends AuthEvent {
+  final String? email;
+  EventNavigateToSignUp({this.email});
+}
 
 final class EventNavigateToMain extends AuthEvent {}
 

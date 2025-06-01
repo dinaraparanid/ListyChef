@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:fluent_ui/fluent_ui.dart' hide Colors;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/utils/ext/general.dart';
 
 const _obscuringCharacter = '•';
+const _fluentErrorLabelDuration = Duration(milliseconds: 300);
 
 final class AppOutlineTextField extends StatefulWidget {
   final TextEditingController? controller;
@@ -42,17 +44,17 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
 
   @override
   void initState() {
-    super.initState();
     controller = widget.controller ?? TextEditingController();
     focusNode.addListener(onFocusChange);
+    super.initState();
   }
 
   @override
   void dispose() {
-    super.dispose();
     controller.dispose();
     focusNode.removeListener(onFocusChange);
     focusNode.dispose();
+    super.dispose();
   }
 
   void onFocusChange() => setState(() => isFocused = focusNode.hasFocus);
@@ -189,29 +191,50 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
 
   Widget FluentUi({required AppTheme theme}) => FluentTheme(
     data: FluentThemeData(),
-    child: TextBox(
-      controller: controller,
-      focusNode: focusNode,
-      style: textStyle(theme),
-      highlightColor: theme.colors.text.focused,
-      unfocusedColor: theme.colors.text.unfocused,
-      placeholder: widget.label,
-      placeholderStyle: labelStyle(theme),
-      obscureText: widget.obscureText,
-      obscuringCharacter: _obscuringCharacter,
-      cursorColor: cursorColor(theme),
-      onChanged: widget.onChanged,
-      decoration: WidgetStateProperty.fromMap({
-        WidgetState.focused: BoxDecoration(
-          color: theme.colors.text.background,
-        ),
-        WidgetState.disabled: BoxDecoration(
-          color: theme.colors.text.background,
-        ),
-        WidgetState.error: BoxDecoration(
-          color: theme.colors.text.background,
-        ),
-      }),
+    child: AnimatedSize(
+      duration: _fluentErrorLabelDuration,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        spacing: theme.dimensions.padding.extraSmall,
+        children: [
+          TextBox(
+            controller: controller,
+            focusNode: focusNode,
+            style: textStyle(theme),
+            highlightColor: theme.colors.text.focused,
+            unfocusedColor: theme.colors.text.unfocused,
+            placeholder: widget.label,
+            placeholderStyle: labelStyle(theme),
+            obscureText: widget.obscureText,
+            obscuringCharacter: _obscuringCharacter,
+            cursorColor: cursorColor(theme),
+            onChanged: widget.onChanged,
+            decoration: WidgetStateProperty.fromMap({
+              WidgetState.focused: BoxDecoration(
+                color: theme.colors.text.background,
+              ),
+              WidgetState.disabled: BoxDecoration(
+                color: theme.colors.text.background,
+              ),
+              WidgetState.error: BoxDecoration(
+                color: theme.colors.text.background,
+              ),
+            }),
+          ),
+
+          AnimatedOpacity(
+            opacity: widget.error.isNullOrEmpty ? 0 : 1,
+            duration: _fluentErrorLabelDuration,
+            child: widget.error?.let((e) => Text(
+              e,
+              style: theme.typography.regular.copyWith(
+                color: theme.colors.error,
+              ),
+            )),
+          )
+        ],
+      ),
     ),
   );
 }

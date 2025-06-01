@@ -9,6 +9,7 @@ enum AuthError {
   userTokenExpired,
   networkRequestFailed,
   invalidCredential,
+  emailAlreadyInUse,
   weakPassword,
   unknown,
 }
@@ -23,6 +24,7 @@ extension ToAuthError on FirebaseAuthException {
     'user-token-expired' => AuthError.userTokenExpired,
     'network-request-failed' => AuthError.networkRequestFailed,
     'invalid-credential' => AuthError.invalidCredential,
+    'email-already-in-use' => AuthError.emailAlreadyInUse,
     _ => AuthError.unknown
   };
 }

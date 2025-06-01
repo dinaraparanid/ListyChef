@@ -1,10 +1,43 @@
 {
   "app_name": "Listy Chef",
+  "ok": "OK",
+  "cancel": "Cancel",
+  "error": "Error",
+  "yes": "Yes",
+  "no": "No",
 
   "auth_welcome_title": "Welcome to Listy Chef!",
   "auth_email_label": "Email",
   "auth_nickname_label": "Nickname",
   "auth_password_label": "Password",
   "auth_sign_in": "Sign In",
-  "auth_sign_up": "Sign Up"
+  "auth_sign_up": "Sign Up",
+  "auth_error_email_empty": "Email must not be empty",
+  "auth_error_nickname_empty": "Nickname must not be empty",
+  "auth_error_short_password": "Password must contain at least 8 symbols",
+  "auth_error_invalid_email": "Invalid email",
+  "auth_error_user_disabled": "Your account is disabled",
+  "auth_error_wrong_password": "Invalid password",
+  "auth_error_too_many_requests": "Too many requests. Try again later",
+  "auth_error_user_token_expired": "The maximum session duration has been exceeded. To continue, please log in again.",
+  "auth_error_network_request_failed": "Failed to make a network request. Please, check your internet connection",
+  "auth_error_invalid_credential": "Invalid credentials. Please, try again",
+  "auth_error_weak_password": "Password must be stronger",
+  "auth_error_unknown": "Unknown error. Please, try again",
+  "auth_error_user_not_found": "Account with email `{email}` does not exist",
+  "@auth_error_user_not_found": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "auth_error_email_already_in_use": "User with email `{email}` already exists. Do you want to sign in?",
+  "@auth_error_email_already_in_use": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  }
 }

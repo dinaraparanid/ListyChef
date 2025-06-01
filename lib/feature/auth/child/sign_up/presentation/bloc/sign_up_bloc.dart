@@ -1,19 +1,26 @@
+import 'package:bloc_presentation/bloc_presentation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dartx/dartx.dart';
 import 'package:listy_chef/core/domain/text/text_change_use_case.dart';
+import 'package:listy_chef/core/domain/text/text_container.dart';
 import 'package:listy_chef/core/utils/functions/do_nothing.dart';
 import 'package:listy_chef/feature/auth/child/sign_up/presentation/bloc/sign_up_result.dart';
+import 'package:listy_chef/feature/auth/child/sign_up/presentation/bloc/sign_up_effect.dart';
 import 'package:listy_chef/feature/auth/child/sign_up/presentation/bloc/sign_up_event.dart';
 import 'package:listy_chef/feature/auth/child/sign_up/presentation/bloc/sign_up_state.dart';
 import 'package:listy_chef/feature/auth/domain/sign_up_use_case.dart';
 
-final class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
+final class SignUpBloc extends Bloc<SignUpEvent, SignUpState>
+  with BlocPresentationMixin<SignUpState, SignUpEffect> {
+
   SignUpBloc({
+    String? email,
     required SignUpUseCase signUpUseCase,
     required TextChangeUseCase textChangeUseCase,
     required void Function(SignUpResult) onResult,
-  }) : super(SignUpState()) {
-    on<EventBack>((event, emit) => onResult(ResultGoToSignIn()));
+  }) : super(SignUpState(email: TextContainer(value: email ?? '', error: false))) {
+    on<EventBack>((event, emit) =>
+      onResult(ResultGoToSignIn(email: state.email.value)));
 
     on<EventConfirmClick>((event, emit) async {
       await signUpUseCase(
@@ -21,9 +28,7 @@ final class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         nickname: state.nickname.value,
         password: state.password.value,
         onSuccess: doNothing, // handled by AuthRepository.signedInChanges
-        onFailure: (err) {
-          // TODO: show error dialog
-        },
+        onFailure: (err) => emitPresentation(EffectShowAuthErrorDialog(error: err)),
       );
     });
 

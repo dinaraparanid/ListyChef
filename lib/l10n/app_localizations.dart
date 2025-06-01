@@ -101,6 +101,36 @@ abstract class AppLocalizations {
   /// **'Listy Chef'**
   String get app_name;
 
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no;
+
   /// No description provided for @auth_welcome_title.
   ///
   /// In en, this message translates to:
@@ -136,6 +166,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sign Up'**
   String get auth_sign_up;
+
+  /// No description provided for @auth_error_email_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Email must not be empty'**
+  String get auth_error_email_empty;
+
+  /// No description provided for @auth_error_nickname_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nickname must not be empty'**
+  String get auth_error_nickname_empty;
+
+  /// No description provided for @auth_error_short_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain at least 8 symbols'**
+  String get auth_error_short_password;
+
+  /// No description provided for @auth_error_invalid_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email'**
+  String get auth_error_invalid_email;
+
+  /// No description provided for @auth_error_user_disabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account is disabled'**
+  String get auth_error_user_disabled;
+
+  /// No description provided for @auth_error_wrong_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid password'**
+  String get auth_error_wrong_password;
+
+  /// No description provided for @auth_error_too_many_requests.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many requests. Try again later'**
+  String get auth_error_too_many_requests;
+
+  /// No description provided for @auth_error_user_token_expired.
+  ///
+  /// In en, this message translates to:
+  /// **'The maximum session duration has been exceeded. To continue, please log in again.'**
+  String get auth_error_user_token_expired;
+
+  /// No description provided for @auth_error_network_request_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to make a network request. Please, check your internet connection'**
+  String get auth_error_network_request_failed;
+
+  /// No description provided for @auth_error_invalid_credential.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid credentials. Please, try again'**
+  String get auth_error_invalid_credential;
+
+  /// No description provided for @auth_error_weak_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be stronger'**
+  String get auth_error_weak_password;
+
+  /// No description provided for @auth_error_unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown error. Please, try again'**
+  String get auth_error_unknown;
+
+  /// No description provided for @auth_error_user_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'Account with email `{email}` does not exist'**
+  String auth_error_user_not_found(String email);
+
+  /// No description provided for @auth_error_email_already_in_use.
+  ///
+  /// In en, this message translates to:
+  /// **'User with email `{email}` already exists. Do you want to sign in?'**
+  String auth_error_email_already_in_use(String email);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
