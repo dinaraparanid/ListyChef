@@ -1,10 +1,11 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:listy_chef/core/domain/auth/auth_error.dart';
 import 'package:listy_chef/core/presentation/foundation/app_error_dialog.dart';
+import 'package:listy_chef/core/presentation/foundation/app_snackbar.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
-import 'package:listy_chef/core/utils/ext/bool_ext.dart';
 
-Future<void> showAuthErrorDialog({
+FutureOr<void> showAuthErrorMessage({
   required BuildContext context,
   required String email,
   required AuthError error,
@@ -12,9 +13,9 @@ Future<void> showAuthErrorDialog({
 }) {
   final strings = context.strings;
 
-  final isSingleOkButton = switch (error) {
-    AuthError.emailAlreadyInUse => false,
-    _ => true,
+  final isDialog = switch (error) {
+    AuthError.emailAlreadyInUse => true,
+    _ => false,
   };
 
   final description = switch (error) {
@@ -31,12 +32,21 @@ Future<void> showAuthErrorDialog({
     AuthError.unknown => strings.auth_error_unknown,
   };
 
-  return showAppErrorDialog(
-    context: context,
-    title: strings.error,
-    description: description,
-    positiveButton: isSingleOkButton.ifFalse(strings.yes),
-    onPositiveClicked: isSingleOkButton.ifFalse(onEmailAlreadyInUse),
-    negativeButton: isSingleOkButton.ifFalse(strings.no),
-  );
+  return switch (isDialog) {
+    true => showAppErrorDialog(
+      context: context,
+      title: strings.error,
+      description: description,
+      positiveButton: strings.yes,
+      onPositiveClicked: onEmailAlreadyInUse,
+      negativeButton: strings.no,
+    ),
+
+    false => showAppSnackBar(
+      context: context,
+      title: strings.error,
+      message: description,
+      mode: AppSnackBarMode.error,
+    ),
+  };
 }

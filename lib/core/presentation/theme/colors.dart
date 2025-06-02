@@ -12,6 +12,7 @@ const _InterdimensionalBlue50 = Color(0x803B28CC);
 const _PaleCornflowerBlue = Color(0xFFADD7F6);
 const _ChineseBlack = Color(0xFF0A1310);
 const _PersianRed = Color(0xFFD73232);
+const _Mint = Color(0xFF09BC8A);
 
 @immutable
 final class AppColors {
@@ -22,6 +23,7 @@ final class AppColors {
   final AppTextColors text;
   final AppIconColors icon;
   final AppNavigationBarColors navigationBar;
+  final AppSnackBarColors snackBar;
 
   const AppColors({
     this.primary = _InterdimensionalBlue,
@@ -31,6 +33,7 @@ final class AppColors {
     this.text = const AppTextColors(),
     this.icon = const AppIconColors(),
     this.navigationBar = const AppNavigationBarColors(),
+    this.snackBar = const AppSnackBarColors(),
   });
 }
 
@@ -100,5 +103,20 @@ final class AppNavigationBarColors {
     this.background = _InterdimensionalBlue,
     this.selected = _MintCream,
     this.unselected = _PaleCornflowerBlue,
+  });
+}
+
+@immutable
+final class AppSnackBarColors {
+  final Color error;
+  final Color success;
+  final Color info;
+  final Color content;
+
+  const AppSnackBarColors({
+    this.error = _PersianRed,
+    this.success = _Mint,
+    this.info = _InterdimensionalBlue,
+    this.content = _MintCream,
   });
 }

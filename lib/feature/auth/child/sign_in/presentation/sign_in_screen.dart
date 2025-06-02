@@ -9,7 +9,7 @@ import 'package:listy_chef/feature/auth/child/sign_in/presentation/bloc/mod.dart
 import 'package:listy_chef/feature/auth/child/sign_in/presentation/widget/sign_in_content.dart';
 import 'package:listy_chef/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:listy_chef/feature/auth/presentation/bloc/auth_event.dart';
-import 'package:listy_chef/feature/auth/presentation/widget/auth_error_dialog.dart';
+import 'package:listy_chef/feature/auth/presentation/widget/auth_error_message.dart';
 
 final class SignInScreen extends StatelessWidget {
   final String? email;
@@ -31,8 +31,8 @@ final class SignInScreen extends StatelessWidget {
     child: BlocBuilder<SignInBloc, SignInState>(
       buildWhen: distinctState((s) => s.email.value),
       builder: (context, state) => BlocPresentationListener<SignInBloc, SignInEffect>(
-        listener: (context, effect) => switch (effect) {
-          EffectShowAuthErrorDialog() => showAuthErrorDialog(
+        listener: (context, effect) async => switch (effect) {
+          EffectShowAuthErrorDialog() => await showAuthErrorMessage(
             context: context,
             email: state.email.value,
             error: effect.error,

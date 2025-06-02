@@ -10,8 +10,8 @@ plugins {
 
 android {
     namespace = "com.paranid5.listy_chef"
-    compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    compileSdk = 35
+    ndkVersion = "29.0.13113456"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
