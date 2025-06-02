@@ -18,3 +18,9 @@ final class EventPasswordChange extends SignUpEvent {
   final String password;
   EventPasswordChange({required this.password});
 }
+
+final class EventClearEmail extends SignUpEvent {}
+
+final class EventClearNickname extends SignUpEvent {}
+
+final class EventChangePasswordVisibility extends SignUpEvent {}

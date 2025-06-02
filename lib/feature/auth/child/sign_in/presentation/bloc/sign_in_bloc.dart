@@ -3,6 +3,7 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:listy_chef/core/domain/text/text_change_use_case.dart';
 import 'package:listy_chef/core/domain/text/text_container.dart';
+import 'package:listy_chef/core/utils/ext/bool_ext.dart';
 import 'package:listy_chef/core/utils/functions/do_nothing.dart';
 import 'package:listy_chef/feature/auth/child/sign_in/presentation/bloc/sign_in_effect.dart';
 import 'package:listy_chef/feature/auth/child/sign_in/presentation/bloc/sign_in_event.dart';
@@ -47,5 +48,14 @@ final class SignInBloc extends Bloc<SignInEvent, SignInState>
         update: (textContainer) => emit(state.copyWith(password: textContainer)),
       );
     });
+
+    on<EventClearEmail>((event, emit) {
+      emit(state.copyWith(email: TextContainer(value: '', error: false)));
+      emitPresentation(EffectClearEmail());
+    });
+
+    on<EventChangePasswordVisibility>((event, emit) =>
+      emit(state.copyWith(isPasswordVisible: state.isPasswordVisible.not)),
+    );
   }
 }

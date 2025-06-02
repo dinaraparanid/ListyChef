@@ -7,3 +7,4 @@ final class EffectShowAuthErrorDialog extends SignInEffect {
   EffectShowAuthErrorDialog({required this.error});
 }
 
+final class EffectClearEmail extends SignInEffect {}

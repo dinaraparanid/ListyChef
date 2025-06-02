@@ -14,7 +14,11 @@ abstract class SignInState with _$SignInState {
     @Default(TextContainer(value: '', error: false))
     TextContainer<bool> password,
 
-    @Default(false) bool isConfirmButtonLoading,
+    @Default(false)
+    bool isConfirmButtonLoading,
+
+    @Default(false)
+    bool isPasswordVisible,
   }) = _SignInState;
 }
 
@@ -25,5 +29,7 @@ extension Properties on SignInState {
   bool get isPasswordSmall => isSmallForPassword(password.value);
 
   bool get isConfirmButtonEnabled =>
-      email.value.isNotEmpty && isPasswordSmall.not;
+    email.value.isNotEmpty && isPasswordSmall.not;
+
+  bool get isEmailClearIconVisible => email.value.isNotEmpty;
 }

@@ -13,3 +13,7 @@ final class EventPasswordChange extends SignInEvent {
   final String password;
   EventPasswordChange({required this.password});
 }
+
+final class EventClearEmail extends SignInEvent {}
+
+final class EventChangePasswordVisibility extends SignInEvent {}

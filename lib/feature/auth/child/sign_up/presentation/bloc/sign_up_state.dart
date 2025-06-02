@@ -16,6 +16,12 @@ abstract class SignUpState with _$SignUpState {
 
     @Default(TextContainer(value: '', error: false))
     TextContainer<bool> password,
+
+    @Default(false)
+    bool isConfirmButtonLoading,
+
+    @Default(false)
+    bool isPasswordVisible,
   }) = _SignUpState;
 }
 
@@ -29,4 +35,8 @@ extension Properties on SignUpState {
     email.value.isNotEmpty &&
     nickname.value.isNotEmpty &&
     isPasswordSmall.not;
+
+  bool get isEmailClearIconVisible => email.value.isNotEmpty;
+
+  bool get isNicknameClearIconVisible => nickname.value.isNotEmpty;
 }

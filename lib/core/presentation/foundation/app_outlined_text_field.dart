@@ -2,6 +2,9 @@ import 'package:dartx/dartx.dart';
 import 'package:fluent_ui/fluent_ui.dart' hide Colors;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:listy_chef/core/presentation/foundation/app_clickable.dart';
+import 'package:listy_chef/core/presentation/foundation/image_asset.dart';
 import 'package:listy_chef/core/presentation/foundation/platform_call.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
@@ -9,6 +12,7 @@ import 'package:listy_chef/core/utils/ext/general.dart';
 
 const _obscuringCharacter = '•';
 const _fluentErrorLabelDuration = Duration(milliseconds: 300);
+const _iconDuration = Duration(milliseconds: 300);
 
 final class AppOutlineTextField extends StatefulWidget {
   final TextEditingController? controller;
@@ -16,7 +20,9 @@ final class AppOutlineTextField extends StatefulWidget {
   final String? placeholder;
   final String? error;
   final bool obscureText;
-  final void Function(String)? onChanged;
+  final SvgImageAsset? suffixIcon;
+  final void Function(String)? onChange;
+  final void Function()? onSuffixClick;
 
   const AppOutlineTextField({
     super.key,
@@ -25,12 +31,13 @@ final class AppOutlineTextField extends StatefulWidget {
     this.placeholder,
     this.error,
     this.obscureText = false,
-    this.onChanged,
+    this.suffixIcon,
+    this.onChange,
+    this.onSuffixClick,
   });
 
   @override
-  State<StatefulWidget> createState() =>
-    _AppOutlineTextFieldState();
+  State<StatefulWidget> createState() => _AppOutlineTextFieldState();
 }
 
 final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
@@ -96,6 +103,32 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
   TextStyle labelStyle(AppTheme theme) =>
     theme.typography.body.copyWith(color: borderColor(theme));
 
+  Widget suffix(AppTheme theme) {
+    final asset = widget.suffixIcon;
+    final onClick = widget.onSuffixClick;
+
+    return AnimatedOpacity(
+      opacity: asset == null || onClick == null ? 0 : 1,
+      duration: _iconDuration,
+      child: asset == null || onClick == null ? null : AppClickable(
+        onClick: onClick,
+        border: CircleBorder(),
+        child: Padding(
+          padding: EdgeInsets.all(theme.dimensions.padding.small),
+          child: SvgPicture.asset(
+            asset.value,
+            width: theme.dimensions.size.small,
+            height: theme.dimensions.size.small,
+            colorFilter: ColorFilter.mode(
+              borderColor(theme),
+              BlendMode.srcIn,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget CupertinoUi({required AppTheme theme}) => Column(
     mainAxisSize: MainAxisSize.min,
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,7 +178,11 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
             obscureText: widget.obscureText,
             obscuringCharacter: _obscuringCharacter,
             cursorColor: cursorColor(theme),
-            onChanged: widget.onChanged,
+            onChanged: widget.onChange,
+            suffix: Padding(
+              padding: EdgeInsets.only(right: theme.dimensions.padding.small),
+              child: suffix(theme),
+            ),
           ),
         ),
       )
@@ -185,8 +222,12 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
       ),
       labelText: widget.label,
       labelStyle: labelStyle(theme),
+      suffixIcon: Padding(
+        padding: EdgeInsets.only(right: theme.dimensions.padding.small),
+        child: suffix(theme),
+      ),
     ),
-    onChanged: widget.onChanged,
+    onChanged: widget.onChange,
   );
 
   Widget FluentUi({required AppTheme theme}) => FluentTheme(
@@ -209,7 +250,12 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
             obscureText: widget.obscureText,
             obscuringCharacter: _obscuringCharacter,
             cursorColor: cursorColor(theme),
-            onChanged: widget.onChanged,
+            onChanged: widget.onChange,
+            padding: EdgeInsets.all(theme.dimensions.padding.extraMedium),
+            suffix: Padding(
+              padding: EdgeInsets.only(right: theme.dimensions.padding.small),
+              child: suffix(theme),
+            ),
             decoration: WidgetStateProperty.fromMap({
               WidgetState.focused: BoxDecoration(
                 color: theme.colors.text.background,

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:listy_chef/core/presentation/foundation/app_scaffold.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/utils/functions/distinct_state.dart';
+import 'package:listy_chef/core/utils/functions/do_nothing.dart';
 import 'package:listy_chef/feature/auth/child/sign_in/presentation/bloc/mod.dart';
 import 'package:listy_chef/feature/auth/child/sign_in/presentation/widget/sign_in_content.dart';
 import 'package:listy_chef/feature/auth/presentation/bloc/auth_bloc.dart';
@@ -36,6 +37,8 @@ final class SignInScreen extends StatelessWidget {
             email: state.email.value,
             error: effect.error,
           ),
+
+          EffectClearEmail() => doNothing,
         },
         child: AppScaffold(
           backgroundColor: context.appTheme.colors.background.primary,

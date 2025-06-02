@@ -6,3 +6,7 @@ final class EffectShowAuthErrorDialog extends SignUpEffect {
   final AuthError error;
   EffectShowAuthErrorDialog({required this.error});
 }
+
+final class EffectClearEmail extends SignUpEffect {}
+
+final class EffectClearNickname extends SignUpEffect {}

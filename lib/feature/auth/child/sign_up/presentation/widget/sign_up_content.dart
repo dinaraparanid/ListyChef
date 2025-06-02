@@ -1,8 +1,10 @@
+import 'package:bloc_presentation/bloc_presentation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:listy_chef/core/presentation/foundation/app_filled_button.dart';
 import 'package:listy_chef/core/presentation/foundation/app_outlined_text_field.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
+import 'package:listy_chef/core/presentation/theme/images.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
 import 'package:listy_chef/core/utils/ext/bool_ext.dart';
 import 'package:listy_chef/feature/auth/child/sign_up/presentation/bloc/mod.dart';
@@ -18,11 +20,13 @@ final class SignUpContent extends StatefulWidget {
 
 final class _SignUpContentState extends State<SignUpContent> {
 
-  late TextEditingController controller;
+  late TextEditingController emailController;
+  late TextEditingController nicknameController;
 
   @override
   void initState() {
-    controller = TextEditingController(text: widget.initialEmail);
+    emailController = TextEditingController(text: widget.initialEmail);
+    nicknameController = TextEditingController(text: '');
     super.initState();
   }
 
@@ -66,26 +70,53 @@ final class _SignUpContentState extends State<SignUpContent> {
 
             SizedBox(height: theme.dimensions.padding.extraMedium),
 
-            CommonDimensions(
-              child: AppOutlineTextField(
-                controller: controller,
-                label: strings.auth_email_label,
-                error: state.email.error.ifTrue(strings.auth_error_email_empty),
-                onChanged: (input) => BlocProvider
-                  .of<SignUpBloc>(context)
-                  .add(EventEmailChange(email: input)),
+            BlocPresentationListener<SignUpBloc, SignUpEffect>(
+              listener: (context, effect) {
+                if (effect is EffectClearEmail) {
+                  emailController.clear();
+                }
+              },
+              child: CommonDimensions(
+                child: AppOutlineTextField(
+                  controller: emailController,
+                  label: strings.auth_email_label,
+                  error: state.email.error.ifTrue(strings.auth_error_email_empty),
+                  suffixIcon: state.isEmailClearIconVisible.ifTrue(
+                    AppImages.loadSvg('ic_close'),
+                  ),
+                  onChange: (input) => BlocProvider
+                    .of<SignUpBloc>(context)
+                    .add(EventEmailChange(email: input)),
+                  onSuffixClick: () => BlocProvider
+                    .of<SignUpBloc>(context)
+                    .add(EventClearEmail()),
+                ),
               ),
             ),
 
             SizedBox(height: theme.dimensions.padding.extraMedium),
 
-            CommonDimensions(
-              child: AppOutlineTextField(
-                label: strings.auth_nickname_label,
-                error: state.nickname.error.ifTrue(strings.auth_error_nickname_empty),
-                onChanged: (input) => BlocProvider
-                  .of<SignUpBloc>(context)
-                  .add(EventNicknameChange(nickname: input)),
+            BlocPresentationListener<SignUpBloc, SignUpEffect>(
+              listener: (context, effect) {
+                if (effect is EffectClearNickname) {
+                  nicknameController.clear();
+                }
+              },
+              child: CommonDimensions(
+                child: AppOutlineTextField(
+                  controller: nicknameController,
+                  label: strings.auth_nickname_label,
+                  error: state.nickname.error.ifTrue(strings.auth_error_nickname_empty),
+                  suffixIcon: state.isNicknameClearIconVisible.ifTrue(
+                    AppImages.loadSvg('ic_close'),
+                  ),
+                  onChange: (input) => BlocProvider
+                    .of<SignUpBloc>(context)
+                    .add(EventNicknameChange(nickname: input)),
+                  onSuffixClick: () => BlocProvider
+                    .of<SignUpBloc>(context)
+                    .add(EventClearNickname()),
+                ),
               ),
             ),
 
@@ -96,9 +127,15 @@ final class _SignUpContentState extends State<SignUpContent> {
                 obscureText: true,
                 label: strings.auth_password_label,
                 error: state.password.error.ifTrue(strings.auth_error_short_password),
-                onChanged: (input) => BlocProvider
+                suffixIcon: AppImages.loadSvg(
+                  state.isPasswordVisible ? 'ic_eye' : 'ic_eye_closed',
+                ),
+                onChange: (input) => BlocProvider
                   .of<SignUpBloc>(context)
                   .add(EventPasswordChange(password: input)),
+                onSuffixClick: () => BlocProvider
+                  .of<SignUpBloc>(context)
+                  .add(EventChangePasswordVisibility()),
               ),
             ),
 
