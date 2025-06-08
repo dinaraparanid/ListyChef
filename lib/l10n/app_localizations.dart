@@ -250,6 +250,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'User with email `{email}` already exists. Do you want to sign in?'**
   String auth_error_email_already_in_use(String email);
+
+  /// No description provided for @main_tab_cart.
+  ///
+  /// In en, this message translates to:
+  /// **'Cart'**
+  String get main_tab_cart;
+
+  /// No description provided for @main_tab_recipes.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipes'**
+  String get main_tab_recipes;
+
+  /// No description provided for @main_tab_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get main_tab_profile;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

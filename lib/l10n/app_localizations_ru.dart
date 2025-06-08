@@ -89,4 +89,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String auth_error_email_already_in_use(String email) {
     return 'Пользователь с email `$email` уже существует. Хотите войти?';
   }
+
+  @override
+  String get main_tab_cart => 'Корзина';
+
+  @override
+  String get main_tab_recipes => 'Рецепты';
+
+  @override
+  String get main_tab_profile => 'Профиль';
 }

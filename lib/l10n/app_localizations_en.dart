@@ -89,4 +89,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String auth_error_email_already_in_use(String email) {
     return 'User with email `$email` already exists. Do you want to sign in?';
   }
+
+  @override
+  String get main_tab_cart => 'Cart';
+
+  @override
+  String get main_tab_recipes => 'Recipes';
+
+  @override
+  String get main_tab_profile => 'Profile';
 }

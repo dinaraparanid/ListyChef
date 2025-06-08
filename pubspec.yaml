@@ -31,6 +31,7 @@ dependencies:
   fpdart: ^1.1.1
   logger: ^2.5.0
   bloc_presentation: ^1.1.0
+  sizer: ^3.0.5
 
 dev_dependencies:
   flutter_test:

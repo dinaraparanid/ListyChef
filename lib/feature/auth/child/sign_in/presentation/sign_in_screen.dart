@@ -1,7 +1,7 @@
 import 'package:bloc_presentation/bloc_presentation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:listy_chef/core/presentation/foundation/app_scaffold.dart';
+import 'package:listy_chef/core/presentation/foundation/scaffold/app_scaffold.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/utils/functions/distinct_state.dart';
 import 'package:listy_chef/core/utils/functions/do_nothing.dart';

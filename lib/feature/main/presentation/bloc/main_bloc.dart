@@ -26,6 +26,12 @@ final class MainBloc extends Bloc<MainEvent, MainState> {
       state.copyWith(route: MainRoute.profile()),
     ));
 
+    on<EventNavigateToRoute>((event, emit) => switch (event.route) {
+      MainRouteCart() => add(EventNavigateToCart()),
+      MainRouteRecipes() => add(EventNavigateToRecipes()),
+      MainRouteProfile() => add(EventNavigateToProfile()),
+    });
+
     _listenRouteChanges();
   }
 
@@ -45,7 +51,7 @@ final class MainBloc extends Bloc<MainEvent, MainState> {
 
   void _navigateToMainRoute(MainRoute route) => switch (route) {
     MainRouteCart() => _router.value.goNamed(AppRoute.cart.name),
-    MainRouteRecipes() => _router.value.goNamed(AppRoute.cart.name),
-    MainRouteProfile() => _router.value.goNamed(AppRoute.cart.name),
+    MainRouteRecipes() => _router.value.goNamed(AppRoute.recipes.name),
+    MainRouteProfile() => _router.value.goNamed(AppRoute.profile.name),
   };
 }

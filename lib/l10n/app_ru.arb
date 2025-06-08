@@ -39,5 +39,9 @@
         "type": "String"
       }
     }
-  }
+  },
+
+  "main_tab_cart": "Корзина",
+  "main_tab_recipes": "Рецепты",
+  "main_tab_profile": "Профиль"
 }
