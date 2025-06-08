@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:listy_chef/core/domain/auth/repository/auth_repository.dart';
 import 'package:listy_chef/feature/root/presentation/bloc/root_event.dart';
 import 'package:listy_chef/navigation/app_route.dart';
 import 'package:listy_chef/navigation/app_router.dart';
@@ -9,6 +10,7 @@ final class RootBloc extends Bloc<RootEvent, void> {
 
   RootBloc({
     required AppRouter router,
+    required AuthRepository authRepository,
   }) : super(null) {
     on<EventNavigateToAuth>((event, emit) =>
       router.value.replaceNamed(AppRoute.auth.name),
@@ -18,8 +20,7 @@ final class RootBloc extends Bloc<RootEvent, void> {
       router.value.replaceNamed(AppRoute.main.name),
     );
 
-    // TODO check authorized
-    _authorizedListener = Stream.value(false).listen((isAuthorized) =>
+    _authorizedListener = authRepository.signedInChanges.listen((isAuthorized) =>
       add(isAuthorized ? EventNavigateToMain() : EventNavigateToAuth()),
     );
   }

@@ -1,5 +1,5 @@
 import 'package:listy_chef/core/domain/auth/auth_error.dart';
-import 'package:listy_chef/core/domain/auth/auth_repository.dart';
+import 'package:listy_chef/core/domain/auth/repository/auth_repository.dart';
 
 final class SignInUseCase {
   final AuthRepository _repository;

@@ -1,7 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:listy_chef/core/domain/auth/auth_error.dart';
 
-abstract class AuthRepository {
+abstract interface class AuthRepository {
   Stream<bool> get signedInChanges;
 
   Future<Either<AuthError, void>> signIn({

@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:listy_chef/core/domain/auth/auth_error.dart';
-import 'package:listy_chef/core/domain/auth/auth_repository.dart';
+import 'package:listy_chef/core/domain/auth/repository/auth_repository.dart';
 import 'package:listy_chef/core/domain/logger/app_logger.dart';
 
-final class AuthRepositoryImpl extends AuthRepository {
+final class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl();
 
   @override

@@ -25,13 +25,16 @@ final class AppScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.appTheme;
 
-    return platformCall(
-      android: MaterialUi,
-      iOS: CupertinoUi,
-      macOS: CupertinoUi,
-      linux: YaruUi,
-      windows: FluentUi,
-    )(theme);
+    return PopScope(
+      onPopInvokedWithResult: (_, _) => onBack?.call(),
+      child: platformCall(
+        android: MaterialUi,
+        iOS: CupertinoUi,
+        macOS: CupertinoUi,
+        linux: YaruUi,
+        windows: FluentUi,
+      )(theme),
+    );
   }
 
   Widget? Title(AppTheme theme) => title?.let((text) => FittedBox(
