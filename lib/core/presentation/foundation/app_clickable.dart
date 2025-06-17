@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 
 final class AppClickable extends StatelessWidget {
   final void Function() onClick;

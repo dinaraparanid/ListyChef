@@ -11,7 +11,7 @@ final class RootBlocFactory {
     required AuthRepository authRepository,
   }) : _router = router, _authRepository = authRepository;
 
-  RootBloc create() => RootBloc(
+  RootBloc call() => RootBloc(
     router: _router,
     authRepository: _authRepository,
   );

@@ -15,7 +15,7 @@ final class RootScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BlocProvider(
     lazy: false,
-    create: (_) => blocFactory.create(),
+    create: (_) => blocFactory(),
     child: child,
   );
 }

@@ -6,5 +6,5 @@ final class AuthBlocFactory {
 
   AuthBlocFactory({required AppRouter router}) : _router = router;
 
-  AuthBloc create() => AuthBloc(router: _router);
+  AuthBloc call() => AuthBloc(router: _router);
 }

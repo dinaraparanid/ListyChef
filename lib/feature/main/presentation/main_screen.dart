@@ -19,7 +19,7 @@ final class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocProvider(
-    create: (_) => blocFactory.create(),
+    create: (_) => blocFactory(),
     child: BlocBuilder<MainBloc, MainState>(
       builder: (context, state) => AppScaffold(
         selectedIndex: state.route.ordinal,

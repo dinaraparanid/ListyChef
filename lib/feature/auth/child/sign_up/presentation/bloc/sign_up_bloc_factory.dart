@@ -13,7 +13,7 @@ final class SignUpBlocFactory {
   }) : _signUpUseCase = signUpUseCase,
     _textChangeUseCase = textChangeUseCase;
 
-  SignUpBloc create({
+  SignUpBloc call({
     String? email,
     required void Function(SignUpResult) onResult,
   }) => SignUpBloc(

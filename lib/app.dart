@@ -38,19 +38,19 @@ final class App extends StatelessWidget {
     return AppThemeProvider(
       theme: theme,
       child: BlocProvider(
-        create: (_) => rootBlocFactory.create(),
+        create: (_) => rootBlocFactory(),
         child: platformCall(
           android: MaterialUi,
           iOS: CupertinoUi,
           macOS: CupertinoUi,
           linux: YaruUi,
           windows: FluentUi,
-        )(),
+        )(theme),
       ),
     );
   }
 
-  Widget MaterialUi() => MaterialApp.router(
+  Widget MaterialUi(AppTheme theme) => MaterialApp.router(
     routerConfig: router.value,
     theme: ThemeData(
       highlightColor: Colors.transparent,
@@ -59,19 +59,25 @@ final class App extends StatelessWidget {
     supportedLocales: AppLocalizations.supportedLocales,
   );
 
-  Widget CupertinoUi() => CupertinoApp.router(
+  Widget CupertinoUi(AppTheme theme) => CupertinoApp.router(
     routerConfig: router.value,
     theme: CupertinoThemeData(),
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
   );
 
-  Widget YaruUi() => YaruTheme(builder: (context, _, _) => MaterialUi());
+  Widget YaruUi(AppTheme theme) =>
+    YaruTheme(builder: (context, _, _) => MaterialUi(theme));
 
-  Widget FluentUi() => win.FluentApp.router(
+  Widget FluentUi(AppTheme theme) => win.FluentApp.router(
     routerConfig: router.value,
     theme: win.FluentThemeData(
       brightness: Brightness.light,
+      navigationPaneTheme: win.NavigationPaneThemeData(
+        backgroundColor: theme.colors.navigationBar.backgroundCollapsed,
+        overlayBackgroundColor: theme.colors.navigationBar.background,
+        highlightColor: theme.colors.navigationBar.background,
+      )
     ),
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,

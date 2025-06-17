@@ -8,5 +8,5 @@ final class MainBlocFactory {
     required AppRouter router,
   }) : _router = router;
 
-  MainBloc create() => MainBloc(router: _router);
+  MainBloc call() => MainBloc(router: _router);
 }

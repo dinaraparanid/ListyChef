@@ -23,7 +23,7 @@ final class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocProvider(
-    create: (context) => blocFactory.create(
+    create: (context) => blocFactory(
       email: email,
       onResult: (result) => BlocProvider
         .of<AuthBloc>(context)

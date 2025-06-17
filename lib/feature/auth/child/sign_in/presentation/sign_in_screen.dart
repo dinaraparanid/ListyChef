@@ -23,7 +23,7 @@ final class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocProvider(
-    create: (context) => blocFactory.create(
+    create: (context) => blocFactory(
       onResult: (result) => BlocProvider
         .of<AuthBloc>(context)
         .add(EventHandleSignInResult(result: result)),

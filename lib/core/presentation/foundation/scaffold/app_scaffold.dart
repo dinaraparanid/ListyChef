@@ -8,6 +8,7 @@ import 'package:listy_chef/core/presentation/foundation/platform_call.dart';
 import 'package:listy_chef/core/presentation/foundation/scaffold/app_navigation_menu_item_data.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
+import 'package:listy_chef/core/presentation/theme/strings.dart';
 import 'package:listy_chef/core/utils/ext/general.dart';
 import 'package:sizer/sizer.dart';
 import 'package:yaru/widgets.dart';
@@ -33,20 +34,16 @@ final class AppScaffold extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final theme = context.appTheme;
-
-    return PopScope(
-      onPopInvokedWithResult: (_, _) => onBack?.call(),
-      child: platformCall(
-        android: MaterialUi,
-        iOS: CupertinoUi.curry()(false),
-        macOS: CupertinoUi.curry()(true),
-        linux: YaruUi,
-        windows: FluentUi,
-      )(theme),
-    );
-  }
+  Widget build(BuildContext context) => PopScope(
+    onPopInvokedWithResult: (_, _) => onBack?.call(),
+    child: platformCall(
+      android: MaterialUi,
+      iOS: CupertinoUi.curry()(false),
+      macOS: CupertinoUi.curry()(true),
+      linux: YaruUi,
+      windows: FluentUi,
+    )(context),
+  );
 
   Widget? Title(AppTheme theme) => title?.let((text) => FittedBox(
     fit: BoxFit.scaleDown,
@@ -58,29 +55,32 @@ final class AppScaffold extends StatelessWidget {
     ),
   ));
 
-  Widget MaterialUi(AppTheme theme) => Scaffold(
-    backgroundColor: backgroundColor ?? theme.colors.background.primary,
+  Widget MaterialUi(BuildContext context) => Scaffold(
+    backgroundColor: backgroundColor
+      ?? context.appTheme.colors.background.primary,
     extendBody: true,
     appBar: title != null || onBack != null ? AppBar(
-      backgroundColor: backgroundColor ?? theme.colors.background.primary,
+      backgroundColor: backgroundColor
+        ?? context.appTheme.colors.background.primary,
       surfaceTintColor: Colors.transparent,
       shadowColor: Colors.grey,
-      title: Title(theme),
+      title: Title(context.appTheme),
       leading: IconButton(
         onPressed: onBack,
         icon: Icon(
           Icons.arrow_back,
-          color: theme.colors.icon.primary,
+          color: context.appTheme.colors.icon.primary,
         ),
       ),
     ) : null,
     bottomNavigationBar: items?.let((items) => Sizer(
-      builder: (context, orientation, screenType) => switch ((orientation, screenType)) {
-        (Orientation.portrait, ScreenType.mobile) =>
-          _MaterialBottomNavigationBar(context: context, items: items),
+      builder: (context, orientation, screenType) =>
+        switch ((orientation, screenType)) {
+          (Orientation.portrait, ScreenType.mobile) =>
+            _MaterialBottomNavigationBar(context: context, items: items),
 
-        _ => SizedBox(),
-      },
+          _ => SizedBox(),
+        },
     )),
     body: Sizer(
       builder: (context, orientation, screenType) =>
@@ -165,16 +165,17 @@ final class AppScaffold extends StatelessWidget {
     )).toList(growable: false),
   );
 
-  Widget CupertinoUi(bool isMacOS, AppTheme theme) => switch ((items, isMacOS)) {
+  Widget CupertinoUi(bool isMacOS, BuildContext context) => switch ((items, isMacOS)) {
     (null, _) => CupertinoPageScaffold(
-      backgroundColor: backgroundColor ?? theme.colors.background.primary,
+      backgroundColor: backgroundColor
+        ?? context.appTheme.colors.background.primary,
       navigationBar: title != null || onBack != null ? CupertinoNavigationBar(
         backgroundColor: Colors.transparent,
         brightness: Brightness.light,
-        middle: Title(theme),
+        middle: Title(context.appTheme),
         leading: CupertinoNavigationBarBackButton(
           onPressed: onBack,
-          color: theme.colors.icon.primary,
+          color: context.appTheme.colors.icon.primary,
         ),
       ) : null,
       child: Padding(
@@ -184,14 +185,14 @@ final class AppScaffold extends StatelessWidget {
     ),
 
     (final IList items, true) => CupertinoPageScaffold(
-      backgroundColor: backgroundColor ?? theme.colors.background.primary,
+      backgroundColor: backgroundColor ?? context.appTheme.colors.background.primary,
       navigationBar: title != null || onBack != null ? CupertinoNavigationBar(
         backgroundColor: Colors.transparent,
         brightness: Brightness.light,
-        middle: Title(theme),
+        middle: Title(context.appTheme),
         leading: CupertinoNavigationBarBackButton(
           onPressed: onBack,
-          color: theme.colors.icon.primary,
+          color: context.appTheme.colors.icon.primary,
         ),
       ) : null,
       child: PlatformMenuBar(
@@ -212,22 +213,23 @@ final class AppScaffold extends StatelessWidget {
     ),
 
     (final IList items, false) => Scaffold(
-      backgroundColor: backgroundColor ?? theme.colors.background.primary,
+      backgroundColor: backgroundColor
+        ?? context.appTheme.colors.background.primary,
       bottomNavigationBar: CupertinoTabBar(
         currentIndex: selectedIndex ?? 0,
-        backgroundColor: theme.colors.navigationBar.background,
-        activeColor: theme.colors.navigationBar.selected,
-        inactiveColor: theme.colors.navigationBar.unselected,
+        backgroundColor: context.appTheme.colors.navigationBar.background,
+        activeColor: context.appTheme.colors.navigationBar.selected,
+        inactiveColor: context.appTheme.colors.navigationBar.unselected,
         onTap: onItemClick,
         items: items.mapIndexed((index, item) => BottomNavigationBarItem(
           icon: SvgPicture.asset(
             item.icon.value,
-            width: theme.dimensions.size.small,
-            height: theme.dimensions.size.small,
+            width: context.appTheme.dimensions.size.small,
+            height: context.appTheme.dimensions.size.small,
             colorFilter: ColorFilter.mode(
               index == selectedIndex
-                ? theme.colors.navigationBar.selected
-                : theme.colors.navigationBar.unselected,
+                ? context.appTheme.colors.navigationBar.selected
+                : context.appTheme.colors.navigationBar.unselected,
               BlendMode.srcIn,
             ),
           ),
@@ -241,12 +243,12 @@ final class AppScaffold extends StatelessWidget {
     ),
   };
 
-  Widget YaruUi(AppTheme theme) => YaruDetailPage(
-    backgroundColor: backgroundColor ?? theme.colors.background.primary,
+  Widget YaruUi(BuildContext context) => YaruDetailPage(
+    backgroundColor: backgroundColor ?? context.appTheme.colors.background.primary,
     extendBody: true,
     appBar: title != null || onBack != null ? YaruTitleBar(
       backgroundColor: Colors.transparent,
-      title: Title(theme),
+      title: Title(context.appTheme),
       leading: YaruBackButton(
         onPressed: onBack,
         style: YaruBackButtonStyle.rounded,
@@ -277,15 +279,15 @@ final class AppScaffold extends StatelessWidget {
     ),
   );
 
-  Widget FluentUi(AppTheme theme) => win.NavigationView(
+  Widget FluentUi(BuildContext context) => win.NavigationView(
     appBar: title != null || onBack != null ? win.NavigationAppBar(
-      title: Title(theme),
+      title: Title(context.appTheme),
       leading: YaruBackButton(
         onPressed: onBack,
         style: YaruBackButtonStyle.rounded,
       ),
       decoration: BoxDecoration(
-        color: backgroundColor ?? theme.colors.background.primary,
+        color: backgroundColor ?? context.appTheme.colors.background.primary,
         border: Border(
           bottom: BorderSide(
             color: Colors.grey,
@@ -297,20 +299,37 @@ final class AppScaffold extends StatelessWidget {
       selected: selectedIndex,
       onChanged: onItemClick,
       displayMode: win.PaneDisplayMode.compact,
+      header: Text(
+        context.strings.app_name,
+        style: context.appTheme.typography.h.h4.copyWith(
+          color: context.appTheme.colors.navigationBar.selected,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
       items: [
-        for (final item in items)
+        for (final (index, item) in items.indexed)
           win.PaneItem(
             icon: SvgPicture.asset(
               item.icon.value,
-              width: theme.dimensions.size.small,
-              height: theme.dimensions.size.small,
+              width: context.appTheme.dimensions.size.small,
+              height: context.appTheme.dimensions.size.small,
+              colorFilter: ColorFilter.mode(
+                index == selectedIndex
+                  ? context.appTheme.colors.navigationBar.selected
+                  : context.appTheme.colors.navigationBar.unselected,
+                BlendMode.srcIn,
+              ),
             ),
             title: Text(
               item.title,
-              style: theme.typography.regular,
+              style: context.appTheme.typography.regular.copyWith(
+                color: index == selectedIndex
+                  ? context.appTheme.colors.navigationBar.selected
+                  : context.appTheme.colors.navigationBar.unselected,
+              ),
             ),
             body: ColoredBox(
-              color: backgroundColor ?? theme.colors.background.primary,
+              color: backgroundColor ?? context.appTheme.colors.background.primary,
               child: body,
             ),
           ),

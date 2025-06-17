@@ -14,7 +14,7 @@ final class AuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocProvider(
-    create: (_) => blocFactory.create(),
+    create: (_) => blocFactory(),
     child: child,
   );
 }

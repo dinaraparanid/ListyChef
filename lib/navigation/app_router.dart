@@ -4,6 +4,7 @@ import 'package:listy_chef/core/di/di.dart';
 import 'package:listy_chef/feature/auth/child/sign_in/presentation/sign_in_screen.dart';
 import 'package:listy_chef/feature/auth/child/sign_up/presentation/sign_up_screen.dart';
 import 'package:listy_chef/feature/auth/presentation/auth_screen.dart';
+import 'package:listy_chef/feature/main/child/cart/presentation/cart_screen.dart';
 import 'package:listy_chef/feature/main/presentation/main_screen.dart';
 import 'package:listy_chef/feature/root/presentation/root_screen.dart';
 import 'package:listy_chef/navigation/app_route.dart';
@@ -93,7 +94,9 @@ final class AppRouter {
               GoRoute(
                 path: AppRoute.cart.path,
                 name: AppRoute.cart.name,
-                builder: (context, state) => Text('TODO: CartScreen()'),
+                builder: (context, state) => CartScreen(
+                  blocFactory: di(),
+                ),
               ),
               GoRoute(
                 path: AppRoute.recipes.path,

@@ -96,11 +96,13 @@ final class AppIconColors {
 @immutable
 final class AppNavigationBarColors {
   final Color background;
+  final Color backgroundCollapsed;
   final Color selected;
   final Color unselected;
 
   const AppNavigationBarColors({
     this.background = _InterdimensionalBlue,
+    this.backgroundCollapsed = _Independence,
     this.selected = _MintCream,
     this.unselected = _PaleCornflowerBlue,
   });
