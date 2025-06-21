@@ -16,7 +16,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 3.29.3 # TODO обновить до 3.8.0, когда обновится yaru
+          flutter-version: 3.32.4
 
       - name: Get Dependencies
         run: flutter pub get
