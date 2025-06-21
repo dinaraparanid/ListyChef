@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:listy_chef/core/utils/ext/general.dart';
 import 'package:listy_chef/core/domain/auth/auth_error.dart';
+import 'package:listy_chef/core/domain/auth/entity/email.dart';
 import 'package:listy_chef/core/domain/auth/repository/auth_repository.dart';
 import 'package:listy_chef/core/domain/logger/app_logger.dart';
 
@@ -8,10 +10,12 @@ final class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl();
 
   @override
-  Stream<bool> get signedInChanges => FirebaseAuth.instance
-    .authStateChanges()
-    .map((x) => x != null)
-    .distinct();
+  Stream<bool> get signedInChanges =>
+    _userChanges.map((x) => x != null).distinct();
+
+  @override
+  Stream<Email?> get emailChanges =>
+    _userChanges.map((u) => u?.email?.let((e) => Email(e))).distinct();
 
   @override
   Future<Either<AuthError, void>> signIn({
@@ -47,4 +51,6 @@ final class AuthRepositoryImpl implements AuthRepository {
       return Either.left(e.toAuthError());
     }
   }
+
+  Stream<User?> get _userChanges => FirebaseAuth.instance.authStateChanges();
 }

@@ -45,13 +45,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get auth_sign_up => 'Зарегистрироваться';
 
   @override
-  String get auth_error_email_empty => 'Электронная почта не должна быть пустой';
+  String get auth_error_email_empty =>
+      'Электронная почта не должна быть пустой';
 
   @override
   String get auth_error_nickname_empty => 'Никнейм не должен быть пустым';
 
   @override
-  String get auth_error_short_password => 'Пароль должен содержать от 8 символов';
+  String get auth_error_short_password =>
+      'Пароль должен содержать от 8 символов';
 
   @override
   String get auth_error_invalid_email => 'Неверный адрес электронной почты';
@@ -63,22 +65,27 @@ class AppLocalizationsRu extends AppLocalizations {
   String get auth_error_wrong_password => 'Неверный пароль';
 
   @override
-  String get auth_error_too_many_requests => 'Превышено количество запросов. Попробуйте снова позже';
+  String get auth_error_too_many_requests =>
+      'Превышено количество запросов. Попробуйте снова позже';
 
   @override
-  String get auth_error_user_token_expired => 'Максимальная продолжительность сессии превышена. Для продолжения войдите повторно';
+  String get auth_error_user_token_expired =>
+      'Максимальная продолжительность сессии превышена. Для продолжения войдите повторно';
 
   @override
-  String get auth_error_network_request_failed => 'Ошибка сетевого соединения. Проверьте подключение к Интернету';
+  String get auth_error_network_request_failed =>
+      'Ошибка сетевого соединения. Проверьте подключение к Интернету';
 
   @override
-  String get auth_error_invalid_credential => 'Недействительные данные для входа. Пожалуйста, попробуйте ещё раз';
+  String get auth_error_invalid_credential =>
+      'Недействительные данные для входа. Пожалуйста, попробуйте ещё раз';
 
   @override
   String get auth_error_weak_password => 'Пароль недостаточно сложный';
 
   @override
-  String get auth_error_unknown => 'Неизвестная ошибка. Повторите попытку позднее';
+  String get auth_error_unknown =>
+      'Неизвестная ошибка. Повторите попытку позднее';
 
   @override
   String auth_error_user_not_found(String email) {

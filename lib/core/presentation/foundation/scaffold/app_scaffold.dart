@@ -58,7 +58,6 @@ final class AppScaffold extends StatelessWidget {
   Widget MaterialUi(BuildContext context) => Scaffold(
     backgroundColor: backgroundColor
       ?? context.appTheme.colors.background.primary,
-    extendBody: true,
     appBar: title != null || onBack != null ? AppBar(
       backgroundColor: backgroundColor
         ?? context.appTheme.colors.background.primary,
@@ -99,33 +98,39 @@ final class AppScaffold extends StatelessWidget {
     ),
   );
 
-  BottomNavigationBar _MaterialBottomNavigationBar({
+  Widget _MaterialBottomNavigationBar({
     required BuildContext context,
     required IList<AppNavigationMenuItemData> items,
-  }) => BottomNavigationBar(
-    backgroundColor: context.appTheme.colors.navigationBar.background,
-    selectedItemColor: context.appTheme.colors.navigationBar.selected,
-    unselectedItemColor: context.appTheme.colors.navigationBar.unselected,
-    selectedLabelStyle: context.appTheme.typography.regular,
-    unselectedLabelStyle: context.appTheme.typography.regular,
-    showSelectedLabels: true,
-    showUnselectedLabels: true,
-    currentIndex: selectedIndex ?? 0,
-    onTap: onItemClick,
-    items: items.mapIndexed((index, item) => BottomNavigationBarItem(
-      icon: SvgPicture.asset(
-        item.icon.value,
-        width: context.appTheme.dimensions.size.small,
-        height: context.appTheme.dimensions.size.small,
-        colorFilter: ColorFilter.mode(
-          index == selectedIndex
-            ? context.appTheme.colors.navigationBar.selected
-            : context.appTheme.colors.navigationBar.unselected,
-          BlendMode.srcIn,
+  }) => ClipRRect(
+    borderRadius: BorderRadiusGeometry.only(
+      topLeft: Radius.circular(context.appTheme.dimensions.radius.small),
+      topRight: Radius.circular(context.appTheme.dimensions.radius.small),
+    ),
+    child: BottomNavigationBar(
+      backgroundColor: context.appTheme.colors.navigationBar.background,
+      selectedItemColor: context.appTheme.colors.navigationBar.selected,
+      unselectedItemColor: context.appTheme.colors.navigationBar.unselected,
+      selectedLabelStyle: context.appTheme.typography.regular,
+      unselectedLabelStyle: context.appTheme.typography.regular,
+      showSelectedLabels: true,
+      showUnselectedLabels: true,
+      currentIndex: selectedIndex ?? 0,
+      onTap: onItemClick,
+      items: items.mapIndexed((index, item) => BottomNavigationBarItem(
+        icon: SvgPicture.asset(
+          item.icon.value,
+          width: context.appTheme.dimensions.size.small,
+          height: context.appTheme.dimensions.size.small,
+          colorFilter: ColorFilter.mode(
+            index == selectedIndex
+                ? context.appTheme.colors.navigationBar.selected
+                : context.appTheme.colors.navigationBar.unselected,
+            BlendMode.srcIn,
+          ),
         ),
-      ),
-      label: item.title,
-    )).toList(growable: false),
+        label: item.title,
+      )).toList(growable: false),
+    ),
   );
 
   NavigationRail _MaterialNavigationRail({

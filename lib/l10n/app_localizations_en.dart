@@ -51,7 +51,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get auth_error_nickname_empty => 'Nickname must not be empty';
 
   @override
-  String get auth_error_short_password => 'Password must contain at least 8 symbols';
+  String get auth_error_short_password =>
+      'Password must contain at least 8 symbols';
 
   @override
   String get auth_error_invalid_email => 'Invalid email';
@@ -63,16 +64,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get auth_error_wrong_password => 'Invalid password';
 
   @override
-  String get auth_error_too_many_requests => 'Too many requests. Try again later';
+  String get auth_error_too_many_requests =>
+      'Too many requests. Try again later';
 
   @override
-  String get auth_error_user_token_expired => 'The maximum session duration has been exceeded. To continue, please log in again.';
+  String get auth_error_user_token_expired =>
+      'The maximum session duration has been exceeded. To continue, please log in again.';
 
   @override
-  String get auth_error_network_request_failed => 'Failed to make a network request. Please, check your internet connection';
+  String get auth_error_network_request_failed =>
+      'Failed to make a network request. Please, check your internet connection';
 
   @override
-  String get auth_error_invalid_credential => 'Invalid credentials. Please, try again';
+  String get auth_error_invalid_credential =>
+      'Invalid credentials. Please, try again';
 
   @override
   String get auth_error_weak_password => 'Password must be stronger';
