@@ -13,6 +13,9 @@ const _PaleCornflowerBlue = Color(0xFFADD7F6);
 const _ChineseBlack = Color(0xFF0A1310);
 const _PersianRed = Color(0xFFD73232);
 const _Mint = Color(0xFF09BC8A);
+const _Jacarta = Color(0xFF3F4060);
+const _Arsenic = Color(0xFF3D3A4B);
+const _Arsenic50 = Color(0x803D3A4B);
 
 @immutable
 final class AppColors {
@@ -21,6 +24,7 @@ final class AppColors {
   final AppBackgroundColors background;
   final AppButtonColors button;
   final AppTextColors text;
+  final AppSearchFieldColors searchField;
   final AppIconColors icon;
   final AppNavigationBarColors navigationBar;
   final AppSnackBarColors snackBar;
@@ -31,6 +35,7 @@ final class AppColors {
     this.background = const AppBackgroundColors(),
     this.button = const AppButtonColors(),
     this.text = const AppTextColors(),
+    this.searchField = const AppSearchFieldColors(),
     this.icon = const AppIconColors(),
     this.navigationBar = const AppNavigationBarColors(),
     this.snackBar = const AppSnackBarColors(),
@@ -81,6 +86,21 @@ final class AppTextColors {
     this.disabled = _MintCream75,
     this.focused = _Crayola,
     this.unfocused = _SlateBlue,
+  });
+}
+
+@immutable
+final class AppSearchFieldColors {
+  final Color background;
+  final Color border;
+  final Color text;
+  final Color placeholder;
+
+  const AppSearchFieldColors({
+    this.background = Colors.white,
+    this.border = _Jacarta,
+    this.text = _Arsenic,
+    this.placeholder = _Arsenic50,
   });
 }
 

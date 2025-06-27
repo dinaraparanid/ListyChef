@@ -10,6 +10,7 @@ import 'package:listy_chef/core/presentation/theme/app_theme.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
 import 'package:listy_chef/core/utils/ext/general.dart';
+import 'package:macos_ui/macos_ui.dart';
 import 'package:sizer/sizer.dart';
 import 'package:yaru/widgets.dart';
 
@@ -84,12 +85,13 @@ final class AppScaffold extends StatelessWidget {
     body: Sizer(
       builder: (context, orientation, screenType) =>
         switch ((orientation, screenType, items)) {
-          (Orientation.portrait, ScreenType.mobile, _) => body,
+          (Orientation.portrait, ScreenType.mobile, _) =>
+            SafeArea(child: body),
 
           (_, _, final IList<AppNavigationMenuItemData> items) => Row(
             children: [
               _MaterialNavigationRail(context: context, items: items),
-              body,
+              Expanded(child: body),
             ],
           ),
 
@@ -123,8 +125,8 @@ final class AppScaffold extends StatelessWidget {
           height: context.appTheme.dimensions.size.small,
           colorFilter: ColorFilter.mode(
             index == selectedIndex
-                ? context.appTheme.colors.navigationBar.selected
-                : context.appTheme.colors.navigationBar.unselected,
+              ? context.appTheme.colors.navigationBar.selected
+              : context.appTheme.colors.navigationBar.unselected,
             BlendMode.srcIn,
           ),
         ),
@@ -189,31 +191,52 @@ final class AppScaffold extends StatelessWidget {
       ),
     ),
 
-    (final IList items, true) => CupertinoPageScaffold(
-      backgroundColor: backgroundColor ?? context.appTheme.colors.background.primary,
-      navigationBar: title != null || onBack != null ? CupertinoNavigationBar(
-        backgroundColor: Colors.transparent,
-        brightness: Brightness.light,
-        middle: Title(context.appTheme),
-        leading: CupertinoNavigationBarBackButton(
-          onPressed: onBack,
-          color: context.appTheme.colors.icon.primary,
+    (final IList items, true) => MacosWindow(
+      sidebar: Sidebar(
+        minWidth: 200,
+        isResizable: false,
+        builder: (context, scrollController) => SidebarItems(
+          currentIndex: selectedIndex ?? 0,
+          onChanged: (index) => onItemClick?.call(index),
+          scrollController: scrollController,
+          selectedColor: context.appTheme.colors.primary,
+          itemSize: SidebarItemSize.large,
+          items: items.mapIndexed((index, item) => SidebarItem(
+            leading: SvgPicture.asset(
+              item.icon.value,
+              width: context.appTheme.dimensions.size.small,
+              height: context.appTheme.dimensions.size.small,
+              colorFilter: ColorFilter.mode(
+                index == selectedIndex
+                  ? context.appTheme.colors.navigationBar.selected
+                  : context.appTheme.colors.navigationBar.unselected,
+                BlendMode.srcIn,
+              ),
+            ),
+            label: Text(
+              item.title,
+              style: context.appTheme.typography.h.h4.copyWith(
+                fontWeight: FontWeight.w700,
+                color: index == selectedIndex
+                  ? context.appTheme.colors.navigationBar.selected
+                  : context.appTheme.colors.navigationBar.unselected,
+              ),
+            ),
+          )).toList(growable: false),
         ),
-      ) : null,
-      child: PlatformMenuBar(
-        menus: [
-          PlatformMenu(
-            label: '',
-            menus: items.mapIndexed((index, item) => PlatformMenuItem(
-              onSelected: () => onItemClick?.call(index),
-              label: item.title,
-            )).toList(growable: false),
+      ),
+      child: CupertinoPageScaffold(
+        backgroundColor: backgroundColor ?? context.appTheme.colors.background.primary,
+        navigationBar: title != null || onBack != null ? CupertinoNavigationBar(
+          backgroundColor: Colors.transparent,
+          brightness: Brightness.light,
+          middle: Title(context.appTheme),
+          leading: CupertinoNavigationBarBackButton(
+            onPressed: onBack,
+            color: context.appTheme.colors.icon.primary,
           ),
-        ],
-        child: Padding(
-          padding: EdgeInsets.only(top: kMinInteractiveDimensionCupertino),
-          child: body,
-        ),
+        ) : null,
+        child: body,
       ),
     ),
 

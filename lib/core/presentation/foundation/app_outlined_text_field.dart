@@ -20,9 +20,12 @@ final class AppOutlineTextField extends StatefulWidget {
   final String? placeholder;
   final String? error;
   final bool obscureText;
+  final Color? background;
+  final SvgImageAsset? prefixIcon;
   final SvgImageAsset? suffixIcon;
   final void Function(String)? onChange;
   final void Function()? onSuffixClick;
+  final void Function()? onPrefixClick;
 
   const AppOutlineTextField({
     super.key,
@@ -31,9 +34,12 @@ final class AppOutlineTextField extends StatefulWidget {
     this.placeholder,
     this.error,
     this.obscureText = false,
+    this.background,
+    this.prefixIcon,
     this.suffixIcon,
     this.onChange,
     this.onSuffixClick,
+    this.onPrefixClick,
   });
 
   @override
@@ -42,7 +48,7 @@ final class AppOutlineTextField extends StatefulWidget {
 
 final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
 
-  late TextEditingController controller;
+  late final controller = widget.controller ?? TextEditingController();
 
   final focusNode = FocusNode();
   var isFocused = false;
@@ -51,7 +57,6 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
 
   @override
   void initState() {
-    controller = widget.controller ?? TextEditingController();
     focusNode.addListener(onFocusChange);
     super.initState();
   }
@@ -103,31 +108,42 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
   TextStyle labelStyle(AppTheme theme) =>
     theme.typography.body.copyWith(color: borderColor(theme));
 
-  Widget suffix(AppTheme theme) {
-    final asset = widget.suffixIcon;
-    final onClick = widget.onSuffixClick;
-
-    return AnimatedOpacity(
-      opacity: asset == null || onClick == null ? 0 : 1,
-      duration: _iconDuration,
-      child: asset == null || onClick == null ? null : AppClickable(
-        onClick: onClick,
-        border: CircleBorder(),
-        child: Padding(
-          padding: EdgeInsets.all(theme.dimensions.padding.small),
-          child: SvgPicture.asset(
-            asset.value,
-            width: theme.dimensions.size.small,
-            height: theme.dimensions.size.small,
-            colorFilter: ColorFilter.mode(
-              borderColor(theme),
-              BlendMode.srcIn,
-            ),
+  Widget textIcon({
+    required AppTheme theme,
+    required SvgImageAsset? asset,
+    void Function()? onClick,
+  }) => AnimatedOpacity(
+    opacity: asset == null || onClick == null ? 0 : 1,
+    duration: _iconDuration,
+    child: asset == null || onClick == null ? null : AppClickable(
+      onClick: onClick,
+      border: CircleBorder(),
+      child: Padding(
+        padding: EdgeInsets.all(theme.dimensions.padding.small),
+        child: SvgPicture.asset(
+          asset.value,
+          width: theme.dimensions.size.small,
+          height: theme.dimensions.size.small,
+          colorFilter: ColorFilter.mode(
+            borderColor(theme),
+            BlendMode.srcIn,
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+
+  Widget prefix(AppTheme theme) => textIcon(
+    theme: theme,
+    asset: widget.prefixIcon,
+    onClick: widget.onPrefixClick,
+  );
+
+  Widget suffix(AppTheme theme) => textIcon(
+    theme: theme,
+    asset: widget.suffixIcon,
+    onClick: widget.onSuffixClick,
+  );
 
   Widget CupertinoUi({required AppTheme theme}) => Column(
     mainAxisSize: MainAxisSize.min,
@@ -168,6 +184,7 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
             ),
             padding: contentPadding(theme),
             decoration: BoxDecoration(
+              color: widget.background,
               borderRadius: borderRadius(theme),
               border: Border.all(
                 color: borderColor(theme),
@@ -179,14 +196,18 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
             obscuringCharacter: _obscuringCharacter,
             cursorColor: cursorColor(theme),
             onChanged: widget.onChange,
+            prefix: Padding(
+              padding: EdgeInsets.only(left: theme.dimensions.padding.medium),
+              child: prefix(theme),
+            ),
             suffix: Padding(
-              padding: EdgeInsets.only(right: theme.dimensions.padding.small),
+              padding: EdgeInsets.only(right: theme.dimensions.padding.medium),
               child: suffix(theme),
             ),
           ),
         ),
       )
-    ].toList(growable: false),
+    ],
   );
 
   Widget MaterialUi({required AppTheme theme}) => TextField(
@@ -199,6 +220,8 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
     decoration: InputDecoration(
       errorText: widget.error,
       contentPadding: contentPadding(theme),
+      filled: widget.background != null,
+      fillColor: widget.background,
       focusedBorder: OutlineInputBorder(
         borderRadius: borderRadius(theme),
         borderSide: BorderSide(
@@ -222,8 +245,12 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
       ),
       labelText: widget.label,
       labelStyle: labelStyle(theme),
+      prefixIcon: Padding(
+        padding: EdgeInsets.only(left: theme.dimensions.padding.medium),
+        child: prefix(theme),
+      ),
       suffixIcon: Padding(
-        padding: EdgeInsets.only(right: theme.dimensions.padding.small),
+        padding: EdgeInsets.only(right: theme.dimensions.padding.medium),
         child: suffix(theme),
       ),
     ),
@@ -252,19 +279,23 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
             cursorColor: cursorColor(theme),
             onChanged: widget.onChange,
             padding: EdgeInsets.all(theme.dimensions.padding.extraMedium),
+            prefix: Padding(
+              padding: EdgeInsets.only(left: theme.dimensions.padding.medium),
+              child: prefix(theme),
+            ),
             suffix: Padding(
-              padding: EdgeInsets.only(right: theme.dimensions.padding.small),
+              padding: EdgeInsets.only(right: theme.dimensions.padding.medium),
               child: suffix(theme),
             ),
             decoration: WidgetStateProperty.fromMap({
               WidgetState.focused: BoxDecoration(
-                color: theme.colors.text.background,
+                color: widget.background ?? theme.colors.text.background,
               ),
               WidgetState.disabled: BoxDecoration(
-                color: theme.colors.text.background,
+                color: widget.background ?? theme.colors.text.background,
               ),
               WidgetState.error: BoxDecoration(
-                color: theme.colors.text.background,
+                color: widget.background ?? theme.colors.text.background,
               ),
             }),
           ),

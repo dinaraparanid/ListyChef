@@ -4,6 +4,8 @@ import 'package:listy_chef/feature/main/child/cart/presentation/bloc/cart_bloc_f
 
 extension CartModule on GetIt {
   List<Type> registerCartModule() => [
-    provideSingleton(() => CartBlocFactory()),
+    provideSingleton(() => CartBlocFactory(
+      textChangeUseCase: this(),
+    )),
   ];
 }

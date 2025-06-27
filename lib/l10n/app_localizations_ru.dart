@@ -105,4 +105,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get main_tab_profile => 'Профиль';
+
+  @override
+  String get cart_search_field_placeholder => 'Название продукта';
 }

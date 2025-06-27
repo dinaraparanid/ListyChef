@@ -10,6 +10,7 @@ import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/feature/root/presentation/bloc/mod.dart';
 import 'package:listy_chef/l10n/app_localizations.dart';
 import 'package:listy_chef/navigation/app_router.dart';
+import 'package:macos_ui/macos_ui.dart';
 import 'package:yaru/settings.dart';
 
 final class App extends StatelessWidget {
@@ -41,16 +42,16 @@ final class App extends StatelessWidget {
         create: (_) => rootBlocFactory(),
         child: platformCall(
           android: MaterialUi,
-          iOS: CupertinoUi,
-          macOS: CupertinoUi,
+          iOS: iOSUi,
+          macOS: MacOSUi,
           linux: YaruUi,
           windows: FluentUi,
-        )(theme),
+        )(context),
       ),
     );
   }
 
-  Widget MaterialUi(AppTheme theme) => MaterialApp.router(
+  Widget MaterialUi(BuildContext context) => MaterialApp.router(
     routerConfig: router.value,
     theme: ThemeData(
       highlightColor: Colors.transparent,
@@ -59,25 +60,31 @@ final class App extends StatelessWidget {
     supportedLocales: AppLocalizations.supportedLocales,
   );
 
-  Widget CupertinoUi(AppTheme theme) => CupertinoApp.router(
+  Widget iOSUi(BuildContext context) => CupertinoApp.router(
     routerConfig: router.value,
     theme: CupertinoThemeData(),
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
   );
 
-  Widget YaruUi(AppTheme theme) =>
-    YaruTheme(builder: (context, _, _) => MaterialUi(theme));
+  Widget MacOSUi(BuildContext context) => MacosApp.router(
+    routerConfig: router.value,
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+  );
 
-  Widget FluentUi(AppTheme theme) => win.FluentApp.router(
+  Widget YaruUi(BuildContext context) =>
+    YaruTheme(builder: (context, _, _) => MaterialUi(context));
+
+  Widget FluentUi(BuildContext context) => win.FluentApp.router(
     routerConfig: router.value,
     theme: win.FluentThemeData(
       brightness: Brightness.light,
       navigationPaneTheme: win.NavigationPaneThemeData(
-        backgroundColor: theme.colors.navigationBar.backgroundCollapsed,
-        overlayBackgroundColor: theme.colors.navigationBar.background,
-        highlightColor: theme.colors.navigationBar.background,
-      )
+        backgroundColor: context.appTheme.colors.navigationBar.backgroundCollapsed,
+        overlayBackgroundColor: context.appTheme.colors.navigationBar.background,
+        highlightColor: context.appTheme.colors.navigationBar.background,
+      ),
     ),
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,

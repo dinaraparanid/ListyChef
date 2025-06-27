@@ -103,4 +103,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get main_tab_profile => 'Profile';
+
+  @override
+  String get cart_search_field_placeholder => 'Product title';
 }

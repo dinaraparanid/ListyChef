@@ -33,6 +33,7 @@ dependencies:
   logger: ^2.5.0
   bloc_presentation: ^1.1.0
   sizer: ^3.0.5
+  macos_ui: ^2.2.0
 
 dev_dependencies:
   flutter_test:
