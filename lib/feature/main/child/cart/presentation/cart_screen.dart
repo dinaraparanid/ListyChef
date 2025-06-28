@@ -4,6 +4,7 @@ import 'package:listy_chef/core/presentation/foundation/app_search_field.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
 import 'package:listy_chef/feature/main/child/cart/presentation/bloc/mod.dart';
+import 'package:listy_chef/feature/main/child/cart/presentation/widget/cart_lists.dart';
 
 final class CartScreen extends StatelessWidget {
   final CartBlocFactory blocFactory;
@@ -24,22 +25,24 @@ final class CartScreen extends StatelessWidget {
           Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    top: context.appTheme.dimensions.padding.extraMedium,
-                    left: context.appTheme.dimensions.padding.extraMedium,
-                    right: context.appTheme.dimensions.padding.extraMedium,
-                  ),
-                  child: Wrap(
-                    children: [
-                      AppSearchField(
-                        placeholder: context.strings.cart_search_field_placeholder,
-                      ),
-                    ],
-                  ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: context.appTheme.dimensions.padding.extraMedium,
+                  left: context.appTheme.dimensions.padding.extraMedium,
+                  right: context.appTheme.dimensions.padding.extraMedium,
+                ),
+                child: Wrap(
+                  children: [
+                    AppSearchField(
+                      placeholder: context.strings.cart_search_field_placeholder,
+                    ),
+                  ],
                 ),
               ),
+
+              SizedBox(height: context.appTheme.dimensions.padding.extraMedium),
+
+              Expanded(child: CartLists()),
             ],
           ),
         ],

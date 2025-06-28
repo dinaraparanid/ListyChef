@@ -298,7 +298,7 @@ final class AppScaffold extends StatelessWidget {
           (_, _, final IList<AppNavigationMenuItemData> items) => Row(
             children: [
               _MaterialNavigationRail(context: context, items: items),
-              body,
+              Expanded(child: body),
             ],
           ),
 

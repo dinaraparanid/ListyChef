@@ -80,11 +80,6 @@ final class App extends StatelessWidget {
     routerConfig: router.value,
     theme: win.FluentThemeData(
       brightness: Brightness.light,
-      navigationPaneTheme: win.NavigationPaneThemeData(
-        backgroundColor: context.appTheme.colors.navigationBar.backgroundCollapsed,
-        overlayBackgroundColor: context.appTheme.colors.navigationBar.background,
-        highlightColor: context.appTheme.colors.navigationBar.background,
-      ),
     ),
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,

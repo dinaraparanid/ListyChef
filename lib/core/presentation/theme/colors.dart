@@ -4,8 +4,10 @@ const _MintCream = Color(0xFFF4FFFD);
 const _MintCream75 = Color(0xBFF4FFFD);
 const _Gray = Color(0xFF817F82);
 const _Crayola = Color(0xFF2667FF);
+const _Crayola75 = Color(0xBF2667FF);
 const _SlateBlue = Color(0xFF6C5ED9);
 const _Independence = Color(0xFF465362);
+const _Independence75 = Color(0xBF465362);
 const _InterdimensionalBlue = Color(0xFF3B28CC);
 const _InterdimensionalBlue75 = Color(0xBF3B28CC);
 const _InterdimensionalBlue50 = Color(0x803B28CC);
@@ -16,6 +18,8 @@ const _Mint = Color(0xFF09BC8A);
 const _Jacarta = Color(0xFF3F4060);
 const _Arsenic = Color(0xFF3D3A4B);
 const _Arsenic50 = Color(0x803D3A4B);
+const _WarmBlack = Color(0xFF004346);
+const _PaleRobinEggBlue50 = Color(0x809AD1D4);
 
 @immutable
 final class AppColors {
@@ -28,6 +32,8 @@ final class AppColors {
   final AppIconColors icon;
   final AppNavigationBarColors navigationBar;
   final AppSnackBarColors snackBar;
+  final AppCheckboxColors checkbox;
+  final AppUniqueComponentsColors unique;
 
   const AppColors({
     this.primary = _InterdimensionalBlue,
@@ -39,6 +45,8 @@ final class AppColors {
     this.icon = const AppIconColors(),
     this.navigationBar = const AppNavigationBarColors(),
     this.snackBar = const AppSnackBarColors(),
+    this.checkbox = const AppCheckboxColors(),
+    this.unique = const AppUniqueComponentsColors(),
   });
 }
 
@@ -140,5 +148,33 @@ final class AppSnackBarColors {
     this.success = _Mint,
     this.info = _InterdimensionalBlue,
     this.content = _MintCream,
+  });
+}
+
+@immutable
+final class AppCheckboxColors {
+  final Color inactive;
+  final Color active;
+  final Color check;
+
+  const AppCheckboxColors({
+    this.inactive = _MintCream,
+    this.active = _WarmBlack,
+    this.check = _MintCream,
+  });
+}
+
+@immutable
+final class AppUniqueComponentsColors {
+  final Color todoProductBackground;
+  final Color addedProductBackground;
+  final Color todoProductText;
+  final Color addedProductText;
+
+  const AppUniqueComponentsColors({
+    this.todoProductBackground = _Crayola75,
+    this.addedProductBackground = _PaleRobinEggBlue50,
+    this.todoProductText = _MintCream,
+    this.addedProductText = _Independence75,
   });
 }
