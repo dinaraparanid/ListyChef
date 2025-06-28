@@ -245,14 +245,14 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
       ),
       labelText: widget.label,
       labelStyle: labelStyle(theme),
-      prefixIcon: Padding(
+      prefixIcon: widget.prefixIcon != null ? Padding(
         padding: EdgeInsets.only(left: theme.dimensions.padding.medium),
         child: prefix(theme),
-      ),
-      suffixIcon: Padding(
+      ) : null,
+      suffixIcon: widget.suffixIcon != null ? Padding(
         padding: EdgeInsets.only(right: theme.dimensions.padding.medium),
         child: suffix(theme),
-      ),
+      ) : null,
     ),
     onChanged: widget.onChange,
   );

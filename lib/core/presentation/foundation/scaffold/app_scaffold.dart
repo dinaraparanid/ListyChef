@@ -293,7 +293,8 @@ final class AppScaffold extends StatelessWidget {
     body: Sizer(
       builder: (context, orientation, screenType) =>
         switch ((orientation, screenType, items)) {
-          (Orientation.portrait, ScreenType.mobile, _) => body,
+          (Orientation.portrait, ScreenType.mobile, _) =>
+            SafeArea(child: body),
 
           (_, _, final IList<AppNavigationMenuItemData> items) => Row(
             children: [

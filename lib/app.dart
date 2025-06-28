@@ -25,28 +25,28 @@ final class App extends StatelessWidget {
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
+    return AnnotatedRegion(
+      value: SystemUiOverlayStyle(
         systemNavigationBarColor: Colors.transparent,
         systemNavigationBarDividerColor: Colors.transparent,
-        systemNavigationBarIconBrightness: Brightness.dark,
+        systemNavigationBarIconBrightness: Brightness.light,
         systemNavigationBarContrastEnforced: false,
+        statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark,
         systemStatusBarContrastEnforced: false,
       ),
-    );
-
-    return AppThemeProvider(
-      theme: theme,
-      child: BlocProvider(
-        create: (_) => rootBlocFactory(),
-        child: platformCall(
-          android: MaterialUi,
-          iOS: iOSUi,
-          macOS: MacOSUi,
-          linux: YaruUi,
-          windows: FluentUi,
-        )(context),
+      child: AppThemeProvider(
+        theme: theme,
+        child: BlocProvider(
+          create: (_) => rootBlocFactory(),
+          child: platformCall(
+            android: MaterialUi,
+            iOS: iOSUi,
+            macOS: MacOSUi,
+            linux: YaruUi,
+            windows: FluentUi,
+          )(context),
+        ),
       ),
     );
   }
