@@ -4,7 +4,7 @@ import 'package:listy_chef/core/presentation/foundation/app_search_field.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
 import 'package:listy_chef/feature/main/child/cart/presentation/bloc/mod.dart';
-import 'package:listy_chef/feature/main/child/cart/presentation/widget/cart_lists.dart';
+import 'package:listy_chef/feature/main/child/cart/presentation/widget/cart_stateful_list.dart';
 
 final class CartScreen extends StatelessWidget {
   final CartBlocFactory blocFactory;
@@ -42,7 +42,7 @@ final class CartScreen extends StatelessWidget {
 
               SizedBox(height: context.appTheme.dimensions.padding.extraMedium),
 
-              Expanded(child: CartLists()),
+              Expanded(child: CartStatefulList()),
             ],
           ),
         ],

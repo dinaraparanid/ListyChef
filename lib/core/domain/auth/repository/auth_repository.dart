@@ -7,6 +7,8 @@ abstract interface class AuthRepository {
 
   Stream<Email?> get emailChanges;
 
+  Email? get email;
+
   Future<Either<AuthError, void>> signIn({
     required String email,
     required String password,

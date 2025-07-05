@@ -18,6 +18,9 @@ final class AuthRepositoryImpl implements AuthRepository {
     _userChanges.map((u) => u?.email?.let((e) => Email(e))).distinct();
 
   @override
+  Email? get email => _user?.email?.let((e) => Email(e));
+
+  @override
   Future<Either<AuthError, void>> signIn({
     required String email,
     required String password,
@@ -53,4 +56,6 @@ final class AuthRepositoryImpl implements AuthRepository {
   }
 
   Stream<User?> get _userChanges => FirebaseAuth.instance.authStateChanges();
+
+  User? get _user => FirebaseAuth.instance.currentUser;
 }

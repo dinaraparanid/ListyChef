@@ -26,6 +26,7 @@ extension Properties<T> on UiState<T> {
   bool get isLoading => this is Loading;
   bool get isError => this is Error;
   bool get isSuccess => this is Success;
+  bool get isData => this is Data;
   bool get isRefreshing => this is Refreshing;
   bool get isEvaluating => isInitial || isLoading || isRefreshing;
 }

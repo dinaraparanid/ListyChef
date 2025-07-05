@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:listy_chef/core/domain/cart/entity/mod.dart';
 import 'package:listy_chef/core/presentation/foundation/app_checkbox.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
-import 'package:listy_chef/feature/main/child/cart/presentation/bloc/cart_bloc.dart';
-import 'package:listy_chef/feature/main/child/cart/presentation/bloc/cart_event.dart';
 
 const _animationDuration = Duration(milliseconds: 300);
 
 final class ProductItem extends StatelessWidget {
   final Product product;
+  final void Function() onCheckChange;
 
   const ProductItem({
     super.key,
     required this.product,
+    required this.onCheckChange,
   });
 
   @override
@@ -37,9 +36,7 @@ final class ProductItem extends StatelessWidget {
       children: [
         AppCheckbox(
           isChecked: product.isAdded,
-          onChanged: (_) => BlocProvider
-            .of<CartBloc>(context)
-            .add(EventProductCheck(id: product.id)),
+          onChanged: (_) => onCheckChange(),
         ),
 
         AnimatedCrossFade(
