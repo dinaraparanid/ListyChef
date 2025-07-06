@@ -23,48 +23,67 @@ final class CartStatefulList extends StatefulWidget {
 
 final class _CartStatefulListState extends State<CartStatefulList> {
 
-  IList<Product> todoProducts = const IList<Product>.empty();
-  IList<Product> addedProducts = const IList<Product>.empty();
-
   @override
-  Widget build(BuildContext context) => BlocConsumer<CartBloc, CartState>(
-    listenWhen: distinctState((s) => (s.todoProductsState, s.addedProductsState)),
-    listener: (context, state) => setState(() {
-      todoProducts = state.todoProductsState.getOrNull ?? todoProducts;
-      addedProducts = state.addedProductsState.getOrNull ?? addedProducts;
-    }),
+  Widget build(BuildContext context) => BlocBuilder<CartBloc, CartState>(
     buildWhen: distinctState((s) => (s.todoProductsState, s.addedProductsState)),
     builder: (context, state) => BlocPresentationListener<CartBloc, CartEffect>(
-      listener: (context, effect) async => switch (effect) {
-        EffectCheckProduct() => await _onProductChecked(
+      listener: (context, effect) async => await switch (effect) {
+        EffectCheckProduct() => _onProductChecked(
+          context: context,
+          todoSnapshot: state.todoProductsState.getOrNull ?? const IList.empty(),
+          addedSnapshot: state.addedProductsState.getOrNull ?? const IList.empty(),
           fromIndex: effect.fromIndex,
           toIndex: effect.toIndex,
-          onDone: () => _loadLists(context),
         ),
 
-        EffectUncheckProduct() => await _onProductUnchecked(
+        EffectUncheckProduct() => _onProductUnchecked(
+          context: context,
+          todoSnapshot: state.todoProductsState.getOrNull ?? const IList.empty(),
+          addedSnapshot: state.addedProductsState.getOrNull ?? const IList.empty(),
           fromIndex: effect.fromIndex,
           toIndex: effect.toIndex,
-          onDone: () => _loadLists(context),
         ),
       },
       child: switch ((state.todoProductsState, state.addedProductsState)) {
         // TODO: если оба пустые, рисовать заглушку
-        (final Data<IList<Product>> _, final Data<IList<Product>> _) =>
-          CartLists(todoProducts: todoProducts, addedProducts: addedProducts),
+        (final Data<IList<Product>> todo, final Data<IList<Product>> added) =>
+          CartLists(todoProducts: todo.value, addedProducts: added.value),
 
         (_, _) => Text('TODO: Loading'),
       },
     ),
   );
 
+  void _loadLists(BuildContext context) =>
+    BlocProvider.of<CartBloc>(context).add(EventLoadLists());
+
+  void _updateTodoList({
+    required BuildContext context,
+    required IList<Product> newTodo,
+  }) => BlocProvider
+    .of<CartBloc>(context)
+    .add(EventUpdateTodoList(snapshot: newTodo));
+
+  void _updateAddedList({
+    required BuildContext context,
+    required IList<Product> newAdded,
+  }) => BlocProvider
+    .of<CartBloc>(context)
+    .add(EventUpdateAddedList(snapshot: newAdded));
+
   Future<void> _onProductChecked({
+    required BuildContext context,
+    required IList<Product> todoSnapshot,
+    required IList<Product> addedSnapshot,
     required int fromIndex,
     required int toIndex,
-    required void Function() onDone,
   }) async {
-    final item = todoProducts[fromIndex];
-    todoProducts = todoProducts.removeAt(fromIndex);
+    final item = todoSnapshot[fromIndex];
+
+    _updateTodoList(
+      context: context,
+      newTodo: todoSnapshot.removeAt(fromIndex),
+    );
 
     todoListKey.currentState!.removeItem(
       fromIndex,
@@ -80,19 +99,31 @@ final class _CartStatefulListState extends State<CartStatefulList> {
 
     await Future.delayed(_animationDuration);
 
-    setState(() => addedProducts = addedProducts.insert(toIndex, item.copyWith(isAdded: true)));
-    addedListKey.currentState!.insertItem(toIndex);
+    if (context.mounted) {
+      _updateAddedList(
+        context: context,
+        newAdded: addedSnapshot.insert(toIndex, item.copyWith(isAdded: true)),
+      );
 
-    onDone();
+      addedListKey.currentState!.insertItem(toIndex);
+
+      _loadLists(context);
+    }
   }
 
   Future<void> _onProductUnchecked({
+    required BuildContext context,
+    required IList<Product> todoSnapshot,
+    required IList<Product> addedSnapshot,
     required int fromIndex,
     required int toIndex,
-    required void Function() onDone,
   }) async {
-    final item = addedProducts[fromIndex];
-    addedProducts = addedProducts.removeAt(fromIndex);
+    final item = addedSnapshot[fromIndex];
+
+    _updateAddedList(
+      context: context,
+      newAdded: addedSnapshot.removeAt(fromIndex),
+    );
 
     addedListKey.currentState!.removeItem(
       fromIndex,
@@ -108,12 +139,15 @@ final class _CartStatefulListState extends State<CartStatefulList> {
 
     await Future.delayed(_animationDuration);
 
-    setState(() => todoProducts = todoProducts.insert(toIndex, item.copyWith(isAdded: false)));
-    todoListKey.currentState!.insertItem(toIndex);
+    if (context.mounted) {
+      _updateTodoList(
+        context: context,
+        newTodo: todoSnapshot.insert(toIndex, item.copyWith(isAdded: false)),
+      );
 
-    onDone();
+      todoListKey.currentState!.insertItem(toIndex);
+
+      _loadLists(context);
+    }
   }
-
-  void _loadLists(BuildContext context) =>
-    BlocProvider.of<CartBloc>(context).add(EventLoadLists());
 }

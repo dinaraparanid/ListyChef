@@ -1,6 +1,7 @@
 import 'package:bloc_presentation/bloc_presentation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:listy_chef/core/domain/text/text_change_use_case.dart';
+import 'package:listy_chef/core/presentation/foundation/ui_state.dart';
 import 'package:listy_chef/feature/main/child/cart/domain/check_product_use_case.dart';
 import 'package:listy_chef/feature/main/child/cart/domain/load_cart_lists_use_case.dart';
 import 'package:listy_chef/feature/main/child/cart/presentation/bloc/cart_effect.dart';
@@ -17,7 +18,7 @@ final class CartBloc extends Bloc<CartEvent, CartState>
   }) : super(CartState()) {
     on<EventLoadLists>((event, emit) async {
       final (todo, added) = await loadCartListsUseCase();
-      add(EventUpdateLists(todoProductsState: todo, addedProductsState: added));
+      add(EventUpdateListStates(todoProductsState: todo, addedProductsState: added));
     });
 
     on<EventSearchQueryChange>((event, emit) => textChangeUseCase(
@@ -27,7 +28,7 @@ final class CartBloc extends Bloc<CartEvent, CartState>
         emit(state.copyWith(searchQuery: textContainer)),
     ));
 
-    on<EventUpdateLists>((event, emit) => emit(state.copyWith(
+    on<EventUpdateListStates>((event, emit) => emit(state.copyWith(
       todoProductsState: event.todoProductsState,
       addedProductsState: event.addedProductsState,
     )));
@@ -49,6 +50,14 @@ final class CartBloc extends Bloc<CartEvent, CartState>
         toIndex: event.toIndex,
       ));
     });
+
+    on<EventUpdateTodoList>((event, emit) =>
+      emit(state.copyWith(todoProductsState: event.snapshot.toUiState())),
+    );
+
+    on<EventUpdateAddedList>((event, emit) =>
+      emit(state.copyWith(addedProductsState: event.snapshot.toUiState())),
+    );
 
     on<EventAddProduct>((event, emit) {
       // TODO

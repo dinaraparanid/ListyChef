@@ -11,11 +11,11 @@ final class EventSearchQueryChange extends CartEvent {
   EventSearchQueryChange({required this.query});
 }
 
-final class EventUpdateLists extends CartEvent {
+final class EventUpdateListStates extends CartEvent {
   final UiState<IList<Product>> todoProductsState;
   final UiState<IList<Product>> addedProductsState;
 
-  EventUpdateLists({
+  EventUpdateListStates({
     required this.todoProductsState,
     required this.addedProductsState,
   });
@@ -43,6 +43,16 @@ final class EventProductUncheck extends CartEvent {
     required this.fromIndex,
     required this.toIndex,
   });
+}
+
+final class EventUpdateTodoList extends CartEvent {
+  final IList<Product> snapshot;
+  EventUpdateTodoList({required this.snapshot});
+}
+
+final class EventUpdateAddedList extends CartEvent {
+  final IList<Product> snapshot;
+  EventUpdateAddedList({required this.snapshot});
 }
 
 final class EventAddProduct extends CartEvent {}
