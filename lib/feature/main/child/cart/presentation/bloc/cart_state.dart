@@ -17,5 +17,11 @@ abstract class CartState with _$CartState {
 
     @Default(UiState.initial())
     UiState<IList<Product>> addedProductsState,
+
+    @Default(false)
+    bool isTodoAddAnimationInProgress,
+
+    @Default(false)
+    bool isAddedAddAnimationInProgress,
   }) = _CartState;
 }

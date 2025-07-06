@@ -26,7 +26,12 @@ final class CartRepositoryImpl implements CartRepository {
     await FirebaseFirestore.instance.runTransaction((transaction) async {
       await transaction.get(docRef).then((doc) {
         final nextAdded = asOrNull<bool>(doc[Product.firestoreFieldAdded])?.not ?? false;
-        transaction.update(docRef, { Product.firestoreFieldAdded: nextAdded });
+        final now = DateTime.now().millisecondsSinceEpoch;
+
+        transaction.update(docRef, {
+          Product.firestoreFieldAdded: nextAdded,
+          Product.firestoreFieldTimestamp: now,
+        });
       });
     });
   }
@@ -44,6 +49,7 @@ final class CartRepositoryImpl implements CartRepository {
   }) => _productsCollection()
     .where(Product.firestoreFieldEmail, isEqualTo: email.value)
     .where(Product.firestoreFieldAdded, isEqualTo: isAdded)
+    .orderBy(Product.firestoreFieldTimestamp, descending: true)
     .get()
     .then((snapshot) => snapshot.toProductList());
 }

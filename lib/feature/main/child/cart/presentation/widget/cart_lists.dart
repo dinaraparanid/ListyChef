@@ -10,11 +10,15 @@ import 'package:listy_chef/feature/main/child/cart/presentation/widget/cart_stat
 final class CartLists extends StatelessWidget {
   final IList<Product> todoProducts;
   final IList<Product> addedProducts;
+  final bool isTodoAddAnimationInProgress;
+  final bool isAddedAddAnimationInProgress;
 
   const CartLists({
     super.key,
     required this.todoProducts,
     required this.addedProducts,
+    required this.isTodoAddAnimationInProgress,
+    required this.isAddedAddAnimationInProgress,
   });
 
   @override
@@ -26,6 +30,7 @@ final class CartLists extends StatelessWidget {
         ),
         sliver: CartList(
           products: todoProducts,
+          isAnimationInProgress: isTodoAddAnimationInProgress,
           listKey: todoListKey,
           onCheckChange: (id, index) => BlocProvider
             .of<CartBloc>(context)
@@ -49,6 +54,7 @@ final class CartLists extends StatelessWidget {
         ),
         sliver: CartList(
           products: addedProducts,
+          isAnimationInProgress: isAddedAddAnimationInProgress,
           listKey: addedListKey,
           onCheckChange: (id, index) => BlocProvider
             .of<CartBloc>(context)

@@ -55,4 +55,14 @@ final class EventUpdateAddedList extends CartEvent {
   EventUpdateAddedList({required this.snapshot});
 }
 
+final class EventUpdateTodoAnimationProgress extends CartEvent {
+  final bool isInProgress;
+  EventUpdateTodoAnimationProgress({required this.isInProgress});
+}
+
+final class EventUpdateAddedAnimationProgress extends CartEvent {
+  final bool isInProgress;
+  EventUpdateAddedAnimationProgress({required this.isInProgress});
+}
+
 final class EventAddProduct extends CartEvent {}

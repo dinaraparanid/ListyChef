@@ -6,12 +6,14 @@ import 'package:listy_chef/feature/main/child/cart/presentation/widget/product_i
 
 final class CartList extends StatelessWidget {
   final IList<Product> products;
+  final bool isAnimationInProgress;
   final GlobalKey<SliverAnimatedListState> listKey;
   final void Function(ProductId id, int index) onCheckChange;
 
   const CartList({
     super.key,
     required this.products,
+    required this.isAnimationInProgress,
     required this.listKey,
     required this.onCheckChange,
   });
@@ -19,22 +21,36 @@ final class CartList extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SliverAnimatedList(
     key: listKey,
-    initialItemCount: products.length,
-    itemBuilder: (context, index, animation) => Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: double.infinity,
-          child: ProductItem(
-            key: ValueKey(products[index].id),
-            product: products[index],
-            onCheckChange: () => onCheckChange(products[index].id, index),
-          ),
-        ),
+    initialItemCount: products.length + 1,
+    itemBuilder: (context, index, animation) => switch (index) {
+      0 => SizedBox(),
 
-        SizedBox(height: context.appTheme.dimensions.padding.small),
-      ],
-    ),
+      1 => Opacity(
+        opacity: isAnimationInProgress ? 0 : 1,
+        child: ItemWithSpacer(context: context, index: index),
+      ),
+
+      _ => ItemWithSpacer(context: context, index: index),
+    },
+  );
+
+  Widget ItemWithSpacer({
+    required BuildContext context,
+    required int index,
+  }) => Column(
+    mainAxisSize: MainAxisSize.min,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      SizedBox(
+        width: double.infinity,
+        child: ProductItem(
+          key: ValueKey(products[index - 1].id),
+          product: products[index - 1],
+          onCheckChange: () => onCheckChange(products[index - 1].id, index - 1),
+        ),
+      ),
+
+      SizedBox(height: context.appTheme.dimensions.padding.small),
+    ],
   );
 }
