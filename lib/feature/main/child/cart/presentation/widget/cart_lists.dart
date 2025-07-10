@@ -1,6 +1,5 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:listy_chef/core/domain/cart/entity/mod.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/feature/main/child/cart/presentation/bloc/mod.dart';
@@ -30,15 +29,15 @@ final class CartLists extends StatelessWidget {
         ),
         sliver: CartList(
           products: todoProducts,
-          isAnimationInProgress: isTodoAddAnimationInProgress,
+          isMoveAnimInProgress: isTodoAddAnimationInProgress,
           listKey: todoListKey,
-          onCheckChange: (id, index) => BlocProvider
-            .of<CartBloc>(context)
-            .add(EventProductCheck(
+          onCheckChange: (id, index) => context.addCartEvent(
+            EventProductCheck(
               id: id,
               fromIndex: index,
               toIndex: 0,
-            )),
+            ),
+          ),
         ),
       ),
 
@@ -54,15 +53,15 @@ final class CartLists extends StatelessWidget {
         ),
         sliver: CartList(
           products: addedProducts,
-          isAnimationInProgress: isAddedAddAnimationInProgress,
+          isMoveAnimInProgress: isAddedAddAnimationInProgress,
           listKey: addedListKey,
-          onCheckChange: (id, index) => BlocProvider
-            .of<CartBloc>(context)
-            .add(EventProductUncheck(
+          onCheckChange: (id, index) => context.addCartEvent(
+            EventProductUncheck(
               id: id,
               fromIndex: index,
               toIndex: 0,
-            )),
+            ),
+          ),
         ),
       ),
     ],

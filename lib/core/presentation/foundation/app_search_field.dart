@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:fluent_ui/fluent_ui.dart' hide Colors;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,8 @@ final class AppSearchField extends StatefulWidget {
 
 final class _AppSearchFieldState extends State<AppSearchField> {
 
-  late final controller = widget.controller ?? TextEditingController();
+  late var text = widget.controller?.text.orEmpty();
+  late final controller = widget.controller ?? TextEditingController(text: text);
 
   final focusNode = FocusNode();
   var isFocused = false;
@@ -58,6 +60,8 @@ final class _AppSearchFieldState extends State<AppSearchField> {
 
   void onTextChange([String? text]) {
     final txt = text ?? controller.text;
+    if (this.text == txt) return;
+    this.text = txt;
     widget.onChange?.call(txt);
     setState(() => isClearVisible = txt.isNotEmpty);
   }

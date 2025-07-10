@@ -15,6 +15,7 @@ extension CartModule on GetIt {
       textChangeUseCase: this(),
       loadCartListsUseCase: this(),
       checkProductUseCase: this(),
+      listDifferenceUseCase: this(),
     )),
   ];
 }

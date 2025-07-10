@@ -6,14 +6,14 @@ import 'package:listy_chef/feature/main/child/cart/presentation/widget/product_i
 
 final class CartList extends StatelessWidget {
   final IList<Product> products;
-  final bool isAnimationInProgress;
+  final bool isMoveAnimInProgress;
   final GlobalKey<SliverAnimatedListState> listKey;
   final void Function(ProductId id, int index) onCheckChange;
 
   const CartList({
     super.key,
     required this.products,
-    required this.isAnimationInProgress,
+    required this.isMoveAnimInProgress,
     required this.listKey,
     required this.onCheckChange,
   });
@@ -26,7 +26,7 @@ final class CartList extends StatelessWidget {
       0 => SizedBox(),
 
       1 => Opacity(
-        opacity: isAnimationInProgress ? 0 : 1,
+        opacity: isMoveAnimInProgress ? 0 : 1,
         child: ItemWithSpacer(context: context, index: index),
       ),
 
