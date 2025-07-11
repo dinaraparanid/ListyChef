@@ -49,7 +49,7 @@ extension Properties on CartState {
 
   UiState<IList<Product>> _filterProductsState({
     required UiState<IList<Product>> initialState,
-  }) => initialState.map((list) => list.where(_matchesQuery).toIList());
+  }) => initialState.mapData((list) => list.where(_matchesQuery).toIList());
 
   bool _matchesQuery(Product product) => switch (searchQuery.value.isBlank) {
     true => true,

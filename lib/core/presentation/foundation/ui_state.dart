@@ -36,10 +36,10 @@ extension Properties<T> on UiState<T> {
   bool get isRefreshing => this is Refreshing;
   bool get isEvaluating => isInitial || isLoading || isRefreshing;
 
-  UiState<R> map<R>(R Function(T) transform) => switch (this) {
+  UiState<R> mapData<R>(R Function(T) transform) => switch (this) {
     Initial() => Initial(),
     Loading() => Loading(),
-    Refreshing(value: final state) => Refreshing(value: state.map(transform)),
+    Refreshing(value: final state) => Refreshing(value: state.mapData(transform)),
     Data(value: final value) => Data(value: transform(value)),
     Success() => Success(),
     Error(e: final e) => Error(e),
