@@ -30,6 +30,7 @@ final class CartStatefulList extends StatelessWidget {
             addedProducts: added.value,
             isTodoAddAnimationInProgress: state.isTodoAddAnimationInProgress,
             isAddedAddAnimationInProgress: state.isAddedAddAnimationInProgress,
+            isAddedListExpanded: state.isAddedListExpanded,
           ),
 
         (_, _) => Text('TODO: Loading'),

@@ -106,4 +106,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cart_search_field_placeholder => 'Product title';
+
+  @override
+  String get cart_label_added => 'Added';
 }

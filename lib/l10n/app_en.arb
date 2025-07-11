@@ -45,5 +45,6 @@
   "main_tab_recipes": "Recipes",
   "main_tab_profile": "Profile",
 
-  "cart_search_field_placeholder": "Product title"
+  "cart_search_field_placeholder": "Product title",
+  "cart_label_added": "Added"
 }

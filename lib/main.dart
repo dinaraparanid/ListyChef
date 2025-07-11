@@ -8,6 +8,7 @@ import 'package:listy_chef/core/presentation/foundation/platform_call.dart';
 import 'package:listy_chef/core/utils/functions/do_nothing.dart';
 import 'package:listy_chef/di/app_module.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:window_manager/window_manager.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,11 +24,30 @@ FutureOr<void> _configurePlatformSetup() => platformCall(
   android: () => doNothingFuture,
   iOS: () => doNothingFuture,
   macOS: _configureMacosWindowUtils,
-  linux: () => doNothingFuture,
-  windows: () => doNothingFuture,
+  linux: () => _configureDesktopSetup,
+  windows: () => _configureDesktopSetup,
 )();
 
 Future<void> _configureMacosWindowUtils() async {
+  await _configureDesktopSetup();
   const config = MacosWindowUtilsConfig();
   await config.apply();
+}
+
+Future<void> _configureDesktopSetup() async {
+  await windowManager.ensureInitialized();
+
+  final windowOptions = WindowOptions(
+    size: Size(800, 600),
+    minimumSize: Size(400, 300),
+    center: true,
+    backgroundColor: Colors.transparent,
+    skipTaskbar: false,
+    titleBarStyle: TitleBarStyle.hidden,
+  );
+
+  windowManager.waitUntilReadyToShow(windowOptions, () async {
+    await windowManager.show();
+    await windowManager.focus();
+  });
 }

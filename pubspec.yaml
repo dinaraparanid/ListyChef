@@ -37,6 +37,7 @@ dependencies:
   rxdart: ^0.28.0
   synchronized: ^3.4.0
   diffutil_dart: ^4.0.1
+  window_manager: ^0.4.3
 
 dev_dependencies:
   flutter_test:

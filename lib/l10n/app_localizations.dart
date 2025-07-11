@@ -277,6 +277,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Product title'**
   String get cart_search_field_placeholder;
+
+  /// No description provided for @cart_label_added.
+  ///
+  /// In en, this message translates to:
+  /// **'Added'**
+  String get cart_label_added;
 }
 
 class _AppLocalizationsDelegate

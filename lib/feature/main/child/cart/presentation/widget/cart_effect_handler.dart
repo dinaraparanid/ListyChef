@@ -11,7 +11,7 @@ import 'package:listy_chef/feature/main/child/cart/presentation/bloc/mod.dart';
 import 'package:listy_chef/feature/main/child/cart/presentation/widget/cart_stateful_list.dart';
 import 'package:listy_chef/feature/main/child/cart/presentation/widget/product_item.dart';
 
-const _animationDuration = Duration(milliseconds: 300);
+const _moveDuration = Duration(milliseconds: 400);
 
 Future<void>? onCartEffect({
   required BuildContext context,
@@ -132,7 +132,7 @@ Future<void> _onProductChecked({
         ),
       ),
     ),
-    duration: _animationDuration,
+    duration: _moveDuration,
   );
 
   _updateAddedList(
@@ -140,7 +140,7 @@ Future<void> _onProductChecked({
     newAdded: addedSnapshot.insert(toIndex, item.copyWith(isAdded: true)),
   );
 
-  addedListKey.currentState!.insertItem(toIndex, duration: _animationDuration);
+  addedListKey.currentState!.insertItem(toIndex, duration: _moveDuration);
 
   WidgetsBinding.instance.addPostFrameCallback((_) async {
     final fromBox = itemKey.currentContext!.findRenderObject() as RenderBox;
@@ -155,7 +155,7 @@ Future<void> _onProductChecked({
     final entry = OverlayEntry(
       builder: (context) => TweenAnimationBuilder(
         tween: Tween(begin: fromPos, end: toPos),
-        duration: _animationDuration,
+        duration: _moveDuration,
         builder: (context, offset, child) => Positioned(
           left: context.appTheme.dimensions.padding.extraMedium,
           top: offset.dy,
@@ -168,7 +168,7 @@ Future<void> _onProductChecked({
     );
 
     Overlay.of(context).insert(entry);
-    await Future.delayed(_animationDuration);
+    await Future.delayed(_moveDuration);
     entry.remove();
 
     if (context.mounted) {
@@ -208,7 +208,7 @@ Future<void> _onProductUnchecked({
         ),
       ),
     ),
-    duration: _animationDuration,
+    duration: _moveDuration,
   );
 
   _updateTodoList(
@@ -216,7 +216,7 @@ Future<void> _onProductUnchecked({
     newTodo: todoSnapshot.insert(toIndex, item.copyWith(isAdded: false)),
   );
 
-  todoListKey.currentState!.insertItem(toIndex, duration: _animationDuration);
+  todoListKey.currentState!.insertItem(toIndex, duration: _moveDuration);
 
   WidgetsBinding.instance.addPostFrameCallback((_) async {
     final fromBox = itemKey.currentContext!.findRenderObject() as RenderBox;
@@ -229,7 +229,7 @@ Future<void> _onProductUnchecked({
     final entry = OverlayEntry(
       builder: (context) => TweenAnimationBuilder(
         tween: Tween(begin: fromPos, end: toPos),
-        duration: _animationDuration,
+        duration: _moveDuration,
         builder: (context, offset, child) => Positioned(
           left: context.appTheme.dimensions.padding.extraMedium,
           top: offset.dy,
@@ -242,7 +242,7 @@ Future<void> _onProductUnchecked({
     );
 
     Overlay.of(context).insert(entry);
-    await Future.delayed(_animationDuration);
+    await Future.delayed(_moveDuration);
     entry.remove();
 
     if (context.mounted) {
@@ -259,7 +259,7 @@ Future<void>? _onInsertTodoProduct({
   required Product item,
 }) {
   _updateShownTodoList(context: context, newTodo: snapshot.insert(index, item));
-  todoListKey.currentState!.insertItem(index, duration: _animationDuration);
+  todoListKey.currentState!.insertItem(index, duration: _moveDuration);
   return null;
 }
 
@@ -270,7 +270,7 @@ Future<void>? _onInsertAddedProduct({
   required Product item,
 }) {
   _updateShownAddedList(context: context, newAdded: snapshot.insert(index, item));
-  addedListKey.currentState!.insertItem(index, duration: _animationDuration);
+  addedListKey.currentState!.insertItem(index, duration: _moveDuration);
   return null;
 }
 
@@ -291,7 +291,7 @@ Future<void>? _onRemoveTodoProduct({
         child: ProductItem(product: item, onCheckChange: doNothing),
       ),
     ),
-    duration: _animationDuration,
+    duration: _moveDuration,
   );
 
   return null;
@@ -314,7 +314,7 @@ Future<void>? _onRemoveAddedProduct({
         child: ProductItem(product: item, onCheckChange: doNothing),
       ),
     ),
-    duration: _animationDuration,
+    duration: _moveDuration,
   );
 
   return null;

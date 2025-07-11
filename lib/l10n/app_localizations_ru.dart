@@ -108,4 +108,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get cart_search_field_placeholder => 'Название продукта';
+
+  @override
+  String get cart_label_added => 'Добавленное';
 }

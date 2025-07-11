@@ -3,14 +3,18 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:listy_chef/core/domain/cart/entity/mod.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/feature/main/child/cart/presentation/bloc/mod.dart';
+import 'package:listy_chef/feature/main/child/cart/presentation/widget/cart_added_list_expander.dart';
 import 'package:listy_chef/feature/main/child/cart/presentation/widget/cart_list.dart';
 import 'package:listy_chef/feature/main/child/cart/presentation/widget/cart_stateful_list.dart';
 
 final class CartLists extends StatelessWidget {
+  static const expandDuration = Duration(milliseconds: 300);
+
   final IList<Product> todoProducts;
   final IList<Product> addedProducts;
   final bool isTodoAddAnimationInProgress;
   final bool isAddedAddAnimationInProgress;
+  final bool isAddedListExpanded;
 
   const CartLists({
     super.key,
@@ -18,6 +22,7 @@ final class CartLists extends StatelessWidget {
     required this.addedProducts,
     required this.isTodoAddAnimationInProgress,
     required this.isAddedAddAnimationInProgress,
+    required this.isAddedListExpanded,
   });
 
   @override
@@ -51,15 +56,32 @@ final class CartLists extends StatelessWidget {
         padding: EdgeInsets.symmetric(
           horizontal: context.appTheme.dimensions.padding.extraMedium,
         ),
-        sliver: CartList(
-          products: addedProducts,
-          isMoveAnimInProgress: isAddedAddAnimationInProgress,
-          listKey: addedListKey,
-          onCheckChange: (id, index) => context.addCartEvent(
-            EventProductUncheck(
-              id: id,
-              fromIndex: index,
-              toIndex: 0,
+        sliver: CartAddedListExpander(isAddedListExpanded: isAddedListExpanded),
+      ),
+
+      SliverToBoxAdapter(
+        child: SizedBox(
+          height: context.appTheme.dimensions.padding.small,
+        ),
+      ),
+
+      SliverAnimatedOpacity(
+        opacity: isAddedListExpanded ? 1 : 0,
+        duration: expandDuration,
+        sliver: SliverPadding(
+          padding: EdgeInsets.symmetric(
+            horizontal: context.appTheme.dimensions.padding.extraMedium,
+          ),
+          sliver: CartList(
+            products: addedProducts,
+            isMoveAnimInProgress: isAddedAddAnimationInProgress,
+            listKey: addedListKey,
+            onCheckChange: (id, index) => context.addCartEvent(
+              EventProductUncheck(
+                id: id,
+                fromIndex: index,
+                toIndex: 0,
+              ),
             ),
           ),
         ),

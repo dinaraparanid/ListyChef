@@ -34,6 +34,9 @@ abstract class CartState with _$CartState {
 
     @Default(false)
     bool isAddedAddAnimationInProgress,
+
+    @Default(true)
+    bool isAddedListExpanded,
   }) = _CartState;
 }
 

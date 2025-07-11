@@ -78,6 +78,11 @@ final class EventUpdateAddedAnimationProgress extends CartEvent {
   EventUpdateAddedAnimationProgress({required this.isInProgress});
 }
 
+final class EventChangeAddedListExpanded extends CartEvent {
+  final bool isExpanded;
+  EventChangeAddedListExpanded({required this.isExpanded});
+}
+
 final class EventAddProduct extends CartEvent {}
 
 extension AddCartEvent on BuildContext {

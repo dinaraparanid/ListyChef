@@ -45,5 +45,6 @@
   "main_tab_recipes": "Рецепты",
   "main_tab_profile": "Профиль",
 
-  "cart_search_field_placeholder": "Название продукта"
+  "cart_search_field_placeholder": "Название продукта",
+  "cart_label_added": "Добавленное"
 }
