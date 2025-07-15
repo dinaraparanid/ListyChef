@@ -148,7 +148,7 @@ final class AppScaffold extends StatelessWidget {
           (_, _, final IList<AppNavigationMenuItemData> items) => Row(
             children: [
               _MaterialNavigationRail(context: context, items: items),
-              Expanded(child: body),
+              Expanded(child: SafeArea(child: body)),
             ],
           ),
 
@@ -338,10 +338,7 @@ final class AppScaffold extends StatelessWidget {
           label: item.title,
         )).toList(growable: false),
       ),
-      body: Padding(
-        padding: EdgeInsets.only(top: kMinInteractiveDimensionCupertino),
-        child: body,
-      ),
+      body: SafeArea(child: body),
     ),
   };
 
