@@ -4,8 +4,10 @@ import 'package:fluent_ui/fluent_ui.dart' as win;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:listy_chef/core/presentation/foundation/app_clickable.dart';
 import 'package:listy_chef/core/presentation/foundation/platform_call.dart';
 import 'package:listy_chef/core/presentation/foundation/scaffold/app_navigation_menu_item_data.dart';
+import 'package:listy_chef/core/presentation/foundation/scaffold/app_scaffold_action.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
@@ -18,6 +20,7 @@ final class AppScaffold extends StatelessWidget {
   final String? title;
   final Color? backgroundColor;
   final Widget body;
+  final AppScaffoldAction? action;
   final IList<AppNavigationMenuItemData>? items;
   final int? selectedIndex;
   final void Function(int)? onItemClick;
@@ -31,6 +34,7 @@ final class AppScaffold extends StatelessWidget {
     this.selectedIndex,
     this.onItemClick,
     this.onBack,
+    this.action,
     required this.body,
   });
 
@@ -56,6 +60,57 @@ final class AppScaffold extends StatelessWidget {
     ),
   ));
 
+  Widget? FAB(AppTheme theme) => action?.let((act) =>
+    FloatingActionButton(
+      backgroundColor: theme.colors.unique.fabBackground,
+      onPressed: act.onPressed,
+      child: SvgPicture.asset(
+        act.icon.value,
+        width: theme.dimensions.size.small,
+        height: theme.dimensions.size.small,
+        colorFilter: ColorFilter.mode(
+          theme.colors.background.primary,
+          BlendMode.srcIn,
+        ),
+      ),
+    ),
+  );
+
+  Widget? FooterAction(AppTheme theme) => action?.let((act) =>
+    AppClickable(
+      onClick: act.onPressed,
+      border: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(theme.dimensions.radius.extraSmall),
+        ),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            act.icon.value,
+            width: theme.dimensions.size.small,
+            height: theme.dimensions.size.small,
+            colorFilter: ColorFilter.mode(
+              theme.colors.navigationBar.unselected,
+              BlendMode.srcIn,
+            ),
+          ),
+
+          SizedBox(width: theme.dimensions.padding.small),
+
+          Text(
+            act.text,
+            style: theme.typography.h.h4.copyWith(
+              fontWeight: FontWeight.w700,
+              color: theme.colors.navigationBar.unselected,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+
   Widget MaterialUi(BuildContext context) => Scaffold(
     backgroundColor: backgroundColor
       ?? context.appTheme.colors.background.primary,
@@ -73,6 +128,8 @@ final class AppScaffold extends StatelessWidget {
         ),
       ),
     ) : null,
+    floatingActionButton: FAB(context.appTheme),
+    floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     bottomNavigationBar: items?.let((items) => Sizer(
       builder: (context, orientation, screenType) =>
         switch ((orientation, screenType)) {
@@ -187,7 +244,21 @@ final class AppScaffold extends StatelessWidget {
       ) : null,
       child: Padding(
         padding: EdgeInsets.only(top: kMinInteractiveDimensionCupertino),
-        child: body,
+        child: Stack(
+          children: [
+            body,
+
+            if (action != null) Padding(
+              padding: EdgeInsets.all(
+                context.appTheme.dimensions.padding.extraMedium,
+              ),
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: FAB(context.appTheme),
+              ),
+            ),
+          ],
+        ),
       ),
     ),
 
@@ -195,6 +266,7 @@ final class AppScaffold extends StatelessWidget {
       sidebar: Sidebar(
         minWidth: 200,
         isResizable: false,
+        bottom: FooterAction(context.appTheme),
         builder: (context, scrollController) => SidebarItems(
           currentIndex: selectedIndex ?? 0,
           onChanged: (index) => onItemClick?.call(index),
@@ -243,6 +315,8 @@ final class AppScaffold extends StatelessWidget {
     (final IList items, false) => Scaffold(
       backgroundColor: backgroundColor
         ?? context.appTheme.colors.background.primary,
+      floatingActionButton: FAB(context.appTheme),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: CupertinoTabBar(
         currentIndex: selectedIndex ?? 0,
         backgroundColor: context.appTheme.colors.navigationBar.background,
@@ -282,6 +356,8 @@ final class AppScaffold extends StatelessWidget {
         style: YaruBackButtonStyle.rounded,
       ),
     ) : null,
+    floatingActionButton: FAB(context.appTheme),
+    floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     bottomNavigationBar: items?.let((items) => Sizer(
       builder: (context, orientation, screenType) => switch ((orientation, screenType)) {
         (Orientation.portrait, ScreenType.mobile) =>
@@ -324,6 +400,7 @@ final class AppScaffold extends StatelessWidget {
         ),
       ),
     ) : null,
+    content: items == null ? body : null,
     pane: items?.let((items) => win.NavigationPane(
       selected: selectedIndex,
       onChanged: onItemClick,
@@ -362,6 +439,27 @@ final class AppScaffold extends StatelessWidget {
               child: body,
             ),
           ),
+      ],
+      footerItems: [
+        if (action != null) win.PaneItemAction(
+          onTap: action!.onPressed,
+          title: Text(
+            action!.text,
+            style: context.appTheme.typography.h.h4.copyWith(
+              fontWeight: FontWeight.w700,
+              color: context.appTheme.colors.navigationBar.unselected,
+            ),
+          ),
+          icon: SvgPicture.asset(
+            action!.icon.value,
+            width: context.appTheme.dimensions.size.small,
+            height: context.appTheme.dimensions.size.small,
+            colorFilter: ColorFilter.mode(
+              context.appTheme.colors.navigationBar.unselected,
+              BlendMode.srcIn,
+            ),
+          ),
+        ),
       ],
     )),
   );

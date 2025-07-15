@@ -20,6 +20,7 @@ const _Arsenic = Color(0xFF3D3A4B);
 const _Arsenic50 = Color(0x803D3A4B);
 const _WarmBlack = Color(0xFF004346);
 const _PaleRobinEggBlue50 = Color(0x809AD1D4);
+const _Blue = Color(0xFF1E00FF);
 
 @immutable
 final class AppColors {
@@ -170,11 +171,13 @@ final class AppUniqueComponentsColors {
   final Color addedProductBackground;
   final Color todoProductText;
   final Color addedProductText;
+  final Color fabBackground;
 
   const AppUniqueComponentsColors({
     this.todoProductBackground = _Crayola75,
     this.addedProductBackground = _PaleRobinEggBlue50,
     this.todoProductText = _MintCream,
     this.addedProductText = _Independence75,
+    this.fabBackground = _Blue,
   });
 }

@@ -45,13 +45,13 @@ final class App extends StatelessWidget {
             macOS: MacOSUi,
             linux: YaruUi,
             windows: FluentUi,
-          )(context),
+          )(theme),
         ),
       ),
     );
   }
 
-  Widget MaterialUi(BuildContext context) => MaterialApp.router(
+  Widget MaterialUi(AppTheme theme) => MaterialApp.router(
     routerConfig: router.value,
     theme: ThemeData(
       highlightColor: Colors.transparent,
@@ -60,26 +60,31 @@ final class App extends StatelessWidget {
     supportedLocales: AppLocalizations.supportedLocales,
   );
 
-  Widget iOSUi(BuildContext context) => CupertinoApp.router(
+  Widget iOSUi(AppTheme theme) => CupertinoApp.router(
     routerConfig: router.value,
     theme: CupertinoThemeData(),
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
   );
 
-  Widget MacOSUi(BuildContext context) => MacosApp.router(
+  Widget MacOSUi(AppTheme theme) => MacosApp.router(
     routerConfig: router.value,
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
   );
 
-  Widget YaruUi(BuildContext context) =>
-    YaruTheme(builder: (context, _, _) => MaterialUi(context));
+  Widget YaruUi(AppTheme theme) =>
+    YaruTheme(builder: (context, _, _) => MaterialUi(theme));
 
-  Widget FluentUi(BuildContext context) => win.FluentApp.router(
+  Widget FluentUi(AppTheme theme) => win.FluentApp.router(
     routerConfig: router.value,
     theme: win.FluentThemeData(
-      brightness: Brightness.light,
+      brightness: Brightness.dark,
+      navigationPaneTheme: win.NavigationPaneThemeData(
+        backgroundColor: theme.colors.navigationBar.background,
+        overlayBackgroundColor: theme.colors.navigationBar.background,
+        highlightColor: theme.colors.navigationBar.selected,
+      )
     ),
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,

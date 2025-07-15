@@ -44,6 +44,7 @@
   "main_tab_cart": "Корзина",
   "main_tab_recipes": "Рецепты",
   "main_tab_profile": "Профиль",
+  "main_action_add": "Добавить",
 
   "cart_search_field_placeholder": "Название продукта",
   "cart_label_added": "Добавленное"

@@ -156,6 +156,7 @@ Future<void> _onProductChecked({
       builder: (context) => TweenAnimationBuilder(
         tween: Tween(begin: fromPos, end: toPos),
         duration: _moveDuration,
+        curve: Curves.easeInOutQuad,
         builder: (context, offset, child) => Positioned(
           left: context.appTheme.dimensions.padding.extraMedium,
           top: offset.dy,
@@ -230,6 +231,7 @@ Future<void> _onProductUnchecked({
       builder: (context) => TweenAnimationBuilder(
         tween: Tween(begin: fromPos, end: toPos),
         duration: _moveDuration,
+        curve: Curves.easeInOutQuad,
         builder: (context, offset, child) => Positioned(
           left: context.appTheme.dimensions.padding.extraMedium,
           top: offset.dy,

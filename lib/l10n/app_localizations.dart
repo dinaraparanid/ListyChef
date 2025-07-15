@@ -272,6 +272,12 @@ abstract class AppLocalizations {
   /// **'Profile'**
   String get main_tab_profile;
 
+  /// No description provided for @main_action_add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get main_action_add;
+
   /// No description provided for @cart_search_field_placeholder.
   ///
   /// In en, this message translates to:
