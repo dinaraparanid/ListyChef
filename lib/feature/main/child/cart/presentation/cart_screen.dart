@@ -22,34 +22,36 @@ final class CartScreen extends StatelessWidget {
       buildWhen: ignoreState(),
       builder: (context, _) => Container(
         color: context.appTheme.colors.background.primary,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: context.appTheme.dimensions.padding.extraMedium,
-                    left: context.appTheme.dimensions.padding.extraMedium,
-                    right: context.appTheme.dimensions.padding.extraMedium,
+        child: SafeArea(
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: context.appTheme.dimensions.padding.extraMedium,
+                      left: context.appTheme.dimensions.padding.extraMedium,
+                      right: context.appTheme.dimensions.padding.extraMedium,
+                    ),
+                    child: Wrap(
+                      children: [
+                        AppSearchField(
+                          placeholder: context.strings.cart_search_field_placeholder,
+                          onChange: (query) => context.addCartEvent(EventSearchQueryChange(query: query)),
+                        ),
+                      ],
+                    ),
                   ),
-                  child: Wrap(
-                    children: [
-                      AppSearchField(
-                        placeholder: context.strings.cart_search_field_placeholder,
-                        onChange: (query) => context.addCartEvent(EventSearchQueryChange(query: query)),
-                      ),
-                    ],
-                  ),
-                ),
 
-                SizedBox(height: context.appTheme.dimensions.padding.extraMedium),
+                  SizedBox(height: context.appTheme.dimensions.padding.extraMedium),
 
-                Expanded(child: CartListsNode()),
-              ],
-            ),
-          ],
+                  Expanded(child: CartListsNode()),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     ),

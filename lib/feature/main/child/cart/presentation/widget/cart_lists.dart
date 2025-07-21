@@ -9,7 +9,7 @@ import 'package:listy_chef/feature/main/child/cart/presentation/widget/cart_list
 
 final class CartLists extends StatelessWidget {
   static const expandDuration = Duration(milliseconds: 300);
-  static const emptyItem = 1;
+  static const movePlaceholder = 1;
 
   final IList<Product> todoProducts;
   final IList<Product> addedProducts;

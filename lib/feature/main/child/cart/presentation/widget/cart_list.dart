@@ -22,7 +22,7 @@ final class CartList extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SliverAnimatedList(
     key: listKey,
-    initialItemCount: products.length + CartLists.emptyItem,
+    initialItemCount: products.length + CartLists.movePlaceholder,
     itemBuilder: (context, index, animation) => switch (index) {
       0 => SizedBox(),
 

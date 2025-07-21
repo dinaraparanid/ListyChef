@@ -142,13 +142,12 @@ final class AppScaffold extends StatelessWidget {
     body: Sizer(
       builder: (context, orientation, screenType) =>
         switch ((orientation, screenType, items)) {
-          (Orientation.portrait, ScreenType.mobile, _) =>
-            SafeArea(child: body),
+          (Orientation.portrait, ScreenType.mobile, _) => body,
 
           (_, _, final IList<AppNavigationMenuItemData> items) => Row(
             children: [
               _MaterialNavigationRail(context: context, items: items),
-              Expanded(child: SafeArea(child: body)),
+              Expanded(child: body),
             ],
           ),
 
@@ -338,7 +337,7 @@ final class AppScaffold extends StatelessWidget {
           label: item.title,
         )).toList(growable: false),
       ),
-      body: SafeArea(child: body),
+      body: body,
     ),
   };
 
@@ -366,8 +365,7 @@ final class AppScaffold extends StatelessWidget {
     body: Sizer(
       builder: (context, orientation, screenType) =>
         switch ((orientation, screenType, items)) {
-          (Orientation.portrait, ScreenType.mobile, _) =>
-            SafeArea(child: body),
+          (Orientation.portrait, ScreenType.mobile, _) => body,
 
           (_, _, final IList<AppNavigationMenuItemData> items) => Row(
             children: [

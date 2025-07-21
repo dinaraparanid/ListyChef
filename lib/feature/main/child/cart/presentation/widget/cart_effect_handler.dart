@@ -114,10 +114,15 @@ Future<void> _onProductChecked({
   final reversedItem = item.copyWith(isAdded: true);
   final itemKey = GlobalKey();
 
+  _updateTodoList(
+    context: context,
+    newTodo: todoSnapshot.removeAt(fromIndex),
+  );
+
   _updateAddedAnimation(context: context, isInProgress: true);
 
   todoListKey.currentState!.removeItem(
-    fromIndex + CartLists.emptyItem,
+    fromIndex + CartLists.movePlaceholder,
     (context, animation) => SizeTransition(
       sizeFactor: animation,
       child: SizedBox(
@@ -132,18 +137,13 @@ Future<void> _onProductChecked({
     duration: _moveDuration,
   );
 
-  _updateTodoList(
-    context: context,
-    newTodo: todoSnapshot.removeAt(fromIndex),
-  );
-
   _updateAddedList(
     context: context,
     newAdded: addedSnapshot.insert(toIndex, reversedItem),
   );
 
   addedListKey.currentState?.insertItem(
-    toIndex + CartLists.emptyItem,
+    toIndex + CartLists.movePlaceholder,
     duration: _moveDuration,
   );
 
@@ -155,8 +155,7 @@ Future<void> _onProductChecked({
 
   WidgetsBinding.instance.addPostFrameCallback((_) async {
     final fromBox = itemKey.currentContext!.findRenderObject() as RenderBox;
-    final fromBoxPos = fromBox.localToGlobal(Offset.zero);
-    final fromPos = Offset(fromBoxPos.dx, fromBoxPos.dy + fromBox.size.height);
+    final fromPos = fromBox.localToGlobal(Offset.zero);
 
     final toBoxList = addedListKey.currentContext?.findRenderObject() as RenderSliverList;
     final firstChildBox = toBoxList.firstChild!;
@@ -209,7 +208,7 @@ Future<void> _onProductUnchecked({
   _updateTodoAnimation(context: context, isInProgress: true);
 
   addedListKey.currentState!.removeItem(
-    fromIndex + CartLists.emptyItem,
+    fromIndex + CartLists.movePlaceholder,
     (context, animation) => SizeTransition(
       sizeFactor: animation,
       child: SizedBox(
@@ -230,7 +229,7 @@ Future<void> _onProductUnchecked({
   );
 
   todoListKey.currentState!.insertItem(
-    toIndex + CartLists.emptyItem,
+    toIndex + CartLists.movePlaceholder,
     duration: _moveDuration,
   );
 
@@ -281,7 +280,7 @@ Future<void>? _onInsertTodoProduct({
   );
 
   todoListKey.currentState!.insertItem(
-    index + CartLists.emptyItem,
+    index + CartLists.movePlaceholder,
     duration: _moveDuration,
   );
 
@@ -300,7 +299,7 @@ Future<void>? _onInsertAddedProduct({
   );
 
   addedListKey.currentState!.insertItem(
-    index + CartLists.emptyItem,
+    index + CartLists.movePlaceholder,
     duration: _moveDuration,
   );
 
@@ -316,7 +315,7 @@ Future<void>? _onRemoveTodoProduct({
   _updateShownTodoList(context: context, newTodo: snapshot.removeAt(index));
 
   todoListKey.currentState!.removeItem(
-    index + CartLists.emptyItem,
+    index + CartLists.movePlaceholder,
     (context, animation) => SizeTransition(
       sizeFactor: animation,
       child: SizedBox(
@@ -339,7 +338,7 @@ Future<void>? _onRemoveAddedProduct({
   _updateShownAddedList(context: context, newAdded: snapshot.removeAt(index));
 
   addedListKey.currentState!.removeItem(
-    index + CartLists.emptyItem,
+    index + CartLists.movePlaceholder,
     (context, animation) => SizeTransition(
       sizeFactor: animation,
       child: SizedBox(
