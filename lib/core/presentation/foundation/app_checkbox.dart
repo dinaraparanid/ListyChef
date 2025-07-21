@@ -42,14 +42,21 @@ final class AppCheckbox extends StatelessWidget {
     ),
   );
 
-  Widget CupertinoUi(BuildContext context) => CupertinoCheckbox(
-    value: isChecked,
-    onChanged: (checked) => onChanged(checked ?? isChecked.not),
-    activeColor: activeColor ?? context.appTheme.colors.checkbox.active,
-    checkColor: checkColor ?? context.appTheme.colors.checkbox.check,
-    side: BorderSide(
-      color: inactiveColor ?? context.appTheme.colors.checkbox.inactive,
-      width: context.appTheme.dimensions.size.line.small,
+  Widget CupertinoUi(BuildContext context) => Transform.scale(
+    scale: 1.25,
+    child: CupertinoCheckbox(
+      value: isChecked,
+      onChanged: (checked) => onChanged(checked ?? isChecked.not),
+      activeColor: activeColor ?? context.appTheme.colors.checkbox.active,
+      checkColor: checkColor ?? context.appTheme.colors.checkbox.check,
+      fillColor: WidgetStateProperty.fromMap({
+        WidgetState.selected: activeColor ?? context.appTheme.colors.checkbox.active,
+        WidgetState.any: Colors.transparent,
+      }),
+      side: BorderSide(
+        color: inactiveColor ?? context.appTheme.colors.checkbox.inactive,
+        width: context.appTheme.dimensions.size.line.small,
+      ),
     ),
   );
 

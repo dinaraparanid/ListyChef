@@ -11,8 +11,8 @@ import 'package:listy_chef/feature/main/child/cart/presentation/widget/cart_list
 final todoListKey = GlobalKey<SliverAnimatedListState>();
 final addedListKey = GlobalKey<SliverAnimatedListState>();
 
-final class CartStatefulList extends StatelessWidget {
-  const CartStatefulList({super.key});
+final class CartListsNode extends StatelessWidget {
+  const CartListsNode({super.key});
 
   @override
   Widget build(BuildContext context) => BlocBuilder<CartBloc, CartState>(

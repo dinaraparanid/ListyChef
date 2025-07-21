@@ -2,6 +2,7 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:listy_chef/core/domain/cart/entity/mod.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
+import 'package:listy_chef/feature/main/child/cart/presentation/widget/cart_lists.dart';
 import 'package:listy_chef/feature/main/child/cart/presentation/widget/product_item.dart';
 
 final class CartList extends StatelessWidget {
@@ -21,16 +22,22 @@ final class CartList extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SliverAnimatedList(
     key: listKey,
-    initialItemCount: products.length + 1,
+    initialItemCount: products.length + CartLists.emptyItem,
     itemBuilder: (context, index, animation) => switch (index) {
       0 => SizedBox(),
 
       1 => Opacity(
         opacity: isMoveAnimInProgress ? 0 : 1,
-        child: ItemWithSpacer(context: context, index: index),
+        child: SizeTransition(
+          sizeFactor: animation,
+          child: ItemWithSpacer(context: context, index: index),
+        ),
       ),
 
-      _ => ItemWithSpacer(context: context, index: index),
+      _ => SizeTransition(
+        sizeFactor: animation,
+        child: ItemWithSpacer(context: context, index: index),
+      ),
     },
   );
 

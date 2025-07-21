@@ -5,10 +5,11 @@ import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/feature/main/child/cart/presentation/bloc/mod.dart';
 import 'package:listy_chef/feature/main/child/cart/presentation/widget/cart_added_list_expander.dart';
 import 'package:listy_chef/feature/main/child/cart/presentation/widget/cart_list.dart';
-import 'package:listy_chef/feature/main/child/cart/presentation/widget/cart_stateful_list.dart';
+import 'package:listy_chef/feature/main/child/cart/presentation/widget/cart_lists_node.dart';
 
 final class CartLists extends StatelessWidget {
   static const expandDuration = Duration(milliseconds: 300);
+  static const emptyItem = 1;
 
   final IList<Product> todoProducts;
   final IList<Product> addedProducts;
@@ -46,28 +47,33 @@ final class CartLists extends StatelessWidget {
         ),
       ),
 
-      SliverToBoxAdapter(
-        child: SizedBox(
-          height: context.appTheme.dimensions.padding.extraMedium,
+      AddedProductsOpacity(
+        sliver: SliverToBoxAdapter(
+          child: SizedBox(
+            height: context.appTheme.dimensions.padding.extraMedium,
+          ),
         ),
       ),
 
-      SliverPadding(
-        padding: EdgeInsets.symmetric(
-          horizontal: context.appTheme.dimensions.padding.extraMedium,
-        ),
-        sliver: CartAddedListExpander(isAddedListExpanded: isAddedListExpanded),
-      ),
-
-      SliverToBoxAdapter(
-        child: SizedBox(
-          height: context.appTheme.dimensions.padding.small,
+      AddedProductsOpacity(
+        sliver: SliverPadding(
+          padding: EdgeInsets.symmetric(
+            horizontal: context.appTheme.dimensions.padding.extraMedium,
+          ),
+          sliver: CartAddedListExpander(isAddedListExpanded: isAddedListExpanded),
         ),
       ),
 
-      SliverAnimatedOpacity(
-        opacity: isAddedListExpanded ? 1 : 0,
-        duration: expandDuration,
+      AddedProductsOpacity(
+        sliver: SliverToBoxAdapter(
+          child: SizedBox(
+            height: context.appTheme.dimensions.padding.small,
+          ),
+        ),
+      ),
+
+      SliverVisibility(
+        visible: isAddedListExpanded,
         sliver: SliverPadding(
           padding: EdgeInsets.symmetric(
             horizontal: context.appTheme.dimensions.padding.extraMedium,
@@ -88,4 +94,11 @@ final class CartLists extends StatelessWidget {
       ),
     ],
   );
+
+  SliverAnimatedOpacity AddedProductsOpacity({required Widget sliver}) =>
+    SliverAnimatedOpacity(
+      opacity: addedProducts.isEmpty ? 0 : 1,
+      duration: expandDuration,
+      sliver: sliver,
+    );
 }
