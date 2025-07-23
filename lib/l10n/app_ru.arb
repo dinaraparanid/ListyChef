@@ -46,6 +46,6 @@
   "main_tab_profile": "Профиль",
   "main_action_add": "Добавить",
 
-  "cart_search_field_placeholder": "Название продукта",
+  "cart_product_field_placeholder": "Название продукта",
   "cart_label_added": "Добавленное"
 }

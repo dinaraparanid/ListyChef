@@ -1,12 +1,16 @@
 import 'dart:async';
+import 'package:bloc_presentation/bloc_presentation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:listy_chef/feature/main/presentation/bloc/main_effect.dart';
 import 'package:listy_chef/feature/main/presentation/bloc/main_event.dart';
 import 'package:listy_chef/feature/main/presentation/bloc/main_route.dart';
 import 'package:listy_chef/feature/main/presentation/bloc/main_state.dart';
 import 'package:listy_chef/navigation/app_route.dart';
 import 'package:listy_chef/navigation/app_router.dart';
 
-final class MainBloc extends Bloc<MainEvent, MainState> {
+final class MainBloc extends Bloc<MainEvent, MainState>
+  with BlocPresentationMixin<MainState, MainEffect> {
+
   final AppRouter _router;
 
   StreamSubscription<MainRoute>? _routeListener;
@@ -31,6 +35,10 @@ final class MainBloc extends Bloc<MainEvent, MainState> {
       MainRouteRecipes() => add(EventNavigateToRecipes()),
       MainRouteProfile() => add(EventNavigateToProfile()),
     });
+
+    on<EventShowAddProductMenu>((event, emit) =>
+      emitPresentation(EffectShowAddProductMenu()),
+    );
 
     _listenRouteChanges();
   }

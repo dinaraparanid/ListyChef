@@ -278,11 +278,11 @@ abstract class AppLocalizations {
   /// **'Add'**
   String get main_action_add;
 
-  /// No description provided for @cart_search_field_placeholder.
+  /// No description provided for @cart_product_field_placeholder.
   ///
   /// In en, this message translates to:
   /// **'Product title'**
-  String get cart_search_field_placeholder;
+  String get cart_product_field_placeholder;
 
   /// No description provided for @cart_label_added.
   ///

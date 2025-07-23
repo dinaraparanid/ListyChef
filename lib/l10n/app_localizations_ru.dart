@@ -110,7 +110,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get main_action_add => 'Добавить';
 
   @override
-  String get cart_search_field_placeholder => 'Название продукта';
+  String get cart_product_field_placeholder => 'Название продукта';
 
   @override
   String get cart_label_added => 'Добавленное';

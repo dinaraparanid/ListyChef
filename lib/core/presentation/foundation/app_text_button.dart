@@ -8,8 +8,6 @@ final class AppTextButton extends StatelessWidget {
   final bool isEnabled;
   final Color? enabledColor;
   final Color? disabledColor;
-  final Color? enabledTextColor;
-  final Color? disabledTextColor;
   final void Function() onClick;
 
   const AppTextButton({
@@ -19,8 +17,6 @@ final class AppTextButton extends StatelessWidget {
     this.isEnabled = true,
     this.enabledColor,
     this.disabledColor,
-    this.enabledTextColor,
-    this.disabledTextColor,
   });
 
   @override
@@ -63,9 +59,10 @@ final class AppTextButton extends StatelessWidget {
       child: Text(
         text,
         style: theme.typography.h.h3.copyWith(
+          fontWeight: FontWeight.w700,
           color: isEnabled
-            ? theme.colors.button.textEnabled
-            : theme.colors.button.textDisabled,
+            ? (enabledColor ?? theme.colors.button.textEnabled)
+            : (disabledColor ?? theme.colors.button.textDisabled),
         ),
       ),
     );

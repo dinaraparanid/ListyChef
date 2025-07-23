@@ -1,6 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:listy_chef/core/presentation/foundation/app_search_field.dart';
+import 'package:listy_chef/core/presentation/foundation/text/app_search_field.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
 import 'package:listy_chef/core/utils/functions/distinct_state.dart';
@@ -38,7 +38,7 @@ final class CartScreen extends StatelessWidget {
                     child: Wrap(
                       children: [
                         AppSearchField(
-                          placeholder: context.strings.cart_search_field_placeholder,
+                          placeholder: context.strings.cart_product_field_placeholder,
                           onChange: (query) => context.addCartEvent(EventSearchQueryChange(query: query)),
                         ),
                       ],

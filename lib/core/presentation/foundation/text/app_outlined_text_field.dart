@@ -21,6 +21,11 @@ final class AppOutlineTextField extends StatefulWidget {
   final String? error;
   final bool obscureText;
   final Color? background;
+  final Color? textColor;
+  final double? textSize;
+  final FontWeight? fontWeight;
+  final Color? focusedColor;
+  final Color? unfocusedColor;
   final SvgImageAsset? prefixIcon;
   final SvgImageAsset? suffixIcon;
   final void Function(String)? onChange;
@@ -35,6 +40,11 @@ final class AppOutlineTextField extends StatefulWidget {
     this.error,
     this.obscureText = false,
     this.background,
+    this.textColor,
+    this.textSize,
+    this.fontWeight,
+    this.focusedColor,
+    this.unfocusedColor,
     this.prefixIcon,
     this.suffixIcon,
     this.onChange,
@@ -84,17 +94,27 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
     )(theme: theme);
   }
 
+  Color focusedColor(AppTheme theme) =>
+    widget.focusedColor ?? theme.colors.text.focused;
+
+  Color unfocusedColor(AppTheme theme) =>
+    widget.unfocusedColor ?? theme.colors.text.unfocused;
+
   Color borderColor(AppTheme theme) {
     if (isError) return theme.colors.error;
-    if (isFocused) return theme.colors.text.focused;
-    return theme.colors.text.unfocused;
+    if (isFocused) return focusedColor(theme);
+    return unfocusedColor(theme);
   }
 
   TextStyle textStyle(AppTheme theme) =>
-    theme.typography.body.copyWith(color: theme.colors.text.primary);
+    theme.typography.body.copyWith(
+      color: widget.textColor ?? theme.colors.text.primary,
+      fontSize: widget.textSize,
+      fontWeight: widget.fontWeight,
+    );
 
   Color cursorColor(AppTheme theme) =>
-    isError ? theme.colors.error : theme.colors.text.focused;
+    isError ? theme.colors.error : focusedColor(theme);
 
   EdgeInsets contentPadding(AppTheme theme) =>
     EdgeInsets.symmetric(
@@ -106,9 +126,12 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
     BorderRadius.circular(theme.dimensions.radius.small);
 
   TextStyle labelStyle(AppTheme theme) =>
-    theme.typography.body.copyWith(color: borderColor(theme));
+    theme.typography.body.copyWith(
+      color: borderColor(theme),
+      fontSize: widget.textSize,
+    );
 
-  Widget textIcon({
+  Widget animatedTextIcon({
     required AppTheme theme,
     required SvgImageAsset? asset,
     void Function()? onClick,
@@ -133,13 +156,13 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
     ),
   );
 
-  Widget prefix(AppTheme theme) => textIcon(
+  Widget animatedPrefix(AppTheme theme) => animatedTextIcon(
     theme: theme,
     asset: widget.prefixIcon,
     onClick: widget.onPrefixClick,
   );
 
-  Widget suffix(AppTheme theme) => textIcon(
+  Widget animatedSuffix(AppTheme theme) => animatedTextIcon(
     theme: theme,
     asset: widget.suffixIcon,
     onClick: widget.onSuffixClick,
@@ -152,9 +175,7 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
       ...?widget.label?.let((label) => [
         Text(
           label,
-          style: theme.typography.body.copyWith(
-            color: theme.colors.text.primary,
-          ),
+          style: labelStyle(theme),
         ),
 
         SizedBox(height: theme.dimensions.padding.small),
@@ -169,11 +190,10 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
             style: theme.typography.regular.copyWith(
               color: theme.colors.error,
             ),
-          ),
-        ),
+          )),
         child: CupertinoTheme(
           data: CupertinoThemeData(
-            primaryColor: theme.colors.text.focused,
+            primaryColor: focusedColor(theme),
           ),
           child: CupertinoTextField(
             controller: controller,
@@ -196,17 +216,17 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
             obscuringCharacter: _obscuringCharacter,
             cursorColor: cursorColor(theme),
             onChanged: widget.onChange,
-            prefix: Padding(
+            prefix: widget.prefixIcon != null ? Padding(
               padding: EdgeInsets.only(left: theme.dimensions.padding.medium),
-              child: prefix(theme),
-            ),
-            suffix: Padding(
+              child: animatedPrefix(theme),
+            ) : null,
+            suffix: widget.suffixIcon != null ? Padding(
               padding: EdgeInsets.only(right: theme.dimensions.padding.medium),
-              child: suffix(theme),
-            ),
+              child: animatedSuffix(theme),
+            ) : null,
           ),
         ),
-      )
+      ),
     ],
   );
 
@@ -225,14 +245,14 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
       focusedBorder: OutlineInputBorder(
         borderRadius: borderRadius(theme),
         borderSide: BorderSide(
-          color: theme.colors.text.focused,
+          color: focusedColor(theme),
           width: theme.dimensions.size.line.small,
         ),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: borderRadius(theme),
         borderSide: BorderSide(
-          color: theme.colors.text.unfocused,
+          color: unfocusedColor(theme),
           width: theme.dimensions.size.line.small,
         ),
       ),
@@ -247,11 +267,11 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
       labelStyle: labelStyle(theme),
       prefixIcon: widget.prefixIcon != null ? Padding(
         padding: EdgeInsets.only(left: theme.dimensions.padding.medium),
-        child: prefix(theme),
+        child: animatedPrefix(theme),
       ) : null,
       suffixIcon: widget.suffixIcon != null ? Padding(
         padding: EdgeInsets.only(right: theme.dimensions.padding.medium),
-        child: suffix(theme),
+        child: animatedSuffix(theme),
       ) : null,
     ),
     onChanged: widget.onChange,
@@ -270,8 +290,8 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
             controller: controller,
             focusNode: focusNode,
             style: textStyle(theme),
-            highlightColor: theme.colors.text.focused,
-            unfocusedColor: theme.colors.text.unfocused,
+            highlightColor: focusedColor(theme),
+            unfocusedColor: unfocusedColor(theme),
             placeholder: widget.label,
             placeholderStyle: labelStyle(theme),
             obscureText: widget.obscureText,
@@ -279,14 +299,14 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
             cursorColor: cursorColor(theme),
             onChanged: widget.onChange,
             padding: EdgeInsets.all(theme.dimensions.padding.extraMedium),
-            prefix: Padding(
+            prefix: widget.prefixIcon != null ? Padding(
               padding: EdgeInsets.only(left: theme.dimensions.padding.medium),
-              child: prefix(theme),
-            ),
-            suffix: Padding(
+              child: animatedPrefix(theme),
+            ) : null,
+            suffix: widget.suffixIcon != null ? Padding(
               padding: EdgeInsets.only(right: theme.dimensions.padding.medium),
-              child: suffix(theme),
-            ),
+              child: animatedSuffix(theme),
+            ) : null,
             decoration: WidgetStateProperty.fromMap({
               WidgetState.focused: BoxDecoration(
                 color: widget.background ?? theme.colors.text.background,

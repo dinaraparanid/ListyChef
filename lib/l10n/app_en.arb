@@ -46,6 +46,6 @@
   "main_tab_profile": "Profile",
   "main_action_add": "Add",
 
-  "cart_search_field_placeholder": "Product title",
+  "cart_product_field_placeholder": "Product title",
   "cart_label_added": "Added"
 }

@@ -21,6 +21,8 @@ const _Arsenic50 = Color(0x803D3A4B);
 const _WarmBlack = Color(0xFF004346);
 const _PaleRobinEggBlue50 = Color(0x809AD1D4);
 const _Blue = Color(0xFF1E00FF);
+const _CetaceanBlue = Color(0xFF091540);
+const _CetaceanBlue50 = Color(0x80091540);
 
 @immutable
 final class AppColors {
@@ -55,10 +57,14 @@ final class AppColors {
 final class AppBackgroundColors {
   final Color primary;
   final Color secondary;
+  final Color modal;
+  final Color modal50;
 
   const AppBackgroundColors({
     this.primary = _MintCream,
     this.secondary = _Gray,
+    this.modal = _CetaceanBlue,
+    this.modal50 = _CetaceanBlue50,
   });
 }
 
@@ -130,7 +136,7 @@ final class AppNavigationBarColors {
   final Color unselected;
 
   const AppNavigationBarColors({
-    this.background = _InterdimensionalBlue,
+    this.background = _CetaceanBlue,
     this.backgroundCollapsed = _Independence,
     this.selected = _MintCream,
     this.unselected = _PaleCornflowerBlue,

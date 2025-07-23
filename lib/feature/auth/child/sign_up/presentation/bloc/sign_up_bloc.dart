@@ -33,29 +33,23 @@ final class SignUpBloc extends Bloc<SignUpEvent, SignUpState>
       );
     });
 
-    on<EventEmailChange>((event, emit) {
-      textChangeUseCase(
-        next: event.email,
-        errorPredicate: (txt) => txt.isBlank,
-        update: (textContainer) => emit(state.copyWith(email: textContainer)),
-      );
-    });
+    on<EventEmailChange>((event, emit) => textChangeUseCase(
+      next: event.email,
+      errorPredicate: (txt) => txt.isBlank,
+      update: (textContainer) => emit(state.copyWith(email: textContainer)),
+    ));
 
-    on<EventNicknameChange>((event, emit) {
-      textChangeUseCase(
-        next: event.nickname,
-        errorPredicate: (txt) => txt.isBlank,
-        update: (textContainer) => emit(state.copyWith(nickname: textContainer)),
-      );
-    });
+    on<EventNicknameChange>((event, emit) => textChangeUseCase(
+      next: event.nickname,
+      errorPredicate: (txt) => txt.isBlank,
+      update: (textContainer) => emit(state.copyWith(nickname: textContainer)),
+    ));
 
-    on<EventPasswordChange>((event, emit) {
-      textChangeUseCase(
-        next: event.password,
-        errorPredicate: (text) => state.isSmallForPassword(text),
-        update: (textContainer) => emit(state.copyWith(password: textContainer)),
-      );
-    });
+    on<EventPasswordChange>((event, emit) => textChangeUseCase(
+      next: event.password,
+      errorPredicate: (text) => state.isSmallForPassword(text),
+      update: (textContainer) => emit(state.copyWith(password: textContainer)),
+    ));
 
     on<EventClearEmail>((event, emit) {
       emit(state.copyWith(email: TextContainer(value: '', error: false)));
