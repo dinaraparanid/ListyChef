@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:listy_chef/core/di/di.dart';
 import 'package:listy_chef/core/presentation/foundation/app_bottom_sheet.dart';
 import 'package:listy_chef/core/presentation/foundation/app_text_button.dart';
+import 'package:listy_chef/core/presentation/foundation/dialog/app_dialog.dart';
 import 'package:listy_chef/core/presentation/foundation/platform_call.dart';
 import 'package:listy_chef/core/presentation/foundation/text/app_outlined_text_field.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
@@ -13,16 +14,22 @@ import 'package:listy_chef/feature/main/child/add_product/presentation/bloc/mod.
 Future<void> showAddProductMenu(BuildContext context) => platformCall(
   android: _showMobileAddProductMenu,
   iOS: _showMobileAddProductMenu,
-  macOS: _showMobileAddProductMenu,
-  linux: _showMobileAddProductMenu,
-  windows: _showMobileAddProductMenu,
-  web: _showMobileAddProductMenu,
+  macOS: _showDesktopAddProductMenu,
+  linux: _showDesktopAddProductMenu,
+  windows: _showDesktopAddProductMenu,
+  web: _showDesktopAddProductMenu,
 )(context);
 
 Future<void> _showMobileAddProductMenu(BuildContext context) =>
   showAppBottomSheet(
     context: context,
     builder: (context) => _ShowAddProductMenuContent(blocFactory: di()),
+  );
+
+Future<void> _showDesktopAddProductMenu(BuildContext context) =>
+  showAppDialog(
+    context: context,
+    contentBuilder: (context) => _ShowAddProductMenuContent(blocFactory: di()),
   );
 
 final class _ShowAddProductMenuContent extends StatefulWidget {
@@ -63,6 +70,7 @@ final class _ShowAddProductMenuContentState extends State<_ShowAddProductMenuCon
                   fontWeight: FontWeight.w700,
                   focusedColor: context.appTheme.colors.text.secondary,
                   unfocusedColor: context.appTheme.colors.text.disabled,
+                  background: Colors.transparent,
                   onChange: (title) => context.addAddProductEvent(
                     EventUpdateProductTitle(title: title),
                   ),

@@ -10,8 +10,6 @@ Future<void> showAppBottomSheet({
 }) => platformCall(
   android: _showMaterialBottomSheet,
   iOS: _showCupertinoBottomSheet,
-
-  // TODO dialog for desktop
   macOS: _showCupertinoBottomSheet,
   linux: _showMaterialBottomSheet,
   windows: _showMaterialBottomSheet,

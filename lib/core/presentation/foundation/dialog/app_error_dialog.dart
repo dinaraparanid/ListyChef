@@ -51,7 +51,7 @@ Future<void> _showMaterialErrorDialog({
       surfaceTintColor: Colors.transparent,
       titlePadding: EdgeInsets.symmetric(
         vertical: theme.dimensions.padding.extraMedium,
-        horizontal: theme.dimensions.padding.extraMedium
+        horizontal: theme.dimensions.padding.extraMedium,
       ),
       title: title?.let((txt) => Text(
         txt,

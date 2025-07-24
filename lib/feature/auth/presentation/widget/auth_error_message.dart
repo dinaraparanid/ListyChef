@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:listy_chef/core/domain/auth/auth_error.dart';
-import 'package:listy_chef/core/presentation/foundation/app_error_dialog.dart';
+import 'package:listy_chef/core/presentation/foundation/dialog/app_error_dialog.dart';
 import 'package:listy_chef/core/presentation/foundation/app_snackbar.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
 

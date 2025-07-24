@@ -310,12 +310,33 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
             decoration: WidgetStateProperty.fromMap({
               WidgetState.focused: BoxDecoration(
                 color: widget.background ?? theme.colors.text.background,
+                borderRadius: borderRadius(theme),
+                border: BoxBorder.fromBorderSide(
+                  BorderSide(
+                    color: focusedColor(theme),
+                    width: theme.dimensions.size.line.small,
+                  ),
+                ),
               ),
               WidgetState.disabled: BoxDecoration(
                 color: widget.background ?? theme.colors.text.background,
+                borderRadius: borderRadius(theme),
+                border: BoxBorder.fromBorderSide(
+                  BorderSide(
+                    color: unfocusedColor(theme),
+                    width: theme.dimensions.size.line.small,
+                  ),
+                ),
               ),
               WidgetState.error: BoxDecoration(
                 color: widget.background ?? theme.colors.text.background,
+                borderRadius: borderRadius(theme),
+                border: BoxBorder.fromBorderSide(
+                  BorderSide(
+                    color: theme.colors.error,
+                    width: theme.dimensions.size.line.small,
+                  ),
+                ),
               ),
             }),
           ),
