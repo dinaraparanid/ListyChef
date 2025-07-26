@@ -5,21 +5,20 @@ import 'package:listy_chef/core/di/di.dart';
 import 'package:listy_chef/core/presentation/foundation/app_bottom_sheet.dart';
 import 'package:listy_chef/core/presentation/foundation/app_text_button.dart';
 import 'package:listy_chef/core/presentation/foundation/dialog/app_dialog.dart';
-import 'package:listy_chef/core/presentation/foundation/platform_call.dart';
 import 'package:listy_chef/core/presentation/foundation/text/app_outlined_text_field.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
 import 'package:listy_chef/feature/main/child/add_product/presentation/bloc/mod.dart';
 import 'package:listy_chef/feature/main/child/add_product/presentation/widget/add_product_effect_handler.dart';
+import 'package:sizer/sizer.dart';
 
-Future<void> showAddProductMenu(BuildContext context) => platformCall(
-  android: _showMobileAddProductMenu,
-  iOS: _showMobileAddProductMenu,
-  macOS: _showDesktopAddProductMenu,
-  linux: _showDesktopAddProductMenu,
-  windows: _showDesktopAddProductMenu,
-  web: _showDesktopAddProductMenu,
-)(context);
+Future<void> showAddProductMenu(BuildContext context) =>
+  switch ((Device.orientation, Device.screenType)) {
+    (Orientation.portrait, ScreenType.mobile) =>
+      _showMobileAddProductMenu(context),
+
+    _ => _showDesktopAddProductMenu(context),
+  };
 
 Future<void> _showMobileAddProductMenu(BuildContext context) =>
   showAppBottomSheet(

@@ -11,6 +11,7 @@ import 'package:listy_chef/feature/root/presentation/bloc/mod.dart';
 import 'package:listy_chef/l10n/app_localizations.dart';
 import 'package:listy_chef/navigation/app_router.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:sizer/sizer.dart';
 import 'package:yaru/settings.dart';
 
 final class App extends StatelessWidget {
@@ -25,27 +26,29 @@ final class App extends StatelessWidget {
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
-    return AnnotatedRegion(
-      value: SystemUiOverlayStyle(
-        systemNavigationBarColor: Colors.transparent,
-        systemNavigationBarDividerColor: Colors.transparent,
-        systemNavigationBarIconBrightness: Brightness.light,
-        systemNavigationBarContrastEnforced: false,
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.dark,
-        systemStatusBarContrastEnforced: false,
-      ),
-      child: AppThemeProvider(
-        theme: theme,
-        child: BlocProvider(
-          create: (_) => rootBlocFactory(),
-          child: platformCall(
-            android: MaterialUi,
-            iOS: iOSUi,
-            macOS: MacOSUi,
-            linux: YaruUi,
-            windows: FluentUi,
-          )(theme),
+    return Sizer(
+      builder: (_, _, _) => AnnotatedRegion(
+        value: SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.transparent,
+          systemNavigationBarDividerColor: Colors.transparent,
+          systemNavigationBarIconBrightness: Brightness.light,
+          systemNavigationBarContrastEnforced: false,
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.dark,
+          systemStatusBarContrastEnforced: false,
+        ),
+        child: AppThemeProvider(
+          theme: theme,
+          child: BlocProvider(
+            create: (_) => rootBlocFactory(),
+            child: platformCall(
+              android: MaterialUi,
+              iOS: iOSUi,
+              macOS: MacOSUi,
+              linux: YaruUi,
+              windows: FluentUi,
+            )(theme),
+          ),
         ),
       ),
     );

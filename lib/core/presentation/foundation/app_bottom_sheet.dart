@@ -22,13 +22,19 @@ Future<void> _showMaterialBottomSheet({
   context: context,
   backgroundColor: context.appTheme.colors.background.modal,
   useRootNavigator: true,
-  builder: (context) => SafeArea(
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SizedBox(height: context.appTheme.dimensions.padding.extraBig),
-        builder(context),
-      ],
+  isScrollControlled: true,
+  builder: (context) => Padding(
+    padding: EdgeInsets.only(
+      bottom: MediaQuery.of(context).viewInsets.bottom,
+    ),
+    child: SafeArea(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(height: context.appTheme.dimensions.padding.extraBig),
+          builder(context),
+        ],
+      ),
     ),
   ),
 );
@@ -39,14 +45,19 @@ Future<void> _showCupertinoBottomSheet({
 }) => showCupertinoModalPopup(
   context: context,
   useRootNavigator: true,
-  builder: (context) => ClipRect(
-    child: BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: context.appTheme.colors.background.modal50,
+  builder: (context) => Padding(
+    padding: EdgeInsets.only(
+      bottom: MediaQuery.of(context).viewInsets.bottom,
+    ),
+    child: ClipRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: context.appTheme.colors.background.modal50,
+          ),
+          child: SafeArea(child: builder(context)),
         ),
-        child: SafeArea(child: builder(context)),
       ),
     ),
   ),

@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:listy_chef/core/presentation/foundation/image_asset.dart';
 
-@immutable
-class AppImages {
-  const AppImages._();
-
+abstract final class AppImages {
   static UnspecifiedImageAsset load(String file) =>
     UnspecifiedImageAsset(value: 'assets/images/$file');
 
