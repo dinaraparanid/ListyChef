@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:bloc_presentation/bloc_presentation.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:listy_chef/core/domain/cart/entity/product.dart';
 import 'package:listy_chef/core/domain/list/list_difference_use_case.dart';
 import 'package:listy_chef/core/domain/list/product_diff_delegate.dart';
 import 'package:listy_chef/core/domain/text/text_change_use_case.dart';
@@ -24,9 +26,65 @@ final class CartBloc extends Bloc<CartEvent, CartState>
     required ListDifferenceUseCase listDifferenceUseCase,
     required AddProductEventBus addProductEventBus,
   }) : super(CartState()) {
+    void handleListDifferences({
+      required IList<Product> oldTodoList,
+      required IList<Product> newTodoList,
+      required IList<Product> oldAddedList,
+      required IList<Product> newAddedList,
+    }) {
+      listDifferenceUseCase(
+        delegate: ProductDiffDelegate(
+          oldList: oldTodoList,
+          newList: newTodoList,
+        ),
+        onInsert: (index, product) => emitPresentation(
+          EffectInsertTodoProduct(index: index, product: product),
+        ),
+        onRemove: (index, product) => emitPresentation(
+          EffectRemoveTodoProduct(index: index, product: product),
+        ),
+      );
+
+      listDifferenceUseCase(
+        delegate: ProductDiffDelegate(
+          oldList: oldAddedList,
+          newList: newAddedList,
+        ),
+        onInsert: (index, product) => emitPresentation(
+          EffectInsertAddedProduct(index: index, product: product),
+        ),
+        onRemove: (index, product) => emitPresentation(
+          EffectRemoveAddedProduct(index: index, product: product),
+        ),
+      );
+    }
+
     on<EventLoadLists>((event, emit) async {
-      final (todo, added) = await loadCartListsUseCase();
-      add(EventUpdateListStates(todoProductsState: todo, addedProductsState: added));
+      final oldTodoState = state.shownTodoProductsState;
+      final oldTodoList = oldTodoState.getOrNull;
+
+      final oldAddedState = state.shownAddedProductsState;
+      final oldAddedList = oldAddedState.getOrNull;
+
+      final (newTodoState, newAddedState) = await loadCartListsUseCase();
+      final newTodoList = newTodoState.getOrNull;
+      final newAddedList = newAddedState.getOrNull;
+
+      if (oldTodoList != null && newTodoList != null &&
+          oldAddedList != null && newAddedList != null
+      ) {
+        handleListDifferences(
+          oldTodoList: oldTodoList,
+          newTodoList: newTodoList,
+          oldAddedList: oldAddedList,
+          newAddedList: newAddedList,
+        );
+      } else {
+        add(EventUpdateListStates(
+          todoProductsState: newTodoState,
+          addedProductsState: newAddedState,
+        ));
+      }
     });
 
     on<EventSearchQueryChange>((event, emit) => textChangeUseCase(
@@ -51,30 +109,11 @@ final class CartBloc extends Bloc<CartEvent, CartState>
         final newAddedList = newAddedState.getOrNull;
         if (newAddedList == null) return;
 
-        listDifferenceUseCase(
-          delegate: ProductDiffDelegate(
-            oldList: oldTodoList,
-            newList: newTodoList,
-          ),
-          onInsert: (index, product) => emitPresentation(
-            EffectInsertTodoProduct(index: index, product: product),
-          ),
-          onRemove: (index, product) => emitPresentation(
-            EffectRemoveTodoProduct(index: index, product: product),
-          ),
-        );
-
-        listDifferenceUseCase(
-          delegate: ProductDiffDelegate(
-            oldList: oldAddedList,
-            newList: newAddedList,
-          ),
-          onInsert: (index, product) => emitPresentation(
-            EffectInsertAddedProduct(index: index, product: product),
-          ),
-          onRemove: (index, product) => emitPresentation(
-            EffectRemoveAddedProduct(index: index, product: product),
-          ),
+        handleListDifferences(
+          oldTodoList: oldTodoList,
+          newTodoList: newTodoList,
+          oldAddedList: oldAddedList,
+          newAddedList: newAddedList,
         );
       },
     ));
