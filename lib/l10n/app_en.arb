@@ -32,7 +32,7 @@
       }
     }
   },
-  "auth_error_email_already_in_use": "User with email `{email}` already exists. Do you want to sign in?",
+  "auth_error_email_already_in_use": "User with email `{email}` already exists. Do you want to sign in?",
   "@auth_error_email_already_in_use": {
     "placeholders": {
       "email": {
@@ -47,5 +47,6 @@
   "main_action_add": "Add",
 
   "cart_product_field_placeholder": "Product title",
-  "cart_label_added": "Added"
+  "cart_label_added": "Added",
+  "cart_error_product_add": "Failed to create new product on the server"
 }

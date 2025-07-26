@@ -4,7 +4,7 @@ import 'package:listy_chef/core/di/provide.dart';
 import 'package:listy_chef/core/domain/auth/repository/auth_repository.dart';
 
 extension AuthModule on GetIt {
-  List<Type> registerAuthModule() => [
+  List<DiEntity> registerAuthModule() => [
     provideSingleton<AuthRepository>(() => AuthRepositoryImpl()),
   ];
 }

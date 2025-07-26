@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:listy_chef/core/domain/cart/entity/product_data.dart';
 import 'package:listy_chef/core/domain/cart/entity/product_id.dart';
 
 part 'product.freezed.dart';
@@ -12,8 +13,6 @@ abstract class Product with _$Product {
 
   const factory Product({
     required ProductId id,
-    required String value,
-    required bool isAdded,
-    required int timestamp,
+    required ProductData data,
   }) = _Product;
 }

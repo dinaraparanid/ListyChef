@@ -7,7 +7,7 @@ import 'package:listy_chef/feature/auth/domain/sign_up_use_case.dart';
 import 'package:listy_chef/feature/auth/presentation/bloc/auth_bloc_factory.dart';
 
 extension AuthModule on GetIt {
-  List<Type> registerAuthModule() => [
+  List<DiEntity> registerAuthModule() => [
     provideSingleton(() => SignInUseCase(repository: this())),
     provideSingleton(() => SignUpUseCase(repository: this())),
     provideSingleton(() => AuthBlocFactory(router: this())),

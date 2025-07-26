@@ -251,7 +251,7 @@ abstract class AppLocalizations {
   /// No description provided for @auth_error_email_already_in_use.
   ///
   /// In en, this message translates to:
-  /// **'User with email `{email}` already exists. Do you want to sign in?'**
+  /// **'User with email `{email}` already exists. Do you want to sign in?'**
   String auth_error_email_already_in_use(String email);
 
   /// No description provided for @main_tab_cart.
@@ -289,6 +289,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Added'**
   String get cart_label_added;
+
+  /// No description provided for @cart_error_product_add.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to create new product on the server'**
+  String get cart_error_product_add;
 }
 
 class _AppLocalizationsDelegate

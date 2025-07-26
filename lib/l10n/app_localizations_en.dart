@@ -92,7 +92,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String auth_error_email_already_in_use(String email) {
-    return 'User with email `$email` already exists. Do you want to sign in?';
+    return 'User with email `$email` already exists. Do you want to sign in?';
   }
 
   @override
@@ -112,4 +112,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cart_label_added => 'Added';
+
+  @override
+  String get cart_error_product_add =>
+      'Failed to create new product on the server';
 }

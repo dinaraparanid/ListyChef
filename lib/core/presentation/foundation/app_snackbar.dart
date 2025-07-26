@@ -11,7 +11,7 @@ enum AppSnackBarMode { error, success, info }
 
 const _snackBarDuration = Duration(seconds: 3);
 
-FutureOr<void> showAppSnackBar({
+Future<void> showAppSnackBar({
   required BuildContext context,
   required String title,
   required String message,
@@ -38,15 +38,15 @@ Color _snackBarColor({
   AppSnackBarMode.info => context.appTheme.colors.snackBar.info,
 };
 
-FutureOr<void> _showMaterialSnackBar({
+Future<void> _showMaterialSnackBar({
   required BuildContext context,
   required String title,
   required String message,
   required AppSnackBarMode mode,
-}) {
+}) async {
   final theme = context.appTheme;
 
-  ScaffoldMessenger.of(context).showSnackBar(
+  await ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       backgroundColor: _snackBarColor(context: context, mode: mode),
       closeIconColor: theme.colors.snackBar.content,
@@ -81,7 +81,7 @@ FutureOr<void> _showMaterialSnackBar({
         ],
       ),
     ),
-  );
+  ).closed;
 }
 
 Future<void> _showCupertinoSnackBar({
@@ -131,15 +131,15 @@ Future<void> _showCupertinoSnackBar({
   return Future.delayed(_snackBarDuration, overlayEntry.remove);
 }
 
-FutureOr<void> _showYaruSnackBar({
+Future<void> _showYaruSnackBar({
   required BuildContext context,
   required String title,
   required String message,
   required AppSnackBarMode mode,
-}) {
+}) async {
   final theme = context.appTheme;
 
-  ScaffoldMessenger.of(context).showSnackBar(
+  await ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       backgroundColor: _snackBarColor(context: context, mode: mode),
       closeIconColor: theme.colors.snackBar.content,
@@ -163,7 +163,7 @@ FutureOr<void> _showYaruSnackBar({
         ),
       ),
     ),
-  );
+  ).closed;
 }
 
 Future<void> _showFluentSnackBar({

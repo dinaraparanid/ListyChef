@@ -53,7 +53,7 @@ extension Properties on CartState {
 
   bool _matchesQuery(Product product) => switch (searchQuery.value.isBlank) {
     true => true,
-    false => product.value.includes(searchQuery.value, ignoreCase: true),
+    false => product.data.value.includes(searchQuery.value, ignoreCase: true),
   };
 }
 

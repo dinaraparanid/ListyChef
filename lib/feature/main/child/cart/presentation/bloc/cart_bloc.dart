@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'package:bloc_presentation/bloc_presentation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:listy_chef/core/domain/list/list_difference_use_case.dart';
 import 'package:listy_chef/core/domain/list/product_diff_delegate.dart';
 import 'package:listy_chef/core/domain/text/text_change_use_case.dart';
 import 'package:listy_chef/core/presentation/foundation/ui_state.dart';
+import 'package:listy_chef/feature/main/child/cart/domain/add_product_event_bus.dart';
 import 'package:listy_chef/feature/main/child/cart/domain/check_product_use_case.dart';
 import 'package:listy_chef/feature/main/child/cart/domain/load_cart_lists_use_case.dart';
 import 'package:listy_chef/feature/main/child/cart/presentation/bloc/cart_effect.dart';
@@ -13,11 +15,14 @@ import 'package:listy_chef/feature/main/child/cart/presentation/bloc/cart_state.
 final class CartBloc extends Bloc<CartEvent, CartState>
   with BlocPresentationMixin<CartState, CartEffect> {
 
+  StreamSubscription<void>? _addProductEventBusSubscription;
+
   CartBloc({
     required TextChangeUseCase textChangeUseCase,
     required LoadCartListsUseCase loadCartListsUseCase,
     required CheckProductUseCase checkProductUseCase,
     required ListDifferenceUseCase listDifferenceUseCase,
+    required AddProductEventBus addProductEventBus,
   }) : super(CartState()) {
     on<EventLoadLists>((event, emit) async {
       final (todo, added) = await loadCartListsUseCase();
@@ -82,7 +87,12 @@ final class CartBloc extends Bloc<CartEvent, CartState>
     )));
 
     on<EventProductCheck>((event, emit) async {
-      await checkProductUseCase(id: event.id);
+      await checkProductUseCase(
+        id: event.id,
+        onError: () {
+          // TODO: show alert
+        },
+      );
 
       emitPresentation(EffectCheckProduct(
         fromIndex: event.fromIndex,
@@ -91,7 +101,12 @@ final class CartBloc extends Bloc<CartEvent, CartState>
     });
 
     on<EventProductUncheck>((event, emit) async {
-      await checkProductUseCase(id: event.id);
+      await checkProductUseCase(
+        id: event.id,
+        onError: () {
+          // TODO: show alert
+        },
+      );
 
       emitPresentation(EffectUncheckProduct(
         fromIndex: event.fromIndex,
@@ -134,5 +149,15 @@ final class CartBloc extends Bloc<CartEvent, CartState>
     });
 
     add(EventLoadLists());
+
+    _addProductEventBusSubscription = addProductEventBus.listen(
+      (_) => add(EventLoadLists())
+    );
+  }
+
+  @override
+  Future<void> close() async {
+    await _addProductEventBusSubscription?.cancel();
+    return super.close();
   }
 }

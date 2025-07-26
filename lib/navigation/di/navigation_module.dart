@@ -5,7 +5,7 @@ import 'package:listy_chef/navigation/observer/auth_navigator_observer.dart';
 import 'package:listy_chef/navigation/observer/main_navigator_observer.dart';
 
 extension NavigationModule on GetIt {
-  List<Type> registerNavigationModule() => [
+  List<DiEntity> registerNavigationModule() => [
     provideSingleton(() => AuthNavigatorObserver()),
     provideSingleton(() => MainNavigatorObserver()),
 

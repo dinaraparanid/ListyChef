@@ -111,7 +111,7 @@ Future<void> _onProductChecked({
   required int toIndex,
 }) async {
   final item = todoSnapshot[fromIndex];
-  final reversedItem = item.copyWith(isAdded: true);
+  final reversedItem = item.copyWith(data: item.data.copyWith(isAdded: true));
   final itemKey = GlobalKey();
 
   _updateTodoList(
@@ -197,7 +197,7 @@ Future<void> _onProductUnchecked({
   required int toIndex,
 }) async {
   final item = addedSnapshot[fromIndex];
-  final reversedItem = item.copyWith(isAdded: false);
+  final reversedItem = item.copyWith(data: item.data.copyWith(isAdded: false));
   final itemKey = GlobalKey();
 
   _updateAddedList(

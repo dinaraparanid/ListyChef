@@ -11,6 +11,8 @@ final class EventUpdateProductTitle extends AddProductEvent {
 
 final class EventConfirmCreation extends AddProductEvent {}
 
+final class EventTriggerCartListsRefresh extends AddProductEvent {}
+
 extension AddAddProductEvent on BuildContext {
   void addAddProductEvent(AddProductEvent event) =>
     BlocProvider.of<AddProductBloc>(this).add(event);

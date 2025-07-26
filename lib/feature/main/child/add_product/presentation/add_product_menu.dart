@@ -10,6 +10,7 @@ import 'package:listy_chef/core/presentation/foundation/text/app_outlined_text_f
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
 import 'package:listy_chef/feature/main/child/add_product/presentation/bloc/mod.dart';
+import 'package:listy_chef/feature/main/child/add_product/presentation/widget/add_product_effect_handler.dart';
 
 Future<void> showAddProductMenu(BuildContext context) => platformCall(
   android: _showMobileAddProductMenu,
@@ -48,8 +49,8 @@ final class _ShowAddProductMenuContentState extends State<_ShowAddProductMenuCon
   Widget build(BuildContext context) => BlocProvider(
     create: (_) => widget.blocFactory(),
     child: BlocPresentationListener<AddProductBloc, AddProductEffect>(
-      listener: (context, effect) => switch (effect) {
-        EffectCloseMenu() => Navigator.of(context, rootNavigator: true).pop(),
+      listener: (context, effect) async {
+        await onAddProductEffect(context: context, effect: effect);
       },
       child: BlocBuilder<AddProductBloc, AddProductState>(
         builder: (context, state) {

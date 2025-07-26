@@ -25,9 +25,18 @@ final class LoadCartListsUseCase {
       );
     }
 
-    final todo = _cartRepository.todoProducts(email: email);
-    final added = _cartRepository.addedProducts(email: email);
+    try {
+      final products = await Future.wait([
+        _cartRepository.todoProducts(email: email),
+        _cartRepository.addedProducts(email: email),
+      ]);
 
-    return ((await todo).toUiState(), (await added).toUiState());
+      return (products[0].toUiState(), products[1].toUiState());
+    } catch (e) {
+      return (
+        UiState<IList<Product>>.error(),
+        UiState<IList<Product>>.error(),
+      );
+    }
   }
 }

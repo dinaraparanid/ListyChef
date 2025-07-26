@@ -19,7 +19,7 @@ final class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) => AnimatedContainer(
     duration: _animationDuration,
     decoration: BoxDecoration(
-      color: switch (product.isAdded) {
+      color: switch (product.data.isAdded) {
         true => context.appTheme.colors.unique.addedProductBackground,
         false => context.appTheme.colors.unique.todoProductBackground,
       },
@@ -35,24 +35,24 @@ final class ProductItem extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         AppCheckbox(
-          isChecked: product.isAdded,
+          isChecked: product.data.isAdded,
           onChanged: (_) => onCheckChange(),
         ),
 
         AnimatedCrossFade(
           duration: _animationDuration,
-          crossFadeState: product.isAdded
+          crossFadeState: product.data.isAdded
             ? CrossFadeState.showSecond
             : CrossFadeState.showFirst,
           firstChild: Text(
-            product.value,
+            product.data.value,
             style: context.appTheme.typography.regular.copyWith(
               color: context.appTheme.colors.unique.todoProductText,
               fontWeight: FontWeight.w500,
             ),
           ),
           secondChild: Text(
-            product.value,
+            product.data.value,
             style: context.appTheme.typography.regular.copyWith(
               color: context.appTheme.colors.unique.addedProductText,
               fontWeight: FontWeight.w500,

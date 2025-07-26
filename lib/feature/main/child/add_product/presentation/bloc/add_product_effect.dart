@@ -1,3 +1,5 @@
 sealed class AddProductEffect {}
 
-final class EffectCloseMenu extends AddProductEffect {}
+final class EffectProductAdded extends AddProductEffect {}
+
+final class EffectProductNotAdded extends AddProductEffect {}
