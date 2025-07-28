@@ -183,9 +183,9 @@ final class CartBloc extends Bloc<CartEvent, CartState>
       emit(state.copyWith(isAddedListExpanded: event.isExpanded)),
     );
 
-    on<EventAddProduct>((event, emit) {
-      // TODO
-    });
+    on<EventStartProductDrag>((event, emit) =>
+      emit(state.copyWith(draggingProduct: event.id)),
+    );
 
     add(EventLoadLists());
 

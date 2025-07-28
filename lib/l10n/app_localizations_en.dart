@@ -116,4 +116,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get cart_error_product_add =>
       'Failed to create new product on the server';
+
+  @override
+  String get cart_action_edit => 'Edit';
+
+  @override
+  String get cart_action_delete => 'Delete';
 }

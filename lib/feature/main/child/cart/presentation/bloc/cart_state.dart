@@ -37,6 +37,9 @@ abstract class CartState with _$CartState {
 
     @Default(true)
     bool isAddedListExpanded,
+
+    @Default(null)
+    ProductId? draggingProduct,
   }) = _CartState;
 }
 

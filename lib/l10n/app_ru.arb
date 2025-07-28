@@ -48,5 +48,7 @@
 
   "cart_product_field_placeholder": "Название продукта",
   "cart_label_added": "Добавленное",
-  "cart_error_product_add": "Не получилось создать новый продукт на сервере"
+  "cart_error_product_add": "Не получилось создать новый продукт на сервере",
+  "cart_action_edit": "Редактировать",
+  "cart_action_delete": "Удалить"
 }

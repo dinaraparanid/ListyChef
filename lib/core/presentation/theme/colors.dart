@@ -4,7 +4,6 @@ const _MintCream = Color(0xFFF4FFFD);
 const _MintCream75 = Color(0xBFF4FFFD);
 const _Gray = Color(0xFF817F82);
 const _Crayola = Color(0xFF2667FF);
-const _Crayola75 = Color(0xBF2667FF);
 const _SlateBlue = Color(0xFF6C5ED9);
 const _Independence = Color(0xFF465362);
 const _Independence75 = Color(0xBF465362);
@@ -19,8 +18,9 @@ const _Jacarta = Color(0xFF3F4060);
 const _Arsenic = Color(0xFF3D3A4B);
 const _Arsenic50 = Color(0x803D3A4B);
 const _WarmBlack = Color(0xFF004346);
-const _PaleRobinEggBlue50 = Color(0x809AD1D4);
 const _Blue = Color(0xFF1E00FF);
+const _Blueberry = Color(0xFF5E8AFB);
+const _ColumbiaBlue = Color(0xFFC3EBE4);
 const _CetaceanBlue = Color(0xFF091540);
 const _CetaceanBlue50 = Color(0x80091540);
 
@@ -178,12 +178,14 @@ final class AppUniqueComponentsColors {
   final Color todoProductText;
   final Color addedProductText;
   final Color fabBackground;
+  final Color underlayActionRowContent;
 
   const AppUniqueComponentsColors({
-    this.todoProductBackground = _Crayola75,
-    this.addedProductBackground = _PaleRobinEggBlue50,
+    this.todoProductBackground = _Blueberry,
+    this.addedProductBackground = _ColumbiaBlue,
     this.todoProductText = _MintCream,
     this.addedProductText = _Independence75,
     this.fabBackground = _Blue,
+    this.underlayActionRowContent = _MintCream,
   });
 }

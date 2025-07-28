@@ -295,6 +295,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to create new product on the server'**
   String get cart_error_product_add;
+
+  /// No description provided for @cart_action_edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get cart_action_edit;
+
+  /// No description provided for @cart_action_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get cart_action_delete;
 }
 
 class _AppLocalizationsDelegate

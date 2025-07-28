@@ -83,7 +83,10 @@ final class EventChangeAddedListExpanded extends CartEvent {
   EventChangeAddedListExpanded({required this.isExpanded});
 }
 
-final class EventAddProduct extends CartEvent {}
+final class EventStartProductDrag extends CartEvent {
+  final ProductId id;
+  EventStartProductDrag({required this.id});
+}
 
 extension AddCartEvent on BuildContext {
   void addCartEvent(CartEvent event) =>
