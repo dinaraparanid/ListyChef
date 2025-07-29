@@ -35,4 +35,12 @@ final class CartRepositoryImpl implements CartRepository {
   Future<void> addProduct({required ProductData data}) async {
     await _firestoreDataSource.addProduct(data: data);
   }
+
+  @override
+  Future<void> updateProduct({
+    required ProductId id,
+    required ProductData newData,
+  }) async {
+    await _firestoreDataSource.updateProduct(id: id, newData: newData);
+  }
 }

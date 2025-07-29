@@ -7,8 +7,9 @@ import 'package:listy_chef/core/domain/list/list_difference_use_case.dart';
 import 'package:listy_chef/core/domain/list/product_diff_delegate.dart';
 import 'package:listy_chef/core/domain/text/text_change_use_case.dart';
 import 'package:listy_chef/core/presentation/foundation/ui_state.dart';
-import 'package:listy_chef/feature/main/child/cart/domain/add_product_event_bus.dart';
+import 'package:listy_chef/feature/main/child/cart/domain/load_cart_lists_event_bus.dart';
 import 'package:listy_chef/feature/main/child/cart/domain/check_product_use_case.dart';
+import 'package:listy_chef/feature/main/child/cart/domain/delete_product_use_case.dart';
 import 'package:listy_chef/feature/main/child/cart/domain/load_cart_lists_use_case.dart';
 import 'package:listy_chef/feature/main/child/cart/presentation/bloc/cart_effect.dart';
 import 'package:listy_chef/feature/main/child/cart/presentation/bloc/cart_event.dart';
@@ -23,8 +24,9 @@ final class CartBloc extends Bloc<CartEvent, CartState>
     required TextChangeUseCase textChangeUseCase,
     required LoadCartListsUseCase loadCartListsUseCase,
     required CheckProductUseCase checkProductUseCase,
+    required DeleteProductUseCase deleteProductUseCase,
     required ListDifferenceUseCase listDifferenceUseCase,
-    required AddProductEventBus addProductEventBus,
+    required LoadCartListsEventBus addProductEventBus,
   }) : super(CartState()) {
     void handleListDifferences({
       required IList<Product> oldTodoList,
@@ -79,12 +81,12 @@ final class CartBloc extends Bloc<CartEvent, CartState>
           oldAddedList: oldAddedList,
           newAddedList: newAddedList,
         );
-      } else {
-        add(EventUpdateListStates(
-          todoProductsState: newTodoState,
-          addedProductsState: newAddedState,
-        ));
       }
+
+      add(EventUpdateListStates(
+        todoProductsState: newTodoState,
+        addedProductsState: newAddedState,
+      ));
     });
 
     on<EventSearchQueryChange>((event, emit) => textChangeUseCase(
@@ -128,9 +130,7 @@ final class CartBloc extends Bloc<CartEvent, CartState>
     on<EventProductCheck>((event, emit) async {
       await checkProductUseCase(
         id: event.id,
-        onError: () {
-          // TODO: show alert
-        },
+        onError: () => emitPresentation(EffectFailedToCheckProduct()),
       );
 
       emitPresentation(EffectCheckProduct(
@@ -142,9 +142,7 @@ final class CartBloc extends Bloc<CartEvent, CartState>
     on<EventProductUncheck>((event, emit) async {
       await checkProductUseCase(
         id: event.id,
-        onError: () {
-          // TODO: show alert
-        },
+        onError: () => emitPresentation(EffectFailedToUncheckProduct()),
       );
 
       emitPresentation(EffectUncheckProduct(
@@ -186,6 +184,19 @@ final class CartBloc extends Bloc<CartEvent, CartState>
     on<EventStartProductDrag>((event, emit) =>
       emit(state.copyWith(draggingProduct: event.id)),
     );
+
+    on<EventDeleteProduct>((event, emit) async {
+      await deleteProductUseCase(
+        id: event.id,
+        onSuccess: () => add(EventLoadLists()),
+        onFailure: () => emitPresentation(EffectFailedToDeleteProduct()),
+      );
+    });
+
+    on<EventEditProduct>((event, emit) {
+      emit(state.copyWith(draggingProduct: null));
+      emitPresentation(EffectShowUpdateProductMenu(product: event.product));
+    });
 
     add(EventLoadLists());
 

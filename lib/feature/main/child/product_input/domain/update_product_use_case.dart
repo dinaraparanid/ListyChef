@@ -1,37 +1,35 @@
-import 'package:listy_chef/core/domain/auth/repository/auth_repository.dart';
 import 'package:listy_chef/core/domain/cart/entity/mod.dart';
 import 'package:listy_chef/core/domain/cart/repository/cart_repository.dart';
 import 'package:listy_chef/core/domain/logger/app_logger.dart';
-import 'package:listy_chef/core/utils/functions/do_nothing.dart';
+import 'package:listy_chef/core/utils/ext/firestore_operation_timeout.dart';
 
-final class AddProductUseCase {
-  static const _timeout = Duration(seconds: 1);
-
+final class UpdateProductUseCase {
   final CartRepository _cartRepository;
-  final AuthRepository _authRepository;
 
-  AddProductUseCase({
+  UpdateProductUseCase({
     required CartRepository cartRepository,
-    required AuthRepository authRepository,
-  }) : _cartRepository = cartRepository, _authRepository = authRepository;
+  }) : _cartRepository = cartRepository;
 
   Future<void> call({
+    required ProductId id,
+    required ProductData previousData,
     required String productTitle,
     required void Function() onSuccess,
     required void Function() onError,
   }) => _cartRepository
-    .addProduct(
-      data: ProductData(
-        isAdded: false,
-        email: _authRepository.email,
+    .updateProduct(
+      id: id,
+      newData: ProductData(
+        isAdded: previousData.isAdded,
+        email: previousData.email,
         value: productTitle,
         timestamp: DateTime.now().millisecondsSinceEpoch,
       ),
     )
-    .timeout(_timeout, onTimeout: doNothing)
+    .firestoreTimeout()
     .then((_) => onSuccess())
     .catchError((e) {
-      AppLogger.value.e('Error during product add', error: e);
+      AppLogger.value.e('Error during product update', error: e);
       onError();
     });
 }

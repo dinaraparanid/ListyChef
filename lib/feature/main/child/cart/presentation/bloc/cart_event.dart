@@ -88,6 +88,16 @@ final class EventStartProductDrag extends CartEvent {
   EventStartProductDrag({required this.id});
 }
 
+final class EventDeleteProduct extends CartEvent {
+  final ProductId id;
+  EventDeleteProduct({required this.id});
+}
+
+final class EventEditProduct extends CartEvent {
+  final Product product;
+  EventEditProduct({required this.product});
+}
+
 extension AddCartEvent on BuildContext {
   void addCartEvent(CartEvent event) =>
     BlocProvider.of<CartBloc>(this).add(event);

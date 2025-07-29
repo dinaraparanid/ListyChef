@@ -43,6 +43,27 @@ final class CartFirestoreDataSource implements CartDataSource {
   Future<void> addProduct({required ProductData data}) =>
     _productsCollection.add(data.toFirestoreData());
 
+  @override
+  Future<void> updateProduct({
+    required ProductId id,
+    required ProductData newData,
+  }) async {
+    final docRef = _productsCollection.doc(id.value);
+
+    await FirebaseFirestore.instance.runTransaction((transaction) async {
+      await transaction.get(docRef).then((doc) {
+        final now = DateTime.now().millisecondsSinceEpoch;
+
+        transaction.update(docRef, {
+          Product.firestoreFieldEmail: newData.email?.value,
+          Product.firestoreFieldProduct: newData.value,
+          Product.firestoreFieldAdded: newData.isAdded,
+          Product.firestoreFieldTimestamp: now,
+        });
+      });
+    });
+  }
+
   CollectionReference<Map<String, dynamic>> get _productsCollection =>
     FirebaseFirestore.instance.collection(_collectionCart);
 

@@ -48,7 +48,11 @@
 
   "cart_product_field_placeholder": "Product title",
   "cart_label_added": "Added",
-  "cart_error_product_add": "Failed to create new product on the server",
+  "cart_error_product_add": "Failed to create new product",
+  "cart_error_product_check": "Failed to check product",
+  "cart_error_product_uncheck": "Failed to uncheck product",
+  "cart_error_product_delete": "Failed to delete product",
+  "cart_error_product_update": "Failed to update product",
   "cart_action_edit": "Edit",
   "cart_action_delete": "Delete"
 }

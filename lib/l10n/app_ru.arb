@@ -48,7 +48,11 @@
 
   "cart_product_field_placeholder": "Название продукта",
   "cart_label_added": "Добавленное",
-  "cart_error_product_add": "Не получилось создать новый продукт на сервере",
+  "cart_error_product_add": "Не получилось создать новый продукт",
+  "cart_error_product_check": "Не получилось отметить продукт",
+  "cart_error_product_uncheck": "Не получилось снять отметку с продукта",
+  "cart_error_product_delete": "Не получилось удалить продукт",
+  "cart_error_product_update": "Не получилось обновить продукт",
   "cart_action_edit": "Редактировать",
   "cart_action_delete": "Удалить"
 }

@@ -59,74 +59,70 @@ final class _AppUnderlayActionRowState extends State<AppUnderlayActionRow> {
   }
 
   @override
-  Widget build(BuildContext context) => LayoutBuilder(
-    builder: (context, constraints) => Stack(
-      alignment: AlignmentDirectional.centerStart,
-      children: [
-        Align(
-          alignment: Alignment.centerRight,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ...widget.actions.map((act) => Container(
-                color: act.backgroundColor,
-                child: AppClickable(
-                  onClick: act.onClick,
-                  child: Padding(
-                    padding: EdgeInsets.all(
-                      context.appTheme.dimensions.padding.extraMedium,
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SvgPicture.asset(
-                          act.icon.value,
-                          width: context.appTheme.dimensions.size.small,
-                          height: context.appTheme.dimensions.size.small,
-                          colorFilter: ColorFilter.mode(
-                            context.appTheme.colors.unique.underlayActionRowContent,
-                            BlendMode.srcIn,
-                          ),
+  Widget build(BuildContext context) => Stack(
+    alignment: AlignmentDirectional.centerStart,
+    children: [
+      Align(
+        alignment: Alignment.centerRight,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ...widget.actions.map((act) => Container(
+              color: act.backgroundColor,
+              child: AppClickable(
+                onClick: act.onClick,
+                child: Padding(
+                  padding: EdgeInsets.all(
+                    context.appTheme.dimensions.padding.extraMedium,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SvgPicture.asset(
+                        act.icon.value,
+                        width: context.appTheme.dimensions.size.small,
+                        height: context.appTheme.dimensions.size.small,
+                        colorFilter: ColorFilter.mode(
+                          context.appTheme.colors.unique.underlayActionRowContent,
+                          BlendMode.srcIn,
                         ),
+                      ),
 
-                        ...?act.name?.let((name) => [
-                          SizedBox(height: context.appTheme.dimensions.padding.minimum),
+                      ...?act.name?.let((name) => [
+                        SizedBox(height: context.appTheme.dimensions.padding.minimum),
 
-                          FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              name,
-                              style: context.appTheme.typography.captionSm.copyWith(
-                                color: context.appTheme.colors.unique.underlayActionRowContent,
-                              ),
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            name,
+                            style: context.appTheme.typography.captionSm.copyWith(
+                              color: context.appTheme.colors.unique.underlayActionRowContent,
                             ),
                           ),
-                        ]),
-                      ],
-                    ),
+                        ),
+                      ]),
+                    ],
                   ),
                 ),
-              )),
-            ],
-          ),
+              ),
+            )),
+          ],
         ),
+      ),
 
-        AnimatedPositioned(
-          left: widget.isPositionKept != false ? position : 0,
-          duration: _animationDuration,
-          child: SizedBox(
-            width: constraints.maxWidth,
-            child: GestureDetector(
-              onHorizontalDragStart: (_) => widget.onDragStart?.call(),
-              onHorizontalDragUpdate: (details) => _onDragUpdate(details.primaryDelta!),
-              onHorizontalDragEnd: (details) => _onDragEnd(),
-              child: widget.child,
-            ),
-          ),
+      AnimatedPositioned(
+        duration: _animationDuration,
+        right: widget.isPositionKept != false ? -position : 0,
+        left: widget.isPositionKept != false ? position : 0,
+        child: GestureDetector(
+          onHorizontalDragStart: (_) => widget.onDragStart?.call(),
+          onHorizontalDragUpdate: (details) => _onDragUpdate(details.primaryDelta!),
+          onHorizontalDragEnd: (details) => _onDragEnd(),
+          child: widget.child,
         ),
-      ],
-    ),
+      ),
+    ],
   );
 
   void _onDragUpdate(double delta) => setState(() {

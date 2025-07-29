@@ -8,4 +8,8 @@ abstract interface class CartRepository {
   Future<void> checkProduct({required ProductId id});
   Future<void> removeProduct({required ProductId id});
   Future<void> addProduct({required ProductData data});
+  Future<void> updateProduct({
+    required ProductId id,
+    required ProductData newData,
+  });
 }

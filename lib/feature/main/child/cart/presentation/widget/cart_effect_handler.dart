@@ -3,14 +3,17 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/rendering.dart';
 import 'package:listy_chef/core/domain/cart/entity/product.dart';
+import 'package:listy_chef/core/presentation/foundation/app_snackbar.dart';
 import 'package:listy_chef/core/presentation/foundation/ui_state.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
+import 'package:listy_chef/core/presentation/theme/strings.dart';
 import 'package:listy_chef/core/utils/ext/ilist_ext.dart';
-import 'package:listy_chef/core/utils/functions/do_nothing.dart';
 import 'package:listy_chef/feature/main/child/cart/presentation/bloc/mod.dart';
 import 'package:listy_chef/feature/main/child/cart/presentation/widget/cart_lists.dart';
 import 'package:listy_chef/feature/main/child/cart/presentation/widget/cart_lists_node.dart';
 import 'package:listy_chef/feature/main/child/cart/presentation/widget/product_item.dart';
+import 'package:listy_chef/feature/main/child/product_input/presentation/bloc/product_input_state.dart';
+import 'package:listy_chef/feature/main/child/product_input/presentation/product_input_menu.dart';
 
 const _moveDuration = Duration(milliseconds: 400);
 
@@ -62,9 +65,30 @@ Future<void>? onCartEffect({
     item: effect.product,
   ),
 
-  // TODO?
-  EffectChangeTodoProduct() => null,
-  EffectChangeAddedProduct() => null,
+  EffectShowUpdateProductMenu() => _showUpdateProductMenu(
+    context: context,
+    product: effect.product,
+  ),
+
+  EffectFailedToCheckProduct() => _showErrorSnackBar(
+    context: context,
+    message: context.strings.cart_error_product_check,
+  ),
+
+  EffectFailedToUncheckProduct() => _showErrorSnackBar(
+    context: context,
+    message: context.strings.cart_error_product_uncheck,
+  ),
+
+  EffectFailedToDeleteProduct() => _showErrorSnackBar(
+    context: context,
+    message: context.strings.cart_error_product_delete,
+  ),
+
+  EffectFailedToEditProduct() => _showErrorSnackBar(
+    context: context,
+    message: context.strings.cart_error_product_update,
+  ),
 };
 
 void _updateTodoAnimation({
@@ -130,7 +154,7 @@ Future<void> _onProductChecked({
         child: Opacity(
           key: itemKey,
           opacity: addedListKey.currentContext == null ? animation.value : 0,
-          child: ProductItem(product: item, onCheckChange: doNothing),
+          child: ProductItem(product: item),
         ),
       ),
     ),
@@ -172,7 +196,7 @@ Future<void> _onProductChecked({
           top: offset.dy,
           child: SizedBox(
             width: fromBox.size.width,
-            child: ProductItem(product: reversedItem, onCheckChange: doNothing),
+            child: ProductItem(product: reversedItem),
           ),
         ),
       ),
@@ -212,11 +236,11 @@ Future<void> _onProductUnchecked({
     (context, animation) => SizeTransition(
       sizeFactor: animation,
       child: SizedBox(
-        key: itemKey,
         width: double.infinity,
         child: Opacity(
+          key: itemKey,
           opacity: 0,
-          child: ProductItem(product: item, onCheckChange: doNothing),
+          child: ProductItem(product: item),
         ),
       ),
     ),
@@ -251,7 +275,7 @@ Future<void> _onProductUnchecked({
           top: offset.dy,
           child: SizedBox(
             width: fromBox.size.width,
-            child: ProductItem(product: reversedItem, onCheckChange: doNothing),
+            child: ProductItem(product: reversedItem),
           ),
         ),
       ),
@@ -320,7 +344,7 @@ Future<void>? _onRemoveTodoProduct({
       sizeFactor: animation,
       child: SizedBox(
         width: double.infinity,
-        child: ProductItem(product: item, onCheckChange: doNothing),
+        child: ProductItem(product: item),
       ),
     ),
     duration: _moveDuration,
@@ -343,7 +367,7 @@ Future<void>? _onRemoveAddedProduct({
       sizeFactor: animation,
       child: SizedBox(
         width: double.infinity,
-        child: ProductItem(product: item, onCheckChange: doNothing),
+        child: ProductItem(product: item),
       ),
     ),
     duration: _moveDuration,
@@ -351,3 +375,22 @@ Future<void>? _onRemoveAddedProduct({
 
   return null;
 }
+
+Future<void> _showUpdateProductMenu({
+  required BuildContext context,
+  required Product product,
+}) => showProductInputMenu(
+  context: context,
+  mode: ProductInputMode.update,
+  initialProduct: product,
+);
+
+Future<void> _showErrorSnackBar({
+  required BuildContext context,
+  required String message,
+}) => showAppSnackBar(
+  context: context,
+  title: context.strings.error,
+  message: message,
+  mode: AppSnackBarMode.error,
+);

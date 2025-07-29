@@ -116,8 +116,20 @@ class AppLocalizationsRu extends AppLocalizations {
   String get cart_label_added => 'Добавленное';
 
   @override
-  String get cart_error_product_add =>
-      'Не получилось создать новый продукт на сервере';
+  String get cart_error_product_add => 'Не получилось создать новый продукт';
+
+  @override
+  String get cart_error_product_check => 'Не получилось отметить продукт';
+
+  @override
+  String get cart_error_product_uncheck =>
+      'Не получилось снять отметку с продукта';
+
+  @override
+  String get cart_error_product_delete => 'Не получилось удалить продукт';
+
+  @override
+  String get cart_error_product_update => 'Не получилось обновить продукт';
 
   @override
   String get cart_action_edit => 'Редактировать';

@@ -293,8 +293,32 @@ abstract class AppLocalizations {
   /// No description provided for @cart_error_product_add.
   ///
   /// In en, this message translates to:
-  /// **'Failed to create new product on the server'**
+  /// **'Failed to create new product'**
   String get cart_error_product_add;
+
+  /// No description provided for @cart_error_product_check.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to check product'**
+  String get cart_error_product_check;
+
+  /// No description provided for @cart_error_product_uncheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to uncheck product'**
+  String get cart_error_product_uncheck;
+
+  /// No description provided for @cart_error_product_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete product'**
+  String get cart_error_product_delete;
+
+  /// No description provided for @cart_error_product_update.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update product'**
+  String get cart_error_product_update;
 
   /// No description provided for @cart_action_edit.
   ///
