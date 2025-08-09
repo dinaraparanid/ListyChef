@@ -18,12 +18,16 @@ final class MainBloc extends Bloc<MainEvent, MainState>
   MainBloc({
     required AppRouter router,
   }) : _router = router, super(MainState()) {
-    on<EventNavigateToCart>((event, emit) => emit(
-      state.copyWith(route: MainRoute.cart()),
+    on<EventNavigateToFolders>((event, emit) => emit(
+      state.copyWith(route: MainRoute.folders()),
     ));
 
-    on<EventNavigateToRecipes>((event, emit) => emit(
-      state.copyWith(route: MainRoute.recipes()),
+    on<EventNavigateToFolder>((event, emit) => emit(
+      state.copyWith(route: MainRoute.folder(folderId: event.folderId)),
+    ));
+
+    on<EventNavigateToTransfer>((event, emit) => emit(
+      state.copyWith(route: MainRoute.transfer()),
     ));
 
     on<EventNavigateToProfile>((event, emit) => emit(
@@ -31,13 +35,18 @@ final class MainBloc extends Bloc<MainEvent, MainState>
     ));
 
     on<EventNavigateToRoute>((event, emit) => switch (event.route) {
-      MainRouteCart() => add(EventNavigateToCart()),
-      MainRouteRecipes() => add(EventNavigateToRecipes()),
+      MainRouteFolders() => add(EventNavigateToFolders()),
+
+      MainRouteFolder(folderId: final id) =>
+        add(EventNavigateToFolder(folderId: id)),
+
+      MainRouteTransfer() => add(EventNavigateToTransfer()),
+
       MainRouteProfile() => add(EventNavigateToProfile()),
     });
 
-    on<EventShowAddProductMenu>((event, emit) =>
-      emitPresentation(EffectShowAddProductMenu()),
+    on<EventShowAddFolderItemMenu>((event, emit) =>
+      emitPresentation(EffectShowAddFolderItemMenu(folderId: event.folderId)),
     );
 
     _listenRouteChanges();
@@ -58,8 +67,17 @@ final class MainBloc extends Bloc<MainEvent, MainState>
   }
 
   void _navigateToMainRoute(MainRoute route) => switch (route) {
-    MainRouteCart() => _router.value.goNamed(AppRoute.cart.name),
-    MainRouteRecipes() => _router.value.goNamed(AppRoute.recipes.name),
+    MainRouteFolders() => _router.value.goNamed(AppRoute.folders.name),
+
+    MainRouteFolder() => _router.value.goNamed(
+      AppRoute.folder.name,
+      pathParameters: {
+        AppRoute.pathFolderId: route.folderId.value,
+      },
+    ),
+
+    MainRouteTransfer() => _router.value.goNamed(AppRoute.transfer.name),
+
     MainRouteProfile() => _router.value.goNamed(AppRoute.profile.name),
   };
 }

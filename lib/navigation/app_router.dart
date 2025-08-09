@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:listy_chef/core/di/di.dart';
+import 'package:listy_chef/core/domain/folders/entity/folder_id.dart';
 import 'package:listy_chef/feature/auth/child/sign_in/presentation/sign_in_screen.dart';
 import 'package:listy_chef/feature/auth/child/sign_up/presentation/sign_up_screen.dart';
 import 'package:listy_chef/feature/auth/presentation/auth_screen.dart';
-import 'package:listy_chef/feature/main/child/cart/presentation/cart_screen.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/folder_screen.dart';
 import 'package:listy_chef/feature/main/presentation/main_screen.dart';
 import 'package:listy_chef/feature/root/presentation/root_screen.dart';
 import 'package:listy_chef/navigation/app_route.dart';
@@ -92,16 +93,31 @@ final class AppRouter {
                 },
               ),
               GoRoute(
-                path: AppRoute.cart.path,
-                name: AppRoute.cart.name,
-                builder: (context, state) => CartScreen(
-                  blocFactory: di(),
-                ),
+                path: AppRoute.folders.path,
+                name: AppRoute.folders.name,
+                builder: (context, state) => Text('TODO: FoldersScreen()'),
               ),
               GoRoute(
-                path: AppRoute.recipes.path,
-                name: AppRoute.recipes.name,
-                builder: (context, state) => Text('TODO: RecipesScreen()'),
+                path: AppRoute.folder.path,
+                name: AppRoute.folder.name,
+                builder: (context, state) {
+                  final folderId = state.pathParameters[AppRoute.pathFolderId];
+
+                  if (folderId == null) {
+                    // TODO: redirect to unknown page 404
+                    return SizedBox();
+                  }
+
+                  return FolderScreen(
+                    folderId: FolderId(folderId),
+                    blocFactory: di(),
+                  );
+                },
+              ),
+              GoRoute(
+                path: AppRoute.transfer.path,
+                name: AppRoute.transfer.name,
+                builder: (context, state) => Text('TODO: TransferScreen()'),
               ),
               GoRoute(
                 path: AppRoute.profile.path,

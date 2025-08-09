@@ -41,18 +41,18 @@
     }
   },
 
-  "main_tab_cart": "Корзина",
-  "main_tab_recipes": "Рецепты",
+  "main_tab_folders": "Папки",
+  "main_tab_transfer": "Трансфер",
   "main_tab_profile": "Профиль",
   "main_action_add": "Добавить",
 
-  "cart_product_field_placeholder": "Название продукта",
-  "cart_label_added": "Добавленное",
-  "cart_error_product_add": "Не получилось создать новый продукт",
-  "cart_error_product_check": "Не получилось отметить продукт",
-  "cart_error_product_uncheck": "Не получилось снять отметку с продукта",
-  "cart_error_product_delete": "Не получилось удалить продукт",
-  "cart_error_product_update": "Не получилось обновить продукт",
-  "cart_action_edit": "Редактировать",
-  "cart_action_delete": "Удалить"
+  "folder_item_field_placeholder": "Название",
+  "folder_item_label_added": "Добавленное",
+  "folder_item_error_add": "Не получилось создать новый элемент",
+  "folder_item_error_check": "Не получилось отметить элемент",
+  "folder_item_error_uncheck": "Не получилось снять отметку с элемента",
+  "folder_item_error_delete": "Не получилось удалить элемент",
+  "folder_item_error_update": "Не получилось обновить элемент",
+  "folder_item_action_edit": "Редактировать",
+  "folder_item_action_delete": "Удалить"
 }

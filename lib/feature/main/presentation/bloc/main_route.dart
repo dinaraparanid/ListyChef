@@ -1,25 +1,27 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:listy_chef/core/domain/folders/entity/folder_id.dart';
 
 part 'main_route.freezed.dart';
 
 @freezed
 sealed class MainRoute with _$MainRoute {
-  const factory MainRoute.cart() = MainRouteCart;
-  const factory MainRoute.recipes() = MainRouteRecipes;
+  const factory MainRoute.folders() = MainRouteFolders;
+  const factory MainRoute.folder({required FolderId folderId}) = MainRouteFolder;
+  const factory MainRoute.transfer() = MainRouteTransfer;
   const factory MainRoute.profile() = MainRouteProfile;
 
-  factory MainRoute.fromOrdinal(int index) => switch (index) {
-    0 => MainRoute.cart(),
-    1 => MainRoute.recipes(),
+  factory MainRoute.fromTabPosition(int index) => switch (index) {
+    0 => MainRoute.folders(),
+    1 => MainRoute.transfer(),
     2 => MainRoute.profile(),
     _ => throw RangeError('Illegal tab index: $index'),
   };
 }
 
-extension Ordinal on MainRoute {
-  int get ordinal => switch (this) {
-    MainRouteCart() => 0,
-    MainRouteRecipes() => 1,
+extension TabPosition on MainRoute {
+  int get tabPosition => switch (this) {
+    MainRouteFolders() || MainRouteFolder() => 0,
+    MainRouteTransfer() => 1,
     MainRouteProfile() => 2,
   };
 }

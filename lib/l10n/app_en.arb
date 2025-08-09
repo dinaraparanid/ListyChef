@@ -41,18 +41,18 @@
     }
   },
 
-  "main_tab_cart": "Cart",
-  "main_tab_recipes": "Recipes",
+  "main_tab_folders": "Folders",
+  "main_tab_transfer": "Transfer",
   "main_tab_profile": "Profile",
   "main_action_add": "Add",
 
-  "cart_product_field_placeholder": "Product title",
-  "cart_label_added": "Added",
-  "cart_error_product_add": "Failed to create new product",
-  "cart_error_product_check": "Failed to check product",
-  "cart_error_product_uncheck": "Failed to uncheck product",
-  "cart_error_product_delete": "Failed to delete product",
-  "cart_error_product_update": "Failed to update product",
-  "cart_action_edit": "Edit",
-  "cart_action_delete": "Delete"
+  "folder_item_field_placeholder": "Title",
+  "folder_item_label_added": "Added",
+  "folder_item_error_add": "Failed to create new item",
+  "folder_item_error_check": "Failed to check item",
+  "folder_item_error_uncheck": "Failed to uncheck item",
+  "folder_item_error_delete": "Failed to delete item",
+  "folder_item_error_update": "Failed to update item",
+  "folder_item_action_edit": "Edit",
+  "folder_item_action_delete": "Delete"
 }

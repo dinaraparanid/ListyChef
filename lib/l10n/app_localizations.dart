@@ -254,17 +254,17 @@ abstract class AppLocalizations {
   /// **'User with email `{email}` already exists. Do you want to sign in?'**
   String auth_error_email_already_in_use(String email);
 
-  /// No description provided for @main_tab_cart.
+  /// No description provided for @main_tab_folders.
   ///
   /// In en, this message translates to:
-  /// **'Cart'**
-  String get main_tab_cart;
+  /// **'Folders'**
+  String get main_tab_folders;
 
-  /// No description provided for @main_tab_recipes.
+  /// No description provided for @main_tab_transfer.
   ///
   /// In en, this message translates to:
-  /// **'Recipes'**
-  String get main_tab_recipes;
+  /// **'Transfer'**
+  String get main_tab_transfer;
 
   /// No description provided for @main_tab_profile.
   ///
@@ -278,59 +278,59 @@ abstract class AppLocalizations {
   /// **'Add'**
   String get main_action_add;
 
-  /// No description provided for @cart_product_field_placeholder.
+  /// No description provided for @folder_item_field_placeholder.
   ///
   /// In en, this message translates to:
-  /// **'Product title'**
-  String get cart_product_field_placeholder;
+  /// **'Title'**
+  String get folder_item_field_placeholder;
 
-  /// No description provided for @cart_label_added.
+  /// No description provided for @folder_item_label_added.
   ///
   /// In en, this message translates to:
   /// **'Added'**
-  String get cart_label_added;
+  String get folder_item_label_added;
 
-  /// No description provided for @cart_error_product_add.
+  /// No description provided for @folder_item_error_add.
   ///
   /// In en, this message translates to:
-  /// **'Failed to create new product'**
-  String get cart_error_product_add;
+  /// **'Failed to create new item'**
+  String get folder_item_error_add;
 
-  /// No description provided for @cart_error_product_check.
+  /// No description provided for @folder_item_error_check.
   ///
   /// In en, this message translates to:
-  /// **'Failed to check product'**
-  String get cart_error_product_check;
+  /// **'Failed to check item'**
+  String get folder_item_error_check;
 
-  /// No description provided for @cart_error_product_uncheck.
+  /// No description provided for @folder_item_error_uncheck.
   ///
   /// In en, this message translates to:
-  /// **'Failed to uncheck product'**
-  String get cart_error_product_uncheck;
+  /// **'Failed to uncheck item'**
+  String get folder_item_error_uncheck;
 
-  /// No description provided for @cart_error_product_delete.
+  /// No description provided for @folder_item_error_delete.
   ///
   /// In en, this message translates to:
-  /// **'Failed to delete product'**
-  String get cart_error_product_delete;
+  /// **'Failed to delete item'**
+  String get folder_item_error_delete;
 
-  /// No description provided for @cart_error_product_update.
+  /// No description provided for @folder_item_error_update.
   ///
   /// In en, this message translates to:
-  /// **'Failed to update product'**
-  String get cart_error_product_update;
+  /// **'Failed to update item'**
+  String get folder_item_error_update;
 
-  /// No description provided for @cart_action_edit.
+  /// No description provided for @folder_item_action_edit.
   ///
   /// In en, this message translates to:
   /// **'Edit'**
-  String get cart_action_edit;
+  String get folder_item_action_edit;
 
-  /// No description provided for @cart_action_delete.
+  /// No description provided for @folder_item_action_delete.
   ///
   /// In en, this message translates to:
   /// **'Delete'**
-  String get cart_action_delete;
+  String get folder_item_action_delete;
 }
 
 class _AppLocalizationsDelegate

@@ -6,6 +6,6 @@ part 'main_state.freezed.dart';
 @freezed
 abstract class MainState with _$MainState {
   const factory MainState({
-    @Default(MainRoute.cart()) MainRoute route,
+    @Default(MainRoute.folders()) MainRoute route,
   }) = _MainState;
 }

@@ -96,10 +96,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get main_tab_cart => 'Cart';
+  String get main_tab_folders => 'Folders';
 
   @override
-  String get main_tab_recipes => 'Recipes';
+  String get main_tab_transfer => 'Transfer';
 
   @override
   String get main_tab_profile => 'Profile';
@@ -108,29 +108,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get main_action_add => 'Add';
 
   @override
-  String get cart_product_field_placeholder => 'Product title';
+  String get folder_item_field_placeholder => 'Title';
 
   @override
-  String get cart_label_added => 'Added';
+  String get folder_item_label_added => 'Added';
 
   @override
-  String get cart_error_product_add => 'Failed to create new product';
+  String get folder_item_error_add => 'Failed to create new item';
 
   @override
-  String get cart_error_product_check => 'Failed to check product';
+  String get folder_item_error_check => 'Failed to check item';
 
   @override
-  String get cart_error_product_uncheck => 'Failed to uncheck product';
+  String get folder_item_error_uncheck => 'Failed to uncheck item';
 
   @override
-  String get cart_error_product_delete => 'Failed to delete product';
+  String get folder_item_error_delete => 'Failed to delete item';
 
   @override
-  String get cart_error_product_update => 'Failed to update product';
+  String get folder_item_error_update => 'Failed to update item';
 
   @override
-  String get cart_action_edit => 'Edit';
+  String get folder_item_action_edit => 'Edit';
 
   @override
-  String get cart_action_delete => 'Delete';
+  String get folder_item_action_delete => 'Delete';
 }

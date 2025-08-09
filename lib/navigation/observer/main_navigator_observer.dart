@@ -5,8 +5,8 @@ import 'package:listy_chef/navigation/observer/app_navigator_observer.dart';
 final class MainNavigatorObserver extends AppNavigatorObserver {
   @override
   AppRouteData get redirectRoute => findPreviousRoute((data) =>
-    data.name == AppRoute.cart.name ||
-    data.name == AppRoute.recipes.name ||
+    data.name == AppRoute.folders.name ||
+    data.name == AppRoute.transfer.name ||
     data.name == AppRoute.profile.name
-  ) ?? AppRouteData(name: AppRoute.cart.name);
+  ) ?? AppRouteData(name: AppRoute.folders.name);
 }

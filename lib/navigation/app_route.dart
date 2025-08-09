@@ -4,9 +4,12 @@ enum AppRoute {
   signIn(path: '/auth/signIn'),
   signUp(path: '/auth/signUp'),
   main(path: '/main'),
-  cart(path: '/main/cart'),
-  recipes(path: '/main/recipes'),
+  folders(path: '/main/folders'),
+  folder(path: '/main/folders/:$pathFolderId'),
+  transfer(path: '/main/transfer'),
   profile(path: '/main/profile');
+
+  static const pathFolderId = 'folder_id';
 
   static const queryEmail = 'email';
 

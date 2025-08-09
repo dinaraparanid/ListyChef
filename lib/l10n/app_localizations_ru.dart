@@ -98,10 +98,10 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get main_tab_cart => 'Корзина';
+  String get main_tab_folders => 'Папки';
 
   @override
-  String get main_tab_recipes => 'Рецепты';
+  String get main_tab_transfer => 'Трансфер';
 
   @override
   String get main_tab_profile => 'Профиль';
@@ -110,30 +110,30 @@ class AppLocalizationsRu extends AppLocalizations {
   String get main_action_add => 'Добавить';
 
   @override
-  String get cart_product_field_placeholder => 'Название продукта';
+  String get folder_item_field_placeholder => 'Название';
 
   @override
-  String get cart_label_added => 'Добавленное';
+  String get folder_item_label_added => 'Добавленное';
 
   @override
-  String get cart_error_product_add => 'Не получилось создать новый продукт';
+  String get folder_item_error_add => 'Не получилось создать новый элемент';
 
   @override
-  String get cart_error_product_check => 'Не получилось отметить продукт';
+  String get folder_item_error_check => 'Не получилось отметить элемент';
 
   @override
-  String get cart_error_product_uncheck =>
-      'Не получилось снять отметку с продукта';
+  String get folder_item_error_uncheck =>
+      'Не получилось снять отметку с элемента';
 
   @override
-  String get cart_error_product_delete => 'Не получилось удалить продукт';
+  String get folder_item_error_delete => 'Не получилось удалить элемент';
 
   @override
-  String get cart_error_product_update => 'Не получилось обновить продукт';
+  String get folder_item_error_update => 'Не получилось обновить элемент';
 
   @override
-  String get cart_action_edit => 'Редактировать';
+  String get folder_item_action_edit => 'Редактировать';
 
   @override
-  String get cart_action_delete => 'Удалить';
+  String get folder_item_action_delete => 'Удалить';
 }
