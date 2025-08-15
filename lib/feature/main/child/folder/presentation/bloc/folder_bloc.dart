@@ -18,7 +18,7 @@ import 'package:listy_chef/feature/main/child/folder/presentation/bloc/folder_st
 final class FolderBloc extends Bloc<FolderEvent, FolderState>
   with BlocPresentationMixin<FolderState, FolderEffect> {
 
-  StreamSubscription<void>? _addProductEventBusSubscription;
+  StreamSubscription<void>? _loadFolderItemsEventBusSubscription;
 
   FolderBloc({
     required FolderId folderId,
@@ -204,14 +204,14 @@ final class FolderBloc extends Bloc<FolderEvent, FolderState>
 
     add(EventLoadLists());
 
-    _addProductEventBusSubscription = loadFolderItemsEventBus.listen(
+    _loadFolderItemsEventBusSubscription = loadFolderItemsEventBus.listen(
       (_) => add(EventLoadLists())
     );
   }
 
   @override
   Future<void> close() async {
-    await _addProductEventBusSubscription?.cancel();
+    await _loadFolderItemsEventBusSubscription?.cancel();
     return super.close();
   }
 }

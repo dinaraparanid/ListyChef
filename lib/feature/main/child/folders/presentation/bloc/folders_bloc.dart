@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:bloc_presentation/bloc_presentation.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +7,8 @@ import 'package:listy_chef/core/domain/list/folder_diff_delegate.dart';
 import 'package:listy_chef/core/domain/list/list_difference_use_case.dart';
 import 'package:listy_chef/core/domain/text/text_change_use_case.dart';
 import 'package:listy_chef/core/presentation/foundation/ui_state.dart';
+import 'package:listy_chef/feature/main/child/folders/domain/load_folders_event_bus.dart';
+import 'package:listy_chef/feature/main/child/folders/domain/load_folders_use_case.dart';
 import 'package:listy_chef/feature/main/child/folders/presentation/bloc/folders_effect.dart';
 import 'package:listy_chef/feature/main/child/folders/presentation/bloc/folders_event.dart';
 import 'package:listy_chef/feature/main/child/folders/presentation/bloc/folders_state.dart';
@@ -13,9 +16,13 @@ import 'package:listy_chef/feature/main/child/folders/presentation/bloc/folders_
 final class FoldersBloc extends Bloc<FoldersEvent, FoldersState>
   with BlocPresentationMixin<FoldersState, FoldersEffect> {
 
+  StreamSubscription<void>? _loadFoldersEventBusSubscription;
+
   FoldersBloc({
     required TextChangeUseCase textChangeUseCase,
+    required LoadFoldersUseCase loadFoldersUseCase,
     required ListDifferenceUseCase listDifferenceUseCase,
+    required LoadFoldersEventBus loadFoldersEventBus,
   }) : super(FoldersState()) {
     void handleListDifferences({
       required IList<Folder> oldList,
@@ -33,8 +40,21 @@ final class FoldersBloc extends Bloc<FoldersEvent, FoldersState>
       ),
     );
 
-    on<EventLoadFolders>((event, emit) {
-      // TODO
+    on<EventLoadFolders>((event, emit) async {
+      final oldState = state.shownFoldersState;
+      final oldList = oldState.getOrNull;
+
+      final newState = await loadFoldersUseCase();
+      final newList = newState.getOrNull;
+
+      if (oldList != null && newList != null) {
+        handleListDifferences(
+          oldList: oldList,
+          newList: newList,
+        );
+      }
+
+      add(EventUpdateFoldersState(foldersState: newState));
     });
 
     on<EventSearchQueryChange>((event, emit) => textChangeUseCase(
@@ -63,5 +83,17 @@ final class FoldersBloc extends Bloc<FoldersEvent, FoldersState>
     on<EventFolderClick>((event, emit) {
       // TODO
     });
+
+    add(EventLoadFolders());
+
+    _loadFoldersEventBusSubscription = loadFoldersEventBus.listen(
+      (_) => add(EventLoadFolders()),
+    );
+  }
+
+  @override
+  Future<void> close() async {
+    await _loadFoldersEventBusSubscription?.cancel();
+    return super.close();
   }
 }
