@@ -6,6 +6,7 @@ import 'package:listy_chef/feature/auth/child/sign_in/presentation/sign_in_scree
 import 'package:listy_chef/feature/auth/child/sign_up/presentation/sign_up_screen.dart';
 import 'package:listy_chef/feature/auth/presentation/auth_screen.dart';
 import 'package:listy_chef/feature/main/child/folder/presentation/folder_screen.dart';
+import 'package:listy_chef/feature/main/child/folders/presentation/folders_screen.dart';
 import 'package:listy_chef/feature/main/presentation/main_screen.dart';
 import 'package:listy_chef/feature/root/presentation/root_screen.dart';
 import 'package:listy_chef/navigation/app_route.dart';
@@ -95,7 +96,7 @@ final class AppRouter {
               GoRoute(
                 path: AppRoute.folders.path,
                 name: AppRoute.folders.name,
-                builder: (context, state) => Text('TODO: FoldersScreen()'),
+                builder: (context, state) => FoldersScreen(blocFactory: di()),
               ),
               GoRoute(
                 path: AppRoute.folder.path,

@@ -46,6 +46,8 @@
   "main_tab_profile": "Профиль",
   "main_action_add": "Добавить",
 
+  "folders_field_placeholder": "Имя папки",
+
   "folder_item_field_placeholder": "Название",
   "folder_item_label_added": "Добавленное",
   "folder_item_error_add": "Не получилось создать новый элемент",

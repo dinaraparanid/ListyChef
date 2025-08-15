@@ -98,7 +98,7 @@ final class EventEditItem extends FolderEvent {
   EventEditItem({required this.item});
 }
 
-extension AddCartEvent on BuildContext {
+extension AddFolderEvent on BuildContext {
   void addFolderEvent(FolderEvent event) =>
     BlocProvider.of<FolderBloc>(this).add(event);
 }

@@ -278,6 +278,12 @@ abstract class AppLocalizations {
   /// **'Add'**
   String get main_action_add;
 
+  /// No description provided for @folders_field_placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Folder\'s name'**
+  String get folders_field_placeholder;
+
   /// No description provided for @folder_item_field_placeholder.
   ///
   /// In en, this message translates to:

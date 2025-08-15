@@ -46,6 +46,8 @@
   "main_tab_profile": "Profile",
   "main_action_add": "Add",
 
+  "folders_field_placeholder": "Folder's name",
+
   "folder_item_field_placeholder": "Title",
   "folder_item_label_added": "Added",
   "folder_item_error_add": "Failed to create new item",

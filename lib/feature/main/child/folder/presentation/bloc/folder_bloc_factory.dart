@@ -1,5 +1,4 @@
 import 'package:listy_chef/core/domain/folders/entity/folder_id.dart';
-import 'package:listy_chef/core/domain/folders/entity/folder_purpose.dart';
 import 'package:listy_chef/core/domain/list/list_difference_use_case.dart';
 import 'package:listy_chef/core/domain/text/text_change_use_case.dart';
 import 'package:listy_chef/feature/main/child/folder/domain/check_folder_item_use_case.dart';
