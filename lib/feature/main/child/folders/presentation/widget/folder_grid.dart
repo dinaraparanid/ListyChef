@@ -6,7 +6,7 @@ import 'package:listy_chef/feature/main/child/folders/presentation/widget/folder
 import 'package:listy_chef/feature/main/child/folders/presentation/widget/folder_node.dart';
 
 final class FolderGrid extends StatelessWidget {
-  static const _itemMaxWidth = 100.0;
+  static const _itemMaxSize = 100.0;
 
   final IList<Folder> folders;
 
@@ -20,10 +20,10 @@ final class FolderGrid extends StatelessWidget {
     key: gridKey,
     initialItemCount: folders.length,
     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-      maxCrossAxisExtent: _itemMaxWidth,
-      mainAxisExtent: _itemMaxWidth,
+      maxCrossAxisExtent: _itemMaxSize,
+      mainAxisExtent: _itemMaxSize,
       mainAxisSpacing: context.appTheme.dimensions.padding.small,
-      crossAxisSpacing: context.appTheme.dimensions.padding.big,
+      crossAxisSpacing: context.appTheme.dimensions.padding.small,
     ),
     itemBuilder: (context, index, animation) => SizeTransition(
       sizeFactor: animation,

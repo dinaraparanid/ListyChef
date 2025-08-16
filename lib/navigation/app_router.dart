@@ -111,7 +111,9 @@ final class AppRouter {
 
                   return FolderScreen(
                     folderId: FolderId(folderId),
-                    blocFactory: di(),
+                    checkFolderBlocFactory: di(),
+                    listFolderBlocFactory: di(),
+                    loadFolderUseCase: di(),
                   );
                 },
               ),

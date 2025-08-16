@@ -8,61 +8,61 @@ import 'package:listy_chef/core/presentation/foundation/ui_state.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
 import 'package:listy_chef/core/utils/ext/ilist_ext.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/bloc/folder_effect.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/bloc/folder_event.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/bloc/folder_state.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/widget/folder_item_check_lists.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/widget/folder_item_check_lists_node.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/widget/folder_item_node.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_effect.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_event.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_state.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/widget/check/folder_item_check_lists.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/widget/check/folder_item_check_lists_node.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/widget/check/check_folder_item_node.dart';
 import 'package:listy_chef/feature/main/child/folder_input/presentation/bloc/folder_input_mode.dart';
 import 'package:listy_chef/feature/main/child/folder_input/presentation/folder_item_input_menu.dart';
 
 const _moveDuration = Duration(milliseconds: 400);
 
-Future<void>? onFolderEffect({
+Future<void>? onCheckFolderEffect({
   required BuildContext context,
-  required FolderEffect effect,
+  required CheckFolderEffect effect,
 }) => switch (effect) {
   EffectCheckFolderItem() => _onFolderItemChecked(
     context: context,
-    todoSnapshot: context.folderState.todoItemsState.getOrNull.orEmpty,
-    addedSnapshot: context.folderState.addedItemsState.getOrNull.orEmpty,
+    todoSnapshot: context.checkFolderState.todoItemsState.getOrNull.orEmpty,
+    addedSnapshot: context.checkFolderState.addedItemsState.getOrNull.orEmpty,
     fromIndex: effect.fromIndex,
     toIndex: effect.toIndex,
   ),
 
   EffectUncheckFolderItem() => _onFolderItemUnchecked(
     context: context,
-    todoSnapshot: context.folderState.todoItemsState.getOrNull.orEmpty,
-    addedSnapshot: context.folderState.addedItemsState.getOrNull.orEmpty,
+    todoSnapshot: context.checkFolderState.todoItemsState.getOrNull.orEmpty,
+    addedSnapshot: context.checkFolderState.addedItemsState.getOrNull.orEmpty,
     fromIndex: effect.fromIndex,
     toIndex: effect.toIndex,
   ),
 
   EffectInsertTodoFolderItem() => _onInsertTodoFolderItem(
     context: context,
-    snapshot: context.folderState.shownTodoItemsState.getOrNull.orEmpty,
+    snapshot: context.checkFolderState.shownTodoItemsState.getOrNull.orEmpty,
     index: effect.index,
     item: effect.item,
   ),
 
   EffectInsertAddedFolderItem() => _onInsertAddedFolderItem(
     context: context,
-    snapshot: context.folderState.shownAddedItemsState.getOrNull.orEmpty,
+    snapshot: context.checkFolderState.shownAddedItemsState.getOrNull.orEmpty,
     index: effect.index,
     item: effect.item,
   ),
 
   EffectRemoveTodoFolderItem() => _onRemoveTodoFolderItem(
     context: context,
-    snapshot: context.folderState.shownTodoItemsState.getOrNull.orEmpty,
+    snapshot: context.checkFolderState.shownTodoItemsState.getOrNull.orEmpty,
     index: effect.index,
     item: effect.item,
   ),
 
   EffectRemoveAddedFolderItem() => _onRemoveAddedFolderItem(
     context: context,
-    snapshot: context.folderState.shownAddedItemsState.getOrNull.orEmpty,
+    snapshot: context.checkFolderState.shownAddedItemsState.getOrNull.orEmpty,
     index: effect.index,
     item: effect.item,
   ),
@@ -96,38 +96,38 @@ Future<void>? onFolderEffect({
 void _updateTodoAnimation({
   required BuildContext context,
   required bool isInProgress,
-}) => context.addFolderEvent(
+}) => context.addCheckFolderEvent(
   EventUpdateTodoAnimationProgress(isInProgress: isInProgress),
 );
 
 void _updateAddedAnimation({
   required BuildContext context,
   required bool isInProgress,
-}) => context.addFolderEvent(
+}) => context.addCheckFolderEvent(
   EventUpdateAddedAnimationProgress(isInProgress: isInProgress),
 );
 
-void _loadLists(BuildContext context) => context.addFolderEvent(EventLoadLists());
+void _loadLists(BuildContext context) => context.addCheckFolderEvent(EventLoadLists());
 
 void _updateTodoList({
   required BuildContext context,
   required IList<FolderItem> newTodo,
-}) => context.addFolderEvent(EventUpdateTodoList(snapshot: newTodo));
+}) => context.addCheckFolderEvent(EventUpdateTodoList(snapshot: newTodo));
 
 void _updateAddedList({
   required BuildContext context,
   required IList<FolderItem> newAdded,
-}) => context.addFolderEvent(EventUpdateAddedList(snapshot: newAdded));
+}) => context.addCheckFolderEvent(EventUpdateAddedList(snapshot: newAdded));
 
 void _updateShownTodoList({
   required BuildContext context,
   required IList<FolderItem> newTodo,
-}) => context.addFolderEvent(EventUpdateShownTodoList(snapshot: newTodo));
+}) => context.addCheckFolderEvent(EventUpdateShownTodoList(snapshot: newTodo));
 
 void _updateShownAddedList({
   required BuildContext context,
   required IList<FolderItem> newAdded,
-}) => context.addFolderEvent(EventUpdateShownAddedList(snapshot: newAdded));
+}) => context.addCheckFolderEvent(EventUpdateShownAddedList(snapshot: newAdded));
 
 Future<void> _onFolderItemChecked({
   required BuildContext context,
@@ -160,7 +160,7 @@ Future<void> _onFolderItemChecked({
         child: Opacity(
           key: itemKey,
           opacity: addedListKey.currentContext == null ? animation.value : 0,
-          child: FolderItemNode(item: item),
+          child: CheckFolderItemNode(item: item),
         ),
       ),
     ),
@@ -202,7 +202,7 @@ Future<void> _onFolderItemChecked({
           top: offset.dy,
           child: SizedBox(
             width: fromBox.size.width,
-            child: FolderItemNode(item: reversedItem),
+            child: CheckFolderItemNode(item: reversedItem),
           ),
         ),
       ),
@@ -250,7 +250,7 @@ Future<void> _onFolderItemUnchecked({
         child: Opacity(
           key: itemKey,
           opacity: 0,
-          child: FolderItemNode(item: item),
+          child: CheckFolderItemNode(item: item),
         ),
       ),
     ),
@@ -285,7 +285,7 @@ Future<void> _onFolderItemUnchecked({
           top: offset.dy,
           child: SizedBox(
             width: fromBox.size.width,
-            child: FolderItemNode(item: reversedItem),
+            child: CheckFolderItemNode(item: reversedItem),
           ),
         ),
       ),
@@ -354,7 +354,7 @@ Future<void>? _onRemoveTodoFolderItem({
       sizeFactor: animation,
       child: SizedBox(
         width: double.infinity,
-        child: FolderItemNode(item: item),
+        child: CheckFolderItemNode(item: item),
       ),
     ),
     duration: _moveDuration,
@@ -377,7 +377,7 @@ Future<void>? _onRemoveAddedFolderItem({
       sizeFactor: animation,
       child: SizedBox(
         width: double.infinity,
-        child: FolderItemNode(item: item),
+        child: CheckFolderItemNode(item: item),
       ),
     ),
     duration: _moveDuration,

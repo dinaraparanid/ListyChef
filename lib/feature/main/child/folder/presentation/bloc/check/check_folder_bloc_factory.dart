@@ -5,9 +5,11 @@ import 'package:listy_chef/feature/main/child/folder/domain/check_folder_item_us
 import 'package:listy_chef/feature/main/child/folder/domain/delete_folder_item_use_case.dart';
 import 'package:listy_chef/feature/main/child/folder/domain/load_check_folder_items_use_case.dart';
 import 'package:listy_chef/feature/main/child/folder/domain/load_folder_items_event_bus.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/bloc/folder_bloc.dart';
+import 'package:listy_chef/feature/main/child/folder/domain/load_folder_use_case.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_bloc.dart';
 
-final class FolderBlocFactory {
+final class CheckFolderBlocFactory {
+  final LoadFolderUseCase _loadFolderUseCase;
   final TextChangeUseCase _textChangeUseCase;
   final LoadCheckFolderItemsUseCase _loadCheckFolderItemsUseCase;
   final CheckFolderItemUseCase _checkFolderItemUseCase;
@@ -15,22 +17,25 @@ final class FolderBlocFactory {
   final ListDifferenceUseCase _listDifferenceUseCase;
   final LoadFolderItemsEventBus _loadFolderItemsEventBus;
 
-  FolderBlocFactory({
+  CheckFolderBlocFactory({
+    required LoadFolderUseCase loadFolderUseCase,
     required TextChangeUseCase textChangeUseCase,
     required LoadCheckFolderItemsUseCase loadCheckFolderItemsUseCase,
     required CheckFolderItemUseCase checkFolderItemUseCase,
     required DeleteFolderItemUseCase deleteFolderItemUseCase,
     required ListDifferenceUseCase listDifferenceUseCase,
     required LoadFolderItemsEventBus loadFolderItemsEventBus,
-  }) : _textChangeUseCase = textChangeUseCase,
+  }) : _loadFolderUseCase = loadFolderUseCase,
+    _textChangeUseCase = textChangeUseCase,
     _loadCheckFolderItemsUseCase = loadCheckFolderItemsUseCase,
     _checkFolderItemUseCase = checkFolderItemUseCase,
     _deleteFolderItemUseCase = deleteFolderItemUseCase,
     _listDifferenceUseCase = listDifferenceUseCase,
     _loadFolderItemsEventBus = loadFolderItemsEventBus;
 
-  FolderBloc call({required FolderId folderId}) => FolderBloc(
+  CheckFolderBloc call({required FolderId folderId}) => CheckFolderBloc(
     folderId: folderId,
+    loadFolderUseCase: _loadFolderUseCase,
     textChangeUseCase: _textChangeUseCase,
     loadCheckFolderItemsUseCase: _loadCheckFolderItemsUseCase,
     checkFolderItemUseCase: _checkFolderItemUseCase,

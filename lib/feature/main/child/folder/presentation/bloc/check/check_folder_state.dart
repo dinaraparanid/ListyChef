@@ -7,17 +7,17 @@ import 'package:listy_chef/core/domain/folders/entity/mod.dart';
 import 'package:listy_chef/core/domain/text/text_container.dart';
 import 'package:listy_chef/core/presentation/foundation/ui_state.dart';
 import 'package:listy_chef/core/utils/ext/string_ext.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/bloc/folder_bloc.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_bloc.dart';
 
-part 'folder_state.freezed.dart';
+part 'check_folder_state.freezed.dart';
 
 @freezed
-abstract class FolderState with _$FolderState {
-  const factory FolderState({
+abstract class CheckFolderState with _$CheckFolderState {
+  const factory CheckFolderState({
     required FolderId folderId,
 
     @Default(UiState.initial())
-    UiState<FolderPurpose> purposeState,
+    UiState<Folder> folderState,
 
     @Default(TextContainer(value: '', error: null))
     TextContainer<void> searchQuery,
@@ -45,10 +45,10 @@ abstract class FolderState with _$FolderState {
 
     @Default(null)
     FolderItemId? draggingItemId,
-  }) = _FolderState;
+  }) = _CheckFolderState;
 }
 
-extension Properties on FolderState {
+extension Properties on CheckFolderState {
   UiState<IList<FolderItem>> get filteredTodoItemsState =>
     _filterItemsState(initialState: todoItemsState);
 
@@ -66,6 +66,6 @@ extension Properties on FolderState {
 }
 
 extension GetFolderState on BuildContext {
-  FolderState get folderState =>
-    BlocProvider.of<FolderBloc>(this, listen: false).state;
+  CheckFolderState get checkFolderState =>
+    BlocProvider.of<CheckFolderBloc>(this, listen: false).state;
 }

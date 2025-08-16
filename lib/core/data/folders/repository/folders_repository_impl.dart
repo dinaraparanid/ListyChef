@@ -17,8 +17,8 @@ final class FoldersRepositoryImpl implements FoldersRepository {
   }
 
   @override
-  Future<FolderPurpose?> folderPurpose({required FolderId id}) async {
-    return await _firestoreDataSource.folderPurpose(id: id);
+  Future<Folder?> folder({required FolderId id}) async {
+    return await _firestoreDataSource.folder(id: id);
   }
 
   @override

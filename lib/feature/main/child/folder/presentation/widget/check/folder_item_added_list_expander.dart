@@ -5,8 +5,8 @@ import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/presentation/theme/images.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
 import 'package:listy_chef/core/utils/ext/bool_ext.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/bloc/folder_event.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/widget/folder_item_check_lists.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_event.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/widget/check/folder_item_check_lists.dart';
 
 final class FolderItemAddedListExpander extends StatelessWidget {
   final bool isAddedListExpanded;
@@ -19,7 +19,7 @@ final class FolderItemAddedListExpander extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SliverToBoxAdapter(
     child: AppClickable(
-      onClick: () => context.addFolderEvent(
+      onClick: () => context.addCheckFolderEvent(
         EventChangeAddedListExpanded(isExpanded: isAddedListExpanded.not),
       ),
       border: RoundedRectangleBorder(

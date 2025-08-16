@@ -5,7 +5,7 @@ import 'package:listy_chef/core/domain/folders/entity/mod.dart';
 abstract interface class FoldersRepository {
   Future<IList<Folder>> folders({required Email email});
 
-  Future<FolderPurpose?> folderPurpose({required FolderId id});
+  Future<Folder?> folder({required FolderId id});
 
   Future<void> addFolder({required FolderData data});
 

@@ -11,13 +11,13 @@ const _actionColorDelete = Color(0xFFD1495B);
 const _checkboxWidth = 34.0;
 
 @immutable
-final class FolderItemNodeCallbacks {
+final class CheckFolderItemNodeCallbacks {
   final void Function() onDragStart;
   final void Function() onEdit;
   final void Function() onDelete;
   final void Function() onCheckChange;
 
-  const FolderItemNodeCallbacks({
+  const CheckFolderItemNodeCallbacks({
     required this.onDragStart,
     required this.onEdit,
     required this.onDelete,
@@ -25,12 +25,12 @@ final class FolderItemNodeCallbacks {
   });
 }
 
-final class FolderItemNode extends StatelessWidget {
+final class CheckFolderItemNode extends StatelessWidget {
   final FolderItem item;
   final bool? isPositionKept;
-  final FolderItemNodeCallbacks? callbacks;
+  final CheckFolderItemNodeCallbacks? callbacks;
 
-  const FolderItemNode({
+  const CheckFolderItemNode({
     super.key,
     required this.item,
     this.isPositionKept,
@@ -43,7 +43,7 @@ final class FolderItemNode extends StatelessWidget {
       Radius.circular(context.appTheme.dimensions.radius.small),
     ),
     child: switch (callbacks) {
-      final FolderItemNodeCallbacks cb => AppUnderlayActionRow(
+      final CheckFolderItemNodeCallbacks cb => AppUnderlayActionRow(
         isPositionKept: isPositionKept,
         onDragStart: callbacks?.onDragStart,
         actions: [

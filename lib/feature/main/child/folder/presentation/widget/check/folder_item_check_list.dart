@@ -4,11 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:listy_chef/core/domain/folders/entity/mod.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/utils/functions/distinct_state.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/bloc/folder_bloc.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/bloc/folder_event.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/bloc/folder_state.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/widget/folder_item_check_lists.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/widget/folder_item_node.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_bloc.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_event.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_state.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/widget/check/folder_item_check_lists.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/widget/check/check_folder_item_node.dart';
 
 final class FolderItemCheckList extends StatelessWidget {
   final IList<FolderItem> items;
@@ -25,7 +25,7 @@ final class FolderItemCheckList extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<FolderBloc, FolderState>(
+  Widget build(BuildContext context) => BlocBuilder<CheckFolderBloc, CheckFolderState>(
     buildWhen: distinctState((s) => s.draggingItemId),
     builder: (context, state) => SliverAnimatedList(
       key: listKey,
@@ -70,17 +70,17 @@ final class FolderItemCheckList extends StatelessWidget {
       children: [
         SizedBox(
           width: double.infinity,
-          child: FolderItemNode(
+          child: CheckFolderItemNode(
             item: product,
             isPositionKept: product.id == draggingItemId,
-            callbacks: FolderItemNodeCallbacks(
-              onDragStart: () => context.addFolderEvent(
+            callbacks: CheckFolderItemNodeCallbacks(
+              onDragStart: () => context.addCheckFolderEvent(
                 EventStartItemDrag(id: product.id),
               ),
-              onEdit: () => context.addFolderEvent(
+              onEdit: () => context.addCheckFolderEvent(
                 EventEditItem(item: product),
               ),
-              onDelete: () => context.addFolderEvent(
+              onDelete: () => context.addCheckFolderEvent(
                 EventDeleteFolderItem(id: product.id),
               ),
               onCheckChange: () => onCheckChange(product.id, index - 1),

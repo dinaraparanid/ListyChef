@@ -8,7 +8,6 @@ import 'package:listy_chef/core/domain/folders/entity/mod.dart';
 import 'package:listy_chef/core/domain/logger/app_logger.dart';
 import 'package:listy_chef/core/utils/ext/bool_ext.dart';
 import 'package:listy_chef/core/utils/ext/dynamic_ext.dart';
-import 'package:listy_chef/core/utils/ext/general.dart';
 
 const _collectionFolders = 'folders';
 const _collectionFolderItems = 'folder_items';
@@ -29,14 +28,15 @@ final class FoldersFirestoreDataSource implements FoldersDataSource {
       .then((snapshot) => snapshot.toFolderList());
 
   @override
-  Future<FolderPurpose?> folderPurpose({required FolderId id}) =>
-    _foldersCollection.doc(id.value).get().then((doc) =>
-      asOrNull<int>(doc[Folder.firestoreFieldPurpose])
-        ?.let(FolderPurpose.fromOrdinal)
-    ).catchError((e) {
-      AppLogger.value.e('Error during getting folder purpose', error: e);
-      return null;
-    });
+  Future<Folder?> folder({required FolderId id}) =>
+    _foldersCollection
+      .doc(id.value)
+      .get()
+      .then((doc) => doc.toFolder())
+      .catchError((e) {
+        AppLogger.value.e('Error during getting folder', error: e);
+        return null;
+      });
 
   @override
   Future<void> addFolder({required FolderData data}) =>

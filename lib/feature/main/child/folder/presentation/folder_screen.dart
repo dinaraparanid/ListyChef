@@ -1,64 +1,48 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:listy_chef/core/domain/folders/entity/mod.dart';
-import 'package:listy_chef/core/presentation/foundation/text/app_search_field.dart';
-import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
-import 'package:listy_chef/core/presentation/theme/strings.dart';
-import 'package:listy_chef/core/utils/functions/distinct_state.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/bloc/mod.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/widget/folder_item_check_lists_node.dart';
+import 'package:listy_chef/core/presentation/foundation/ui_state.dart';
+import 'package:listy_chef/feature/main/child/folder/domain/load_folder_use_case.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/mod.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/bloc/list/list_folder_bloc_factory.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/widget/check/check_folder_content.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/widget/list/list_folder_content.dart';
 
 final class FolderScreen extends StatelessWidget {
   final FolderId folderId;
-  final FolderBlocFactory blocFactory;
+  final CheckFolderBlocFactory checkFolderBlocFactory;
+  final ListFolderBlocFactory listFolderBlocFactory;
+  final LoadFolderUseCase loadFolderUseCase;
 
   const FolderScreen({
     super.key,
     required this.folderId,
-    required this.blocFactory,
+    required this.checkFolderBlocFactory,
+    required this.listFolderBlocFactory,
+    required this.loadFolderUseCase,
   });
 
   @override
-  Widget build(BuildContext context) => BlocProvider(
-    create: (context) => blocFactory(folderId: folderId),
-    child: BlocBuilder<FolderBloc, FolderState>(
-      buildWhen: ignoreState(),
-      builder: (context, _) => Container(
-        color: context.appTheme.colors.background.primary,
-        child: SafeArea(
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: context.appTheme.dimensions.padding.extraMedium,
-                      left: context.appTheme.dimensions.padding.extraMedium,
-                      right: context.appTheme.dimensions.padding.extraMedium,
-                    ),
-                    child: Wrap(
-                      children: [
-                        AppSearchField(
-                          placeholder: context.strings.folder_item_field_placeholder,
-                          onChange: (query) => context.addFolderEvent(
-                            EventSearchQueryChange(query: query),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  SizedBox(height: context.appTheme.dimensions.padding.extraMedium),
-
-                  Expanded(child: FolderItemCheckListsNode()),
-                ],
-              ),
-            ],
-          ),
-        ),
+  Widget build(BuildContext context) => MultiBlocProvider(
+    providers: [
+      BlocProvider(create: (context) => checkFolderBlocFactory(folderId: folderId)),
+      BlocProvider(create: (context) => listFolderBlocFactory(folderId: folderId)),
+    ],
+    child: FutureBuilder(
+      future: loadFolderUseCase(id: folderId).then((state) =>
+        state.mapData((it) => it.data.purpose),
       ),
+      builder: (context, future) => switch ((future.data, future.error)) {
+        (_, final Object _) || (final Error<FolderPurpose> _, _) =>
+          Text('TODO: Error stub'),
+
+        (final Data<FolderPurpose> purpose, _) => switch (purpose.value) {
+          FolderPurpose.check => CheckFolderContent(),
+          FolderPurpose.list => ListFolderContent(),
+        },
+
+        (_, _) => Text('TODO: Loading'),
+      },
     ),
   );
 }

@@ -2,10 +2,10 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:listy_chef/core/domain/folders/entity/mod.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/bloc/folder_event.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/widget/folder_item_added_list_expander.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/widget/folder_item_check_list.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/widget/folder_item_check_lists_node.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_event.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/widget/check/folder_item_added_list_expander.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/widget/check/folder_item_check_list.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/widget/check/folder_item_check_lists_node.dart';
 
 final class FolderItemCheckLists extends StatelessWidget {
   static const expandDuration = Duration(milliseconds: 300);
@@ -37,7 +37,7 @@ final class FolderItemCheckLists extends StatelessWidget {
           items: todoItems,
           isMoveAnimInProgress: isTodoAddAnimationInProgress,
           listKey: todoListKey,
-          onCheckChange: (id, index) => context.addFolderEvent(
+          onCheckChange: (id, index) => context.addCheckFolderEvent(
             EventFolderItemCheck(
               id: id,
               fromIndex: index,
@@ -84,7 +84,7 @@ final class FolderItemCheckLists extends StatelessWidget {
             items: addedItems,
             isMoveAnimInProgress: isAddedAddAnimationInProgress,
             listKey: addedListKey,
-            onCheckChange: (id, index) => context.addFolderEvent(
+            onCheckChange: (id, index) => context.addCheckFolderEvent(
               EventFolderItemUncheck(
                 id: id,
                 fromIndex: index,

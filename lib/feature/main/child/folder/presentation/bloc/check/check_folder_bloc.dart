@@ -11,24 +11,26 @@ import 'package:listy_chef/feature/main/child/folder/domain/check_folder_item_us
 import 'package:listy_chef/feature/main/child/folder/domain/delete_folder_item_use_case.dart';
 import 'package:listy_chef/feature/main/child/folder/domain/load_check_folder_items_use_case.dart';
 import 'package:listy_chef/feature/main/child/folder/domain/load_folder_items_event_bus.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/bloc/folder_effect.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/bloc/folder_event.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/bloc/folder_state.dart';
+import 'package:listy_chef/feature/main/child/folder/domain/load_folder_use_case.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_effect.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_event.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_state.dart';
 
-final class FolderBloc extends Bloc<FolderEvent, FolderState>
-  with BlocPresentationMixin<FolderState, FolderEffect> {
+final class CheckFolderBloc extends Bloc<CheckFolderEvent, CheckFolderState>
+  with BlocPresentationMixin<CheckFolderState, CheckFolderEffect> {
 
   StreamSubscription<void>? _loadFolderItemsEventBusSubscription;
 
-  FolderBloc({
+  CheckFolderBloc({
     required FolderId folderId,
+    required LoadFolderUseCase loadFolderUseCase,
     required TextChangeUseCase textChangeUseCase,
     required LoadCheckFolderItemsUseCase loadCheckFolderItemsUseCase,
     required CheckFolderItemUseCase checkFolderItemUseCase,
     required DeleteFolderItemUseCase deleteFolderItemUseCase,
     required ListDifferenceUseCase listDifferenceUseCase,
     required LoadFolderItemsEventBus loadFolderItemsEventBus,
-  }) : super(FolderState(folderId: folderId)) {
+  }) : super(CheckFolderState(folderId: folderId)) {
     void handleListDifferences({
       required IList<FolderItem> oldTodoList,
       required IList<FolderItem> newTodoList,
@@ -61,6 +63,11 @@ final class FolderBloc extends Bloc<FolderEvent, FolderState>
         ),
       );
     }
+
+    on<EventLoadFolder>((event, emit) async {
+      final folderState = await loadFolderUseCase(id: folderId);
+      emit(state.copyWith(folderState: folderState));
+    });
 
     on<EventLoadLists>((event, emit) async {
       final oldTodoState = state.shownTodoItemsState;
@@ -202,6 +209,7 @@ final class FolderBloc extends Bloc<FolderEvent, FolderState>
       emitPresentation(EffectShowUpdateFolderItemMenu(item: event.item));
     });
 
+    add(EventLoadFolder());
     add(EventLoadLists());
 
     _loadFolderItemsEventBusSubscription = loadFolderItemsEventBus.listen(
