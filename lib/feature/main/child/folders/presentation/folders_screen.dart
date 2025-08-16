@@ -5,6 +5,7 @@ import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
 import 'package:listy_chef/core/utils/functions/distinct_state.dart';
 import 'package:listy_chef/feature/main/child/folders/presentation/bloc/mod.dart';
+import 'package:listy_chef/feature/main/child/folders/presentation/widget/folder_grid_node.dart';
 
 final class FoldersScreen extends StatelessWidget {
   final FoldersBlocFactory blocFactory;
@@ -48,7 +49,14 @@ final class FoldersScreen extends StatelessWidget {
 
                   SizedBox(height: context.appTheme.dimensions.padding.extraMedium),
 
-                  Expanded(child: Text('TODO: FoldersGrid()')),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.appTheme.dimensions.padding.extraMedium,
+                      ),
+                      child: FolderGridNode(),
+                    ),
+                  ),
                 ],
               ),
             ],

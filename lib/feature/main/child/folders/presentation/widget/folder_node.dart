@@ -1,0 +1,41 @@
+import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:listy_chef/core/domain/folders/entity/mod.dart';
+import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
+import 'package:listy_chef/core/presentation/theme/images.dart';
+
+final class FolderNode extends StatelessWidget {
+  final Folder folder;
+
+  const FolderNode({
+    super.key,
+    required this.folder,
+  });
+
+  @override
+  Widget build(BuildContext context) => Column(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      SvgPicture.asset(
+        switch (folder.data.purpose) {
+          FolderPurpose.check => AppImages.loadSvg('folder_check'),
+          FolderPurpose.list => AppImages.loadSvg('folder_list'),
+        }.value,
+        width: context.appTheme.dimensions.size.big,
+        height: context.appTheme.dimensions.size.big,
+      ),
+
+      SizedBox(height: context.appTheme.dimensions.padding.extraSmall),
+
+      Text(
+        folder.data.title,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: context.appTheme.typography.regular.copyWith(
+          color: context.appTheme.colors.text.primary,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    ],
+  );
+}

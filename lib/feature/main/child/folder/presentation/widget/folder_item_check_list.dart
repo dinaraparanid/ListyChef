@@ -71,7 +71,6 @@ final class FolderItemCheckList extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: FolderItemNode(
-            key: ValueKey(product.id),
             item: product,
             isPositionKept: product.id == draggingItemId,
             callbacks: FolderItemNodeCallbacks(
