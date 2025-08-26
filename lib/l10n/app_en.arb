@@ -3,8 +3,11 @@
   "ok": "OK",
   "cancel": "Cancel",
   "error": "Error",
+  "success": "Success",
   "yes": "Yes",
   "no": "No",
+
+  "copied_to_clipboard": "Copied to clipboard",
 
   "auth_welcome_title": "Welcome to Listy Chef!",
   "auth_email_label": "Email",

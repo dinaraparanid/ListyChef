@@ -115,6 +115,10 @@ final class ListFolderBloc extends Bloc<ListFolderEvent, ListFolderState>
       emitPresentation(EffectShowUpdateFolderItemMenu(item: event.item));
     });
 
+    on<EventCopiedToClipboard>((event, emit) =>
+      emitPresentation(EffectCopiedToClipboard()),
+    );
+
     add(EventLoadFolder());
     add(EventLoadList());
 

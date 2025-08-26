@@ -23,6 +23,8 @@ const _Blueberry = Color(0xFF5E8AFB);
 const _ColumbiaBlue = Color(0xFFC3EBE4);
 const _CetaceanBlue = Color(0xFF091540);
 const _CetaceanBlue50 = Color(0x80091540);
+const _CaribbeanGreen20 = Color(0x3303CEA4);
+const _SpiroDiscoBall20 = Color(0x332EC0F9);
 
 @immutable
 final class AppColors {
@@ -177,6 +179,8 @@ final class AppUniqueComponentsColors {
   final Color addedProductBackground;
   final Color todoProductText;
   final Color addedProductText;
+  final Color checkFolderRippleColor;
+  final Color listFolderRippleColor;
   final Color fabBackground;
   final Color underlayActionRowContent;
 
@@ -185,6 +189,8 @@ final class AppUniqueComponentsColors {
     this.addedProductBackground = _ColumbiaBlue,
     this.todoProductText = _MintCream,
     this.addedProductText = _Independence75,
+    this.checkFolderRippleColor = _CaribbeanGreen20,
+    this.listFolderRippleColor = _SpiroDiscoBall20,
     this.fabBackground = _Blue,
     this.underlayActionRowContent = _MintCream,
   });

@@ -25,8 +25,8 @@ final class FolderGrid extends StatelessWidget {
       mainAxisSpacing: context.appTheme.dimensions.padding.small,
       crossAxisSpacing: context.appTheme.dimensions.padding.small,
     ),
-    itemBuilder: (context, index, animation) => SizeTransition(
-      sizeFactor: animation,
+    itemBuilder: (context, index, animation) => FadeTransition(
+      opacity: animation,
       child: FolderNode(folder: folders[index]),
     ),
   );

@@ -46,6 +46,8 @@ final class EventEditItem extends ListFolderEvent {
   EventEditItem({required this.item});
 }
 
+final class EventCopiedToClipboard extends ListFolderEvent {}
+
 extension AddListFolderEvent on BuildContext {
   void addListFolderEvent(ListFolderEvent event) =>
     BlocProvider.of<ListFolderBloc>(this).add(event);

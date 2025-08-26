@@ -48,6 +48,11 @@ Future<void>? onListFolderEffect({
     context: context,
     message: context.strings.folder_item_error_update,
   ),
+
+  EffectCopiedToClipboard() => _showSuccessSnackBar(
+    context: context,
+    message: context.strings.copied_to_clipboard,
+  ),
 };
 
 void _updateShownList({
@@ -102,6 +107,16 @@ Future<void> _showUpdateFolderItemMenu({
   folderId: item.data.folderId,
   mode: FolderInputMode.update,
   initialItem: item,
+);
+
+Future<void> _showSuccessSnackBar({
+  required BuildContext context,
+  required String message,
+}) => showAppSnackBar(
+  context: context,
+  title: context.strings.success,
+  message: message,
+  mode: AppSnackBarMode.success,
 );
 
 Future<void> _showErrorSnackBar({

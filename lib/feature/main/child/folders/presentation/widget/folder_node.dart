@@ -1,8 +1,10 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:listy_chef/core/domain/folders/entity/mod.dart';
+import 'package:listy_chef/core/presentation/foundation/app_clickable.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/presentation/theme/images.dart';
+import 'package:listy_chef/feature/main/child/folders/presentation/bloc/folders_event.dart';
 
 final class FolderNode extends StatelessWidget {
   final Folder folder;
@@ -13,29 +15,43 @@ final class FolderNode extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => Column(
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      SvgPicture.asset(
-        switch (folder.data.purpose) {
-          FolderPurpose.check => AppImages.loadSvg('folder_check'),
-          FolderPurpose.list => AppImages.loadSvg('folder_list'),
-        }.value,
-        width: context.appTheme.dimensions.size.big,
-        height: context.appTheme.dimensions.size.big,
+  Widget build(BuildContext context) => AppClickable(
+    rippleColor: switch (folder.data.purpose) {
+      FolderPurpose.check => context.appTheme.colors.unique.checkFolderRippleColor,
+      FolderPurpose.list => context.appTheme.colors.unique.listFolderRippleColor,
+    },
+    border: RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(
+        Radius.circular(context.appTheme.dimensions.radius.small),
       ),
-
-      SizedBox(height: context.appTheme.dimensions.padding.extraSmall),
-
-      Text(
-        folder.data.title,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: context.appTheme.typography.regular.copyWith(
-          color: context.appTheme.colors.text.primary,
-          fontWeight: FontWeight.w700,
+    ),
+    onClick: () => context.addFoldersEvent(
+      EventFolderClick(folderId: folder.id),
+    ),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SvgPicture.asset(
+          switch (folder.data.purpose) {
+            FolderPurpose.check => AppImages.loadSvg('folder_check'),
+            FolderPurpose.list => AppImages.loadSvg('folder_list'),
+          }.value,
+          width: context.appTheme.dimensions.size.big,
+          height: context.appTheme.dimensions.size.big,
         ),
-      ),
-    ],
+
+        SizedBox(height: context.appTheme.dimensions.padding.extraSmall),
+
+        Text(
+          folder.data.title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: context.appTheme.typography.regular.copyWith(
+            color: context.appTheme.colors.text.primary,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ],
+    ),
   );
 }

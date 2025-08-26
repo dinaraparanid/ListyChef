@@ -21,10 +21,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get error => 'Error';
 
   @override
+  String get success => 'Success';
+
+  @override
   String get yes => 'Yes';
 
   @override
   String get no => 'No';
+
+  @override
+  String get copied_to_clipboard => 'Copied to clipboard';
 
   @override
   String get auth_welcome_title => 'Welcome to Listy Chef!';

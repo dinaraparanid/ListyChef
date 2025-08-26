@@ -20,6 +20,11 @@ final class EventUpdateFoldersState extends FoldersEvent {
   EventUpdateFoldersState({required this.foldersState});
 }
 
+final class EventUpdateShownFoldersList extends FoldersEvent {
+  final IList<Folder> snapshot;
+  EventUpdateShownFoldersList({required this.snapshot});
+}
+
 final class EventFolderClick extends FoldersEvent {
   final FolderId folderId;
   EventFolderClick({required this.folderId});

@@ -14,6 +14,7 @@ extension FoldersModule on GetIt {
     provideSingleton(() => LoadFoldersEventBus()),
 
     provideSingleton(() => FoldersBlocFactory(
+      router: this(),
       textChangeUseCase: this(),
       loadFoldersUseCase: this(),
       listDifferenceUseCase: this(),

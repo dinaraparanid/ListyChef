@@ -64,6 +64,7 @@ final class FoldersFirestoreDataSource implements FoldersDataSource {
   Future<IList<FolderItem>> folderItems({required FolderId folderId}) =>
     _folderItemsCollection
       .where(FolderItem.firestoreFieldFolderId, isEqualTo: folderId)
+      .orderBy(FolderItem.firestoreFieldTimestamp, descending: true)
       .get()
       .then((snapshot) => snapshot.toFolderItemList());
 

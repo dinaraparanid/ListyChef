@@ -107,7 +107,7 @@ Future<void> _showCupertinoSnackBar({
               Text(
                 title,
                 style: theme.typography.h.h4.copyWith(
-                  color: theme.colors.snackBar.content,
+                  color: theme.colors.text.secondary,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -117,7 +117,7 @@ Future<void> _showCupertinoSnackBar({
               Text(
                 message,
                 style: theme.typography.regular.copyWith(
-                  color: theme.colors.snackBar.content,
+                  color: theme.colors.text.secondary,
                 ),
               ),
             ],

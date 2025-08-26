@@ -21,10 +21,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get error => 'Ошибка';
 
   @override
+  String get success => 'Успех';
+
+  @override
   String get yes => 'Да';
 
   @override
   String get no => 'Нет';
+
+  @override
+  String get copied_to_clipboard => 'Скопировано в буффер обмена';
 
   @override
   String get auth_welcome_title => 'Добро пожаловать в Listy Chef!';

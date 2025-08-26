@@ -12,6 +12,8 @@ import 'package:listy_chef/feature/main/child/folders/domain/load_folders_use_ca
 import 'package:listy_chef/feature/main/child/folders/presentation/bloc/folders_effect.dart';
 import 'package:listy_chef/feature/main/child/folders/presentation/bloc/folders_event.dart';
 import 'package:listy_chef/feature/main/child/folders/presentation/bloc/folders_state.dart';
+import 'package:listy_chef/navigation/app_route.dart';
+import 'package:listy_chef/navigation/app_router.dart';
 
 final class FoldersBloc extends Bloc<FoldersEvent, FoldersState>
   with BlocPresentationMixin<FoldersState, FoldersEffect> {
@@ -19,6 +21,7 @@ final class FoldersBloc extends Bloc<FoldersEvent, FoldersState>
   StreamSubscription<void>? _loadFoldersEventBusSubscription;
 
   FoldersBloc({
+    required AppRouter router,
     required TextChangeUseCase textChangeUseCase,
     required LoadFoldersUseCase loadFoldersUseCase,
     required ListDifferenceUseCase listDifferenceUseCase,
@@ -80,9 +83,15 @@ final class FoldersBloc extends Bloc<FoldersEvent, FoldersState>
       shownFoldersState: event.foldersState,
     )));
 
-    on<EventFolderClick>((event, emit) {
-      // TODO
-    });
+    on<EventUpdateShownFoldersList>((event, emit) => emit(state.copyWith(
+      shownFoldersState: event.snapshot.toUiState(),
+    )));
+
+    on<EventFolderClick>((event, emit) =>
+      router.value.pushNamed(AppRoute.folder.name, pathParameters: {
+        AppRoute.pathFolderId: event.folderId.value,
+      }),
+    );
 
     add(EventLoadFolders());
 

@@ -19,6 +19,8 @@ final class EffectShowUpdateFolderItemMenu extends ListFolderEffect {
   EffectShowUpdateFolderItemMenu({required this.item});
 }
 
+final class EffectCopiedToClipboard extends ListFolderEffect {}
+
 final class EffectFailedToDeleteFolderItem extends ListFolderEffect {}
 
 final class EffectFailedToEditFolderItem extends ListFolderEffect {}

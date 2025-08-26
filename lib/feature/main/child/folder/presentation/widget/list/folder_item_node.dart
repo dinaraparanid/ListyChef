@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:listy_chef/core/domain/folders/entity/mod.dart';
+import 'package:listy_chef/core/presentation/foundation/app_clickable.dart';
 import 'package:listy_chef/core/presentation/foundation/app_underlay_action_row.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/presentation/theme/images.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/bloc/list/list_folder_event.dart';
 
 const _animationDuration = Duration(milliseconds: 300);
 const _actionColorEdit = Color(0xFFEDAE49);
@@ -66,24 +69,37 @@ final class FolderItemNode extends StatelessWidget {
 
     return AnimatedContainer(
       duration: _animationDuration,
+      height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
         color: context.appTheme.colors.unique.todoProductBackground,
       ),
-      padding: EdgeInsets.symmetric(
-        vertical: context.appTheme.dimensions.padding.medium,
-        horizontal: context.appTheme.dimensions.padding.small,
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            data.title,
-            style: context.appTheme.typography.regular.copyWith(
-              color: context.appTheme.colors.unique.todoProductText,
-              fontWeight: FontWeight.w500,
-            ),
+      child: AppClickable(
+        onLongClick: () => Clipboard
+          .setData(ClipboardData(text: item.data.title))
+          .then((_) {
+            if (context.mounted) {
+              context.addListFolderEvent(EventCopiedToClipboard());
+            }
+          })
+          .catchError((_) {}), // ignore
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: context.appTheme.dimensions.padding.medium,
+            horizontal: context.appTheme.dimensions.padding.small,
           ),
-        ],
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                data.title,
+                style: context.appTheme.typography.regular.copyWith(
+                  color: context.appTheme.colors.unique.todoProductText,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

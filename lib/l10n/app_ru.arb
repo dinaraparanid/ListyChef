@@ -3,8 +3,11 @@
   "ok": "ОК",
   "cancel": "Отмена",
   "error": "Ошибка",
+  "success": "Успех",
   "yes": "Да",
   "no": "Нет",
+
+  "copied_to_clipboard": "Скопировано в буффер обмена",
 
   "auth_welcome_title": "Добро пожаловать в Listy Chef!",
   "auth_email_label": "Электронная почта",
