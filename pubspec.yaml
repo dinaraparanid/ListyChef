@@ -25,7 +25,7 @@ dependencies:
   fast_immutable_collections: ^11.0.4
   dartx: ^1.2.0
   yaru: ^8.1.0
-  fluent_ui: ^4.11.0
+  fluent_ui: 4.11.0 # TODO 4.12 кривая, обновиться до более старших
   firebase_core: ^3.13.1
   firebase_auth: ^5.5.4
   cloud_firestore: ^5.6.9
