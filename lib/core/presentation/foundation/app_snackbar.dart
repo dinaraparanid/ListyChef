@@ -1,7 +1,6 @@
 import 'dart:async';
-
+import 'dart:ui';
 import 'package:fluent_ui/fluent_ui.dart' as win;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:listy_chef/core/presentation/foundation/platform_call.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
@@ -97,30 +96,44 @@ Future<void> _showCupertinoSnackBar({
       bottom: theme.dimensions.padding.small,
       left: theme.dimensions.padding.small,
       right: theme.dimensions.padding.small,
-      child: CupertinoPopupSurface(
-        child: Padding(
-          padding: EdgeInsets.all(theme.dimensions.padding.small),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                title,
-                style: theme.typography.h.h4.copyWith(
-                  color: theme.colors.text.secondary,
-                  fontWeight: FontWeight.w700,
+      child: SafeArea(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(
+            context.appTheme.dimensions.radius.medium,
+          ),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: _snackBarColor(context: context, mode: mode)
+                  .withValues(alpha: 0.5),
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(theme.dimensions.padding.small),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      title,
+                      style: theme.typography.h.h4.copyWith(
+                        color: theme.colors.text.secondary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+
+                    SizedBox(height: theme.dimensions.padding.small),
+
+                    Text(
+                      message,
+                      style: theme.typography.regular.copyWith(
+                        color: theme.colors.text.secondary,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-
-              SizedBox(height: theme.dimensions.padding.small),
-
-              Text(
-                message,
-                style: theme.typography.regular.copyWith(
-                  color: theme.colors.text.secondary,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),

@@ -2,8 +2,10 @@ import 'package:bloc_presentation/bloc_presentation.dart';
 import 'package:dartx/dartx.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:listy_chef/core/domain/folders/entity/mod.dart';
+import 'package:listy_chef/core/domain/folders/use_case/load_folder_use_case.dart';
 import 'package:listy_chef/core/domain/text/text_change_use_case.dart';
 import 'package:listy_chef/core/domain/text/text_container.dart';
+import 'package:listy_chef/core/presentation/foundation/ui_state.dart';
 import 'package:listy_chef/feature/main/child/folder/domain/load_folder_items_event_bus.dart';
 import 'package:listy_chef/feature/main/child/folder_input/domain/add_folder_item_use_case.dart';
 import 'package:listy_chef/feature/main/child/folder_input/domain/update_folder_item_title_use_case.dart';
@@ -20,6 +22,7 @@ final class FolderItemInputBloc extends Bloc<FolderItemInputEvent, FolderItemInp
     required FolderId folderId,
     FolderItem? initialItem,
     required TextChangeUseCase textChangeUseCase,
+    required LoadFolderUseCase loadFolderUseCase,
     required AddFolderItemUseCase addFolderItemUseCase,
     required UpdateFolderItemTitleUseCase updateFolderItemTitleUseCase,
     required LoadFolderItemsEventBus loadFolderItemsEventBus,
@@ -31,6 +34,10 @@ final class FolderItemInputBloc extends Bloc<FolderItemInputEvent, FolderItemInp
     title: TextContainer(value: initialItem?.data.title ?? '', error: false),
     purpose: initialItem?.data.purpose,
   )) {
+    on<EventUpdatePurpose>((event, emit) =>
+      emit(state.copyWith(purpose: event.purpose))
+    );
+
     on<EventUpdateTitle>((event, emit) => textChangeUseCase(
       next: event.title,
       errorPredicate: (text) => text.isBlank,
@@ -60,5 +67,10 @@ final class FolderItemInputBloc extends Bloc<FolderItemInputEvent, FolderItemInp
     on<EventTriggerRefresh>((event, emit) =>
       loadFolderItemsEventBus.sendEvent(EventRefresh()),
     );
+
+    loadFolderUseCase(id: folderId).then((folderState) {
+      final purpose = folderState.getOrNull?.data.purpose;
+      if (purpose != null) add(EventUpdatePurpose(purpose: purpose));
+    });
   }
 }

@@ -52,7 +52,7 @@ Future<void> _showCupertinoBottomSheet({
     child: ClipRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-        child: Container(
+        child: DecoratedBox(
           decoration: BoxDecoration(
             color: context.appTheme.colors.background.modal50,
           ),

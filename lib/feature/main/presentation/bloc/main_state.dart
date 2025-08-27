@@ -9,3 +9,10 @@ abstract class MainState with _$MainState {
     @Default(MainRoute.folders()) MainRoute route,
   }) = _MainState;
 }
+
+extension Properties on MainState {
+  bool get isNavigationBarVisible => switch (route) {
+    MainRouteFolders() || MainRouteTransfer() || MainRouteProfile() => true,
+    _ => false,
+  };
+}

@@ -66,18 +66,33 @@ final class MainBloc extends Bloc<MainEvent, MainState>
       .listen(_navigateToMainRoute);
   }
 
-  void _navigateToMainRoute(MainRoute route) => switch (route) {
-    MainRouteFolders() => _router.value.goNamed(AppRoute.folders.name),
+  void _navigateToMainRoute(MainRoute route) {
+    void clearStack() {
+      while (_router.value.canPop()) {
+        _router.value.pop();
+      }
+    }
 
-    MainRouteFolder() => _router.value.goNamed(
-      AppRoute.folder.name,
-      pathParameters: {
-        AppRoute.pathFolderId: route.folderId.value,
-      },
-    ),
+    switch (route) {
+      case MainRouteFolders():
+        clearStack();
+        _router.value.goNamed(AppRoute.folders.name);
 
-    MainRouteTransfer() => _router.value.goNamed(AppRoute.transfer.name),
+      case MainRouteFolder():
+        _router.value.pushNamed(
+          AppRoute.folder.name,
+          pathParameters: {
+            AppRoute.pathFolderId: route.folderId.value,
+          },
+        );
 
-    MainRouteProfile() => _router.value.goNamed(AppRoute.profile.name),
-  };
+      case MainRouteTransfer():
+        clearStack();
+        _router.value.goNamed(AppRoute.transfer.name);
+
+      case MainRouteProfile():
+        clearStack();
+        _router.value.goNamed(AppRoute.profile.name);
+    }
+  }
 }

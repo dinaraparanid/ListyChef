@@ -25,11 +25,6 @@ final class EventUpdateShownFoldersList extends FoldersEvent {
   EventUpdateShownFoldersList({required this.snapshot});
 }
 
-final class EventFolderClick extends FoldersEvent {
-  final FolderId folderId;
-  EventFolderClick({required this.folderId});
-}
-
 extension AddFoldersEvent on BuildContext {
   void addFoldersEvent(FoldersEvent event) =>
     BlocProvider.of<FoldersBloc>(this).add(event);

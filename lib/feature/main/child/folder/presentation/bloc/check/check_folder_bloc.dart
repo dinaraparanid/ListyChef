@@ -11,7 +11,7 @@ import 'package:listy_chef/feature/main/child/folder/domain/check_folder_item_us
 import 'package:listy_chef/feature/main/child/folder/domain/delete_folder_item_use_case.dart';
 import 'package:listy_chef/feature/main/child/folder/domain/load_check_folder_items_use_case.dart';
 import 'package:listy_chef/feature/main/child/folder/domain/load_folder_items_event_bus.dart';
-import 'package:listy_chef/feature/main/child/folder/domain/load_folder_use_case.dart';
+import 'package:listy_chef/core/domain/folders/use_case/load_folder_use_case.dart';
 import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_effect.dart';
 import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_event.dart';
 import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_state.dart';

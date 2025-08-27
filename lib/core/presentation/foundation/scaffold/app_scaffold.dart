@@ -8,6 +8,7 @@ import 'package:listy_chef/core/presentation/foundation/app_clickable.dart';
 import 'package:listy_chef/core/presentation/foundation/platform_call.dart';
 import 'package:listy_chef/core/presentation/foundation/scaffold/app_navigation_menu_item_data.dart';
 import 'package:listy_chef/core/presentation/foundation/scaffold/app_scaffold_action.dart';
+import 'package:listy_chef/core/presentation/foundation/scaffold/app_animated_tab_bar_size.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
@@ -22,6 +23,7 @@ final class AppScaffold extends StatelessWidget {
   final Widget body;
   final AppScaffoldAction? action;
   final IList<AppNavigationMenuItemData>? items;
+  final bool isBottomNavigationBarVisible;
   final int? selectedIndex;
   final void Function(int)? onItemClick;
   final void Function()? onBack;
@@ -31,6 +33,7 @@ final class AppScaffold extends StatelessWidget {
     this.title,
     this.backgroundColor,
     this.items,
+    this.isBottomNavigationBarVisible = true,
     this.selectedIndex,
     this.onItemClick,
     this.onBack,
@@ -54,8 +57,9 @@ final class AppScaffold extends StatelessWidget {
     fit: BoxFit.scaleDown,
     child: Text(
       text,
-      style: theme.typography.body.copyWith(
+      style: theme.typography.h.h4.copyWith(
         color: theme.colors.icon.primary,
+        fontWeight: FontWeight.w700,
       ),
     ),
   ));
@@ -159,35 +163,38 @@ final class AppScaffold extends StatelessWidget {
   Widget _MaterialBottomNavigationBar({
     required BuildContext context,
     required IList<AppNavigationMenuItemData> items,
-  }) => ClipRRect(
-    borderRadius: BorderRadiusGeometry.only(
-      topLeft: Radius.circular(context.appTheme.dimensions.radius.small),
-      topRight: Radius.circular(context.appTheme.dimensions.radius.small),
-    ),
-    child: BottomNavigationBar(
-      backgroundColor: context.appTheme.colors.navigationBar.background,
-      selectedItemColor: context.appTheme.colors.navigationBar.selected,
-      unselectedItemColor: context.appTheme.colors.navigationBar.unselected,
-      selectedLabelStyle: context.appTheme.typography.regular,
-      unselectedLabelStyle: context.appTheme.typography.regular,
-      showSelectedLabels: true,
-      showUnselectedLabels: true,
-      currentIndex: selectedIndex ?? 0,
-      onTap: onItemClick,
-      items: items.mapIndexed((index, item) => BottomNavigationBarItem(
-        icon: SvgPicture.asset(
-          item.icon.value,
-          width: context.appTheme.dimensions.size.small,
-          height: context.appTheme.dimensions.size.small,
-          colorFilter: ColorFilter.mode(
-            index == selectedIndex
-              ? context.appTheme.colors.navigationBar.selected
-              : context.appTheme.colors.navigationBar.unselected,
-            BlendMode.srcIn,
+  }) => AppAnimatedTabBarSize(
+    isVisible: isBottomNavigationBarVisible,
+    child: ClipRRect(
+      borderRadius: BorderRadiusGeometry.only(
+        topLeft: Radius.circular(context.appTheme.dimensions.radius.small),
+        topRight: Radius.circular(context.appTheme.dimensions.radius.small),
+      ),
+      child: BottomNavigationBar(
+        backgroundColor: context.appTheme.colors.navigationBar.background,
+        selectedItemColor: context.appTheme.colors.navigationBar.selected,
+        unselectedItemColor: context.appTheme.colors.navigationBar.unselected,
+        selectedLabelStyle: context.appTheme.typography.regular,
+        unselectedLabelStyle: context.appTheme.typography.regular,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        currentIndex: selectedIndex ?? 0,
+        onTap: onItemClick,
+        items: items.mapIndexed((index, item) => BottomNavigationBarItem(
+          icon: SvgPicture.asset(
+            item.icon.value,
+            width: context.appTheme.dimensions.size.small,
+            height: context.appTheme.dimensions.size.small,
+            colorFilter: ColorFilter.mode(
+              index == selectedIndex
+                ? context.appTheme.colors.navigationBar.selected
+                : context.appTheme.colors.navigationBar.unselected,
+              BlendMode.srcIn,
+            ),
           ),
-        ),
-        label: item.title,
-      )).toList(growable: false),
+          label: item.title,
+        )).toList(growable: false),
+      ),
     ),
   );
 
@@ -241,23 +248,20 @@ final class AppScaffold extends StatelessWidget {
           color: context.appTheme.colors.icon.primary,
         ),
       ) : null,
-      child: Padding(
-        padding: EdgeInsets.only(top: kMinInteractiveDimensionCupertino),
-        child: Stack(
-          children: [
-            body,
+      child: Stack(
+        children: [
+          body,
 
-            if (action != null) Padding(
-              padding: EdgeInsets.all(
-                context.appTheme.dimensions.padding.extraMedium,
-              ),
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: FAB(context.appTheme),
-              ),
+          if (action != null) Padding(
+            padding: EdgeInsets.all(
+              context.appTheme.dimensions.padding.extraMedium,
             ),
-          ],
-        ),
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: FAB(context.appTheme),
+            ),
+          ),
+        ],
       ),
     ),
 
@@ -316,26 +320,29 @@ final class AppScaffold extends StatelessWidget {
         ?? context.appTheme.colors.background.primary,
       floatingActionButton: FAB(context.appTheme),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      bottomNavigationBar: CupertinoTabBar(
-        currentIndex: selectedIndex ?? 0,
-        backgroundColor: context.appTheme.colors.navigationBar.background,
-        activeColor: context.appTheme.colors.navigationBar.selected,
-        inactiveColor: context.appTheme.colors.navigationBar.unselected,
-        onTap: onItemClick,
-        items: items.mapIndexed((index, item) => BottomNavigationBarItem(
-          icon: SvgPicture.asset(
-            item.icon.value,
-            width: context.appTheme.dimensions.size.small,
-            height: context.appTheme.dimensions.size.small,
-            colorFilter: ColorFilter.mode(
-              index == selectedIndex
-                ? context.appTheme.colors.navigationBar.selected
-                : context.appTheme.colors.navigationBar.unselected,
-              BlendMode.srcIn,
+      bottomNavigationBar: AppAnimatedTabBarSize(
+        isVisible: isBottomNavigationBarVisible,
+        child: CupertinoTabBar(
+          currentIndex: selectedIndex ?? 0,
+          backgroundColor: context.appTheme.colors.navigationBar.background,
+          activeColor: context.appTheme.colors.navigationBar.selected,
+          inactiveColor: context.appTheme.colors.navigationBar.unselected,
+          onTap: onItemClick,
+          items: items.mapIndexed((index, item) => BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              item.icon.value,
+              width: context.appTheme.dimensions.size.small,
+              height: context.appTheme.dimensions.size.small,
+              colorFilter: ColorFilter.mode(
+                index == selectedIndex
+                  ? context.appTheme.colors.navigationBar.selected
+                  : context.appTheme.colors.navigationBar.unselected,
+                BlendMode.srcIn,
+              ),
             ),
-          ),
-          label: item.title,
-        )).toList(growable: false),
+            label: item.title,
+          )).toList(growable: false),
+        ),
       ),
       body: body,
     ),

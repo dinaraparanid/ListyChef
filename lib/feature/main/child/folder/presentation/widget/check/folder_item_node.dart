@@ -11,13 +11,13 @@ const _actionColorDelete = Color(0xFFD1495B);
 const _checkboxWidth = 34.0;
 
 @immutable
-final class CheckFolderItemNodeCallbacks {
+final class FolderItemNodeCallbacks {
   final void Function() onDragStart;
   final void Function() onEdit;
   final void Function() onDelete;
   final void Function() onCheckChange;
 
-  const CheckFolderItemNodeCallbacks({
+  const FolderItemNodeCallbacks({
     required this.onDragStart,
     required this.onEdit,
     required this.onDelete,
@@ -25,12 +25,12 @@ final class CheckFolderItemNodeCallbacks {
   });
 }
 
-final class CheckFolderItemNode extends StatelessWidget {
+final class FolderItemNode extends StatelessWidget {
   final FolderItem item;
   final bool? isPositionKept;
-  final CheckFolderItemNodeCallbacks? callbacks;
+  final FolderItemNodeCallbacks? callbacks;
 
-  const CheckFolderItemNode({
+  const FolderItemNode({
     super.key,
     required this.item,
     this.isPositionKept,
@@ -43,7 +43,7 @@ final class CheckFolderItemNode extends StatelessWidget {
       Radius.circular(context.appTheme.dimensions.radius.small),
     ),
     child: switch (callbacks) {
-      final CheckFolderItemNodeCallbacks cb => AppUnderlayActionRow(
+      final FolderItemNodeCallbacks cb => AppUnderlayActionRow(
         isPositionKept: isPositionKept,
         onDragStart: callbacks?.onDragStart,
         actions: [
@@ -100,6 +100,7 @@ final class CheckFolderItemNode extends StatelessWidget {
               : CrossFadeState.showFirst,
             firstChild: Text(
               data.title,
+              overflow: TextOverflow.ellipsis,
               style: context.appTheme.typography.regular.copyWith(
                 color: context.appTheme.colors.unique.todoProductText,
                 fontWeight: FontWeight.w500,
@@ -107,6 +108,7 @@ final class CheckFolderItemNode extends StatelessWidget {
             ),
             secondChild: Text(
               data.title,
+              overflow: TextOverflow.ellipsis,
               style: context.appTheme.typography.regular.copyWith(
                 color: context.appTheme.colors.unique.addedProductText,
                 fontWeight: FontWeight.w500,

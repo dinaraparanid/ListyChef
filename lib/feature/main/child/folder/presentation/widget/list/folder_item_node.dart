@@ -90,11 +90,14 @@ final class FolderItemNode extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                data.title,
-                style: context.appTheme.typography.regular.copyWith(
-                  color: context.appTheme.colors.unique.todoProductText,
-                  fontWeight: FontWeight.w500,
+              Expanded(
+                child: Text(
+                  data.title,
+                  overflow: TextOverflow.ellipsis,
+                  style: context.appTheme.typography.regular.copyWith(
+                    color: context.appTheme.colors.unique.todoProductText,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ],

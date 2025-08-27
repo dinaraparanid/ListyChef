@@ -13,7 +13,7 @@ import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/che
 import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_state.dart';
 import 'package:listy_chef/feature/main/child/folder/presentation/widget/check/folder_item_check_lists.dart';
 import 'package:listy_chef/feature/main/child/folder/presentation/widget/check/folder_item_check_lists_node.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/widget/check/check_folder_item_node.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/widget/check/folder_item_node.dart';
 import 'package:listy_chef/feature/main/child/folder_input/presentation/bloc/folder_input_mode.dart';
 import 'package:listy_chef/feature/main/child/folder_input/presentation/folder_item_input_menu.dart';
 
@@ -160,7 +160,7 @@ Future<void> _onFolderItemChecked({
         child: Opacity(
           key: itemKey,
           opacity: addedListKey.currentContext == null ? animation.value : 0,
-          child: CheckFolderItemNode(item: item),
+          child: FolderItemNode(item: item),
         ),
       ),
     ),
@@ -202,7 +202,7 @@ Future<void> _onFolderItemChecked({
           top: offset.dy,
           child: SizedBox(
             width: fromBox.size.width,
-            child: CheckFolderItemNode(item: reversedItem),
+            child: FolderItemNode(item: reversedItem),
           ),
         ),
       ),
@@ -250,7 +250,7 @@ Future<void> _onFolderItemUnchecked({
         child: Opacity(
           key: itemKey,
           opacity: 0,
-          child: CheckFolderItemNode(item: item),
+          child: FolderItemNode(item: item),
         ),
       ),
     ),
@@ -285,7 +285,7 @@ Future<void> _onFolderItemUnchecked({
           top: offset.dy,
           child: SizedBox(
             width: fromBox.size.width,
-            child: CheckFolderItemNode(item: reversedItem),
+            child: FolderItemNode(item: reversedItem),
           ),
         ),
       ),
@@ -354,7 +354,7 @@ Future<void>? _onRemoveTodoFolderItem({
       sizeFactor: animation,
       child: SizedBox(
         width: double.infinity,
-        child: CheckFolderItemNode(item: item),
+        child: FolderItemNode(item: item),
       ),
     ),
     duration: _moveDuration,
@@ -377,7 +377,7 @@ Future<void>? _onRemoveAddedFolderItem({
       sizeFactor: animation,
       child: SizedBox(
         width: double.infinity,
-        child: CheckFolderItemNode(item: item),
+        child: FolderItemNode(item: item),
       ),
     ),
     duration: _moveDuration,

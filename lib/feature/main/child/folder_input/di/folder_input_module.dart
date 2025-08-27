@@ -12,6 +12,7 @@ extension FolderInputModule on GetIt {
 
     provideSingleton(() => FolderItemInputBlocFactory(
       textChangeUseCase: this(),
+      loadFolderUseCase: this(),
       addFolderItemUseCase: this(),
       updateFolderItemTitleUseCase: this(),
       loadFolderItemsEventBus: this(),

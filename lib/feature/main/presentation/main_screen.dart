@@ -25,9 +25,11 @@ final class MainScreen extends StatelessWidget {
     create: (_) => blocFactory(),
     child: BlocBuilder<MainBloc, MainState>(
       builder: (context, state) => BlocPresentationListener<MainBloc, MainEffect>(
-        listener: (context, effect) =>
-          onMainEffect(context: context, effect: effect),
+        listener: (context, effect) async {
+          await onMainEffect(context: context, effect: effect);
+        },
         child: AppScaffold(
+          isBottomNavigationBarVisible: state.isNavigationBarVisible,
           selectedIndex: state.route.tabPosition,
           onItemClick: (index) => context.addMainEvent(
             EventNavigateToRoute(route: MainRoute.fromTabPosition(index)),

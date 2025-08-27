@@ -1,8 +1,14 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:listy_chef/core/domain/folders/entity/mod.dart';
 import 'package:listy_chef/feature/main/child/folder_input/presentation/bloc/folder_item_input_bloc.dart';
 
 sealed class FolderItemInputEvent {}
+
+final class EventUpdatePurpose extends FolderItemInputEvent {
+  final FolderPurpose purpose;
+  EventUpdatePurpose({required this.purpose});
+}
 
 final class EventUpdateTitle extends FolderItemInputEvent {
   final String title;

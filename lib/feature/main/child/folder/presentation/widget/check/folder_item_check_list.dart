@@ -8,7 +8,7 @@ import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/che
 import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_event.dart';
 import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_state.dart';
 import 'package:listy_chef/feature/main/child/folder/presentation/widget/check/folder_item_check_lists.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/widget/check/check_folder_item_node.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/widget/check/folder_item_node.dart';
 
 final class FolderItemCheckList extends StatelessWidget {
   final IList<FolderItem> items;
@@ -70,10 +70,10 @@ final class FolderItemCheckList extends StatelessWidget {
       children: [
         SizedBox(
           width: double.infinity,
-          child: CheckFolderItemNode(
+          child: FolderItemNode(
             item: product,
             isPositionKept: product.id == draggingItemId,
-            callbacks: CheckFolderItemNodeCallbacks(
+            callbacks: FolderItemNodeCallbacks(
               onDragStart: () => context.addCheckFolderEvent(
                 EventStartItemDrag(id: product.id),
               ),

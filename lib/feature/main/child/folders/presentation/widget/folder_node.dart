@@ -4,7 +4,7 @@ import 'package:listy_chef/core/domain/folders/entity/mod.dart';
 import 'package:listy_chef/core/presentation/foundation/app_clickable.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/presentation/theme/images.dart';
-import 'package:listy_chef/feature/main/child/folders/presentation/bloc/folders_event.dart';
+import 'package:listy_chef/feature/main/presentation/bloc/main_event.dart';
 
 final class FolderNode extends StatelessWidget {
   final Folder folder;
@@ -25,8 +25,8 @@ final class FolderNode extends StatelessWidget {
         Radius.circular(context.appTheme.dimensions.radius.small),
       ),
     ),
-    onClick: () => context.addFoldersEvent(
-      EventFolderClick(folderId: folder.id),
+    onClick: () => context.addMainEvent(
+      EventNavigateToFolder(folderId: folder.id),
     ),
     child: Column(
       mainAxisSize: MainAxisSize.min,

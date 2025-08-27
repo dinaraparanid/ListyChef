@@ -13,38 +13,33 @@ final class CheckFolderContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BlocBuilder<CheckFolderBloc, CheckFolderState>(
     buildWhen: ignoreState(),
-    builder: (context, _) => Container(
+    builder: (context, state) => Container(
       color: context.appTheme.colors.background.primary,
       child: SafeArea(
-        child: Stack(
-          alignment: Alignment.center,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
           children: [
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: context.appTheme.dimensions.padding.extraMedium,
-                    left: context.appTheme.dimensions.padding.extraMedium,
-                    right: context.appTheme.dimensions.padding.extraMedium,
+            Padding(
+              padding: EdgeInsets.only(
+                top: context.appTheme.dimensions.padding.extraMedium,
+                left: context.appTheme.dimensions.padding.extraMedium,
+                right: context.appTheme.dimensions.padding.extraMedium,
+              ),
+              child: Wrap(
+                children: [
+                  AppSearchField(
+                    placeholder: context.strings.folder_item_field_placeholder,
+                    onChange: (query) => context.addCheckFolderEvent(
+                      EventSearchQueryChange(query: query),
+                    ),
                   ),
-                  child: Wrap(
-                    children: [
-                      AppSearchField(
-                        placeholder: context.strings.folder_item_field_placeholder,
-                        onChange: (query) => context.addCheckFolderEvent(
-                          EventSearchQueryChange(query: query),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                SizedBox(height: context.appTheme.dimensions.padding.extraMedium),
-
-                Expanded(child: FolderItemCheckListsNode()),
-              ],
+                ],
+              ),
             ),
+
+            SizedBox(height: context.appTheme.dimensions.padding.extraMedium),
+
+            Expanded(child: FolderItemCheckListsNode()),
           ],
         ),
       ),

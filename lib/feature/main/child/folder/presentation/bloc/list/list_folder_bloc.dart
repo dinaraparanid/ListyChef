@@ -9,7 +9,7 @@ import 'package:listy_chef/core/domain/text/text_change_use_case.dart';
 import 'package:listy_chef/core/presentation/foundation/ui_state.dart';
 import 'package:listy_chef/feature/main/child/folder/domain/delete_folder_item_use_case.dart';
 import 'package:listy_chef/feature/main/child/folder/domain/load_folder_items_event_bus.dart';
-import 'package:listy_chef/feature/main/child/folder/domain/load_folder_use_case.dart';
+import 'package:listy_chef/core/domain/folders/use_case/load_folder_use_case.dart';
 import 'package:listy_chef/feature/main/child/folder/domain/load_list_folder_items_use_case.dart';
 import 'package:listy_chef/feature/main/child/folder/presentation/bloc/list/list_folder_effect.dart';
 import 'package:listy_chef/feature/main/child/folder/presentation/bloc/list/list_folder_event.dart';
