@@ -1,15 +1,22 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:fluent_ui/fluent_ui.dart' as win;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:listy_chef/core/presentation/foundation/app_text_button.dart';
 import 'package:listy_chef/core/presentation/foundation/platform_call.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/utils/ext/general.dart';
+import 'package:macos_ui/macos_ui.dart';
+import 'package:pull_down_button/pull_down_button.dart';
+import 'package:yaru/settings.dart';
+import 'package:yaru/widgets.dart';
 
-final class AppDropdownMenu<T> extends StatefulWidget {
-  final T? initialSelection;
+final class AppDropdownMenu<T> extends StatelessWidget {
+  final T? currentlySelected;
   final IList<T> entries;
-  final String Function(T) entryBuilder;
-  final String? label;
+  final String Function(T) entryLabel;
+  final String label;
   final Color? background;
   final Color? textColor;
   final double? textSize;
@@ -20,10 +27,10 @@ final class AppDropdownMenu<T> extends StatefulWidget {
 
   const AppDropdownMenu({
     super.key,
-    this.initialSelection,
+    this.currentlySelected,
     required this.entries,
-    required this.entryBuilder,
-    this.label,
+    required this.entryLabel,
+    required this.label,
     this.background,
     this.textColor,
     this.textSize,
@@ -34,122 +41,177 @@ final class AppDropdownMenu<T> extends StatefulWidget {
   });
 
   @override
-  State<StatefulWidget> createState() => _AppDropdownMenuState<T>();
-}
-
-final class _AppDropdownMenuState<T> extends State<AppDropdownMenu<T>> {
-
-  late final controller = TextEditingController();
-
-  final focusNode = FocusNode();
-  var isFocused = false;
-
-  @override
-  void initState() {
-    focusNode.addListener(onFocusChange);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    focusNode.removeListener(onFocusChange);
-    focusNode.dispose();
-    super.dispose();
-  }
-
-  void onFocusChange() => setState(() => isFocused = focusNode.hasFocus);
-
-  @override
   Widget build(BuildContext context) => platformCall(
     android: MaterialUi,
-    iOS: MaterialUi,
-    macOS: MaterialUi,
-    linux: MaterialUi,
-    windows: MaterialUi,
+    iOS: iOSUi,
+    macOS: MacOSUi,
+    linux: YaruUi,
+    windows: FluentUi,
   )(context.appTheme);
 
-  Color focusedColor(AppTheme theme) =>
-    widget.focusedColor ?? theme.colors.text.focused;
+  Color _focusedColor(AppTheme theme) =>
+    focusedColor ?? theme.colors.text.focused;
 
-  Color unfocusedColor(AppTheme theme) =>
-    widget.unfocusedColor ?? theme.colors.text.unfocused;
+  Color _unfocusedColor(AppTheme theme) =>
+    unfocusedColor ?? theme.colors.text.unfocused;
 
-  Color borderColor(AppTheme theme) {
-    if (isFocused) return focusedColor(theme);
-    return unfocusedColor(theme);
-  }
+  Color _borderColor(AppTheme theme) => _focusedColor(theme);
 
-  Color textColor(AppTheme theme) =>
-    widget.textColor ?? theme.colors.text.primary;
+  Color _textColor(AppTheme theme) =>
+    textColor ?? theme.colors.text.primary;
 
-  TextStyle textStyle(AppTheme theme) =>
+  TextStyle _textStyle(AppTheme theme) =>
     theme.typography.body.copyWith(
-      color: textColor(theme),
-      fontSize: widget.textSize,
-      fontWeight: widget.fontWeight,
+      color: _textColor(theme),
+      fontSize: textSize,
+      fontWeight: fontWeight,
     );
 
-  EdgeInsets contentPadding(AppTheme theme) =>
+  EdgeInsets _contentPadding(AppTheme theme) =>
     EdgeInsets.symmetric(
       vertical: theme.dimensions.padding.extraMedium,
       horizontal: theme.dimensions.padding.extraBig,
     );
 
-  BorderRadius borderRadius(AppTheme theme) =>
+  BorderRadius _borderRadius(AppTheme theme) =>
     BorderRadius.circular(theme.dimensions.radius.small);
 
-  TextStyle labelStyle(AppTheme theme) =>
+  TextStyle _labelStyle(AppTheme theme) =>
     theme.typography.body.copyWith(
-      color: borderColor(theme),
-      fontSize: widget.textSize,
+      color: _borderColor(theme),
+      fontSize: textSize,
     );
 
-  Widget MaterialUi(AppTheme theme) => Material(
-    color: Colors.transparent,
+  Widget _label(AppTheme theme) =>
+    Text(label, style: _labelStyle(theme));
+
+  Widget MaterialUi(AppTheme theme) => Theme(
+    data: ThemeData(brightness: Brightness.dark),
     child: DropdownMenu<T>(
-      initialSelection: widget.initialSelection,
-      dropdownMenuEntries: [...widget.entries.map((e) =>
+      initialSelection: currentlySelected,
+      dropdownMenuEntries: [...entries.map((e) =>
         DropdownMenuEntry<T>(
           value: e,
-          label: widget.entryBuilder(e),
+          label: entryLabel(e),
           style: MenuItemButton.styleFrom(
-            foregroundColor: textColor(theme),
-            backgroundColor: widget.background,
-            textStyle: textStyle(theme),
+            foregroundColor: _textColor(theme),
+            backgroundColor: background,
+            textStyle: _textStyle(theme),
           ),
         ),
       )],
-      onSelected: widget.onChange,
-      focusNode: focusNode,
-      textStyle: textStyle(theme),
+      onSelected: onChange,
+      textStyle: _textStyle(theme),
       requestFocusOnTap: false,
-      label: widget.label?.let((it) => Text(it, style: labelStyle(theme))),
+      label: _label(theme),
       inputDecorationTheme: InputDecorationTheme(
-        filled: widget.background != null,
-        fillColor: widget.background,
+        filled: background != null,
+        fillColor: background,
+        contentPadding: _contentPadding(theme),
         focusedBorder: OutlineInputBorder(
-          borderRadius: borderRadius(theme),
+          borderRadius: _borderRadius(theme),
           borderSide: BorderSide(
-            color: focusedColor(theme),
+            color: _focusedColor(theme),
             width: theme.dimensions.size.line.small,
           ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: borderRadius(theme),
+          borderRadius: _borderRadius(theme),
           borderSide: BorderSide(
-            color: unfocusedColor(theme),
+            color: _unfocusedColor(theme),
             width: theme.dimensions.size.line.small,
           ),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: borderRadius(theme),
+          borderRadius: _borderRadius(theme),
           borderSide: BorderSide(
             color: theme.colors.error,
             width: theme.dimensions.size.line.small,
           ),
         ),
       ),
+    ),
+  );
+
+  Widget iOSUi(AppTheme theme) => CupertinoTheme(
+    data: CupertinoThemeData(brightness: Brightness.dark),
+    child: PullDownButton(
+      itemBuilder: (context) =>  [...entries.map((e) => PullDownMenuItem(
+        onTap: () => onChange?.call(e),
+        title: entryLabel(e),
+        icon: currentlySelected == e ? CupertinoIcons.check_mark : null,
+        iconColor: _focusedColor(theme),
+        itemTheme: PullDownMenuItemTheme(
+          textStyle: _textStyle(theme),
+        ),
+      ))],
+      buttonBuilder: (context, showMenu) => AppTextButton(
+        text: '$label${currentlySelected?.let((it) => '\n${entryLabel(it)}') ?? ''}',
+        onClick: () => showMenu(),
+        enabledColor: _textColor(theme),
+      ),
+    ),
+  );
+
+  Widget MacOSUi(AppTheme theme) => MacosTheme(
+    data: MacosThemeData(
+      brightness: Brightness.dark,
+      popupButtonTheme: MacosPopupButtonThemeData(
+        highlightColor: theme.colors.primary,
+        backgroundColor: MacosColors.tertiaryLabelColor.darkColor,
+      ),
+    ),
+    child: MacosPopupButton<T>(
+      value: currentlySelected,
+      onChanged: onChange,
+      hint: _label(theme),
+      items: [...entries.map((e) => MacosPopupMenuItem(
+        value: e,
+        child: Text(entryLabel(e)),
+      ))],
+    ),
+  );
+
+  Widget YaruUi(AppTheme theme) => YaruTheme(
+    data: YaruThemeData(themeMode: ThemeMode.dark),
+    child: YaruPopupMenuButton<T>(
+      initialValue: currentlySelected,
+      padding: _contentPadding(theme),
+      style: OutlinedButton.styleFrom(
+        foregroundColor: _unfocusedColor(theme),
+        backgroundColor: background,
+        shape: RoundedRectangleBorder(
+          borderRadius: _borderRadius(theme),
+          side: BorderSide(
+            color: _unfocusedColor(theme),
+            width: theme.dimensions.size.line.small,
+          ),
+        ),
+      ),
+      itemBuilder: (context) => [...entries.map((e) =>
+        PopupMenuItem<T>(
+          value: e,
+          textStyle: _textStyle(theme),
+          child: Text(entryLabel(e), style: _textStyle(theme)),
+        ),
+      )],
+      onSelected: onChange,
+      child: Text(
+        currentlySelected?.let(entryLabel) ?? label,
+        style: _textStyle(theme),
+      ),
+    ),
+  );
+
+  Widget FluentUi(AppTheme theme) => win.FluentTheme(
+    data: win.FluentThemeData(brightness: Brightness.dark),
+    child: win.DropDownButton(
+      title: _label(theme),
+      items: [...entries.map((e) => win.MenuFlyoutItem(
+        selected: currentlySelected == e,
+        text: Text(entryLabel(e), style: _textStyle(theme)),
+        onPressed: () => onChange?.call(e),
+      ))],
     ),
   );
 }

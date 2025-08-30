@@ -35,8 +35,8 @@ final class FolderItemCheckList extends StatelessWidget {
 
         1 => Opacity(
           opacity: isMoveAnimInProgress ? 0 : 1,
-          child: SizeTransition(
-            sizeFactor: animation,
+          child: FadeTransition(
+            opacity: animation,
             child: ItemWithSpacer(
               context: context,
               index: index,
@@ -45,8 +45,8 @@ final class FolderItemCheckList extends StatelessWidget {
           ),
         ),
 
-        _ => SizeTransition(
-          sizeFactor: animation,
+        _ => FadeTransition(
+          opacity: animation,
           child: ItemWithSpacer(
             context: context,
             index: index,

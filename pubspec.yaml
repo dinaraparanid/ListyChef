@@ -38,6 +38,7 @@ dependencies:
   synchronized: ^3.4.0
   diffutil_dart: ^4.0.1
   window_manager: ^0.4.3
+  pull_down_button: ^0.10.2
 
 dev_dependencies:
   flutter_test:

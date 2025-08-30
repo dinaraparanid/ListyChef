@@ -29,7 +29,7 @@ final class FolderInputBloc extends Bloc<FolderInputEvent, FolderInputState>
     id: initialItem?.id,
     previousData: initialItem?.data,
     title: TextContainer(value: initialItem?.data.title ?? '', error: false),
-    purpose: initialItem?.data.purpose,
+    purpose: initialItem?.data.purpose ?? FolderPurpose.list,
   )) {
     on<EventUpdatePurpose>((event, emit) =>
       emit(state.copyWith(purpose: event.purpose))
@@ -45,7 +45,7 @@ final class FolderInputBloc extends Bloc<FolderInputEvent, FolderInputState>
       await switch (state.mode) {
         FolderInputMode.create => addFolderUseCase(
           title: state.title.value,
-          purpose: state.purpose!,
+          purpose: state.purpose,
           onSuccess: () => emitPresentation(EffectSuccess()),
           onError: () => emitPresentation(EffectSuccess()),
         ),

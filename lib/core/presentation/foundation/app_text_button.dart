@@ -58,6 +58,7 @@ final class AppTextButton extends StatelessWidget {
       fit: BoxFit.scaleDown,
       child: Text(
         text,
+        textAlign: TextAlign.center,
         style: theme.typography.h.h3.copyWith(
           fontWeight: FontWeight.w700,
           color: isEnabled

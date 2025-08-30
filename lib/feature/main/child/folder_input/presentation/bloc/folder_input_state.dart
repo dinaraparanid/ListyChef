@@ -18,11 +18,12 @@ abstract class FolderInputState with _$FolderInputState {
     @Default(TextContainer(value: '', error: false))
     TextContainer<bool> title,
 
-    FolderPurpose? purpose,
+    @Default(FolderPurpose.list)
+    FolderPurpose purpose,
   }) = _FolderInputState;
 }
 
 extension Properties on FolderInputState {
   bool get isConfirmButtonEnabled =>
-    title.value.isNotBlank && title.error.not && purpose != null;
+    title.value.isNotBlank && title.error.not;
 }

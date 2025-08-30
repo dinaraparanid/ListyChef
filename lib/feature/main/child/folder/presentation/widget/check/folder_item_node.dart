@@ -70,7 +70,6 @@ final class FolderItemNode extends StatelessWidget {
 
     return AnimatedContainer(
       duration: _animationDuration,
-      height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
         color: switch (data.isAdded) {
           true => context.appTheme.colors.unique.addedProductBackground,

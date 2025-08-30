@@ -72,6 +72,7 @@ final class App extends StatelessWidget {
 
   Widget MacOSUi(AppTheme theme) => MacosApp.router(
     routerConfig: router.value,
+    theme: MacosThemeData(isMainWindow: true),
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
   );

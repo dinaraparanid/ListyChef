@@ -115,16 +115,27 @@ final class _FolderInputMenuContentState extends State<_FolderInputMenuContent> 
                 ),
               ),
 
-              SizedBox(height: context.appTheme.dimensions.padding.small),
+              SizedBox(height: context.appTheme.dimensions.padding.big),
 
               CommonPadding(
                 child: AppDropdownMenu<FolderPurpose>(
                   label: context.strings.folder_purpose_label,
-                  initialSelection: FolderPurpose.list,
+                  currentlySelected: state.purpose,
                   entries: IList(FolderPurpose.values),
-                  entryBuilder: (purpose) => switch (purpose) {
+                  entryLabel: (purpose) => switch (purpose) {
                     FolderPurpose.check => context.strings.folder_purpose_check,
                     FolderPurpose.list => context.strings.folder_purpose_list,
+                  },
+                  textColor: context.appTheme.colors.text.secondary,
+                  textSize: context.appTheme.typography.h.h4.fontSize,
+                  fontWeight: FontWeight.w700,
+                  focusedColor: context.appTheme.colors.text.secondary,
+                  unfocusedColor: context.appTheme.colors.text.disabled,
+                  background: Colors.transparent,
+                  onChange: (purpose) {
+                    if (purpose != null) {
+                      context.addFolderInputEvent(EventUpdatePurpose(purpose: purpose));
+                    }
                   },
                 )
               ),
