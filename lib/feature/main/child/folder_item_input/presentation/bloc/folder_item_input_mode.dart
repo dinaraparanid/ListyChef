@@ -1,0 +1,1 @@
+enum FolderItemInputMode { create, update }

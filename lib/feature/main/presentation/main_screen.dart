@@ -38,9 +38,7 @@ final class MainScreen extends StatelessWidget {
             MainRouteFolders() => AppScaffoldAction(
               icon: AppImages.loadSvg('ic_plus'),
               text: 'Add',
-              onPressed: () {
-                // TODO folders input
-              },
+              onPressed: () => context.addMainEvent(EventShowAddFolderMenu()),
             ),
 
             MainRouteFolder(folderId: final folderId) => AppScaffoldAction(

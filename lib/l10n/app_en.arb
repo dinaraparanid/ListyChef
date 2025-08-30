@@ -51,6 +51,10 @@
 
   "folders_field_placeholder": "Folder's name",
 
+  "folder_purpose_label": "Folder purpose",
+  "folder_purpose_list": "List",
+  "folder_purpose_check": "Check",
+
   "folder_item_field_placeholder": "Title",
   "folder_item_label_added": "Added",
   "folder_item_error_add": "Failed to create new item",

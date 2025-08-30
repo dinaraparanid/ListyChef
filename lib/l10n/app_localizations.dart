@@ -296,6 +296,24 @@ abstract class AppLocalizations {
   /// **'Folder\'s name'**
   String get folders_field_placeholder;
 
+  /// No description provided for @folder_purpose_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Folder purpose'**
+  String get folder_purpose_label;
+
+  /// No description provided for @folder_purpose_list.
+  ///
+  /// In en, this message translates to:
+  /// **'List'**
+  String get folder_purpose_list;
+
+  /// No description provided for @folder_purpose_check.
+  ///
+  /// In en, this message translates to:
+  /// **'Check'**
+  String get folder_purpose_check;
+
   /// No description provided for @folder_item_field_placeholder.
   ///
   /// In en, this message translates to:

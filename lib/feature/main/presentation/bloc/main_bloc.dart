@@ -45,6 +45,10 @@ final class MainBloc extends Bloc<MainEvent, MainState>
       MainRouteProfile() => add(EventNavigateToProfile()),
     });
 
+    on<EventShowAddFolderMenu>((event, emit) =>
+      emitPresentation(EffectShowAddFolderMenu()),
+    );
+
     on<EventShowAddFolderItemMenu>((event, emit) =>
       emitPresentation(EffectShowAddFolderItemMenu(folderId: event.folderId)),
     );

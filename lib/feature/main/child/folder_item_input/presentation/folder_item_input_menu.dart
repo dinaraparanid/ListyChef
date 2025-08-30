@@ -9,13 +9,13 @@ import 'package:listy_chef/core/presentation/foundation/dialog/app_dialog.dart';
 import 'package:listy_chef/core/presentation/foundation/text/app_outlined_text_field.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
-import 'package:listy_chef/feature/main/child/folder_input/presentation/bloc/mod.dart';
-import 'package:listy_chef/feature/main/child/folder_input/presentation/widget/folder_item_input_effect_handler.dart';
+import 'package:listy_chef/feature/main/child/folder_item_input/presentation/bloc/mod.dart';
+import 'package:listy_chef/feature/main/child/folder_item_input/presentation/widget/folder_item_input_effect_handler.dart';
 import 'package:sizer/sizer.dart';
 
 Future<void> showFolderItemInputMenu({
   required BuildContext context,
-  required FolderInputMode mode,
+  required FolderItemInputMode mode,
   required FolderId folderId,
   FolderItem? initialItem,
 }) => switch ((Device.orientation, Device.screenType)) {
@@ -30,7 +30,7 @@ Future<void> showFolderItemInputMenu({
 
 Future<void> _showMobileFolderItemInputMenu({
   required BuildContext context,
-  required FolderInputMode mode,
+  required FolderItemInputMode mode,
   required FolderId folderId,
   FolderItem? initialItem,
 }) => showAppBottomSheet(
@@ -45,7 +45,7 @@ Future<void> _showMobileFolderItemInputMenu({
 
 Future<void> _showDesktopFolderItemInputMenu({
   required BuildContext context,
-  required FolderInputMode mode,
+  required FolderItemInputMode mode,
   required FolderId folderId,
   FolderItem? initialItem,
 }) => showAppDialog(
@@ -59,7 +59,7 @@ Future<void> _showDesktopFolderItemInputMenu({
 );
 
 final class _FolderItemInputMenuContent extends StatefulWidget {
-  final FolderInputMode mode;
+  final FolderItemInputMode mode;
   final FolderId folderId;
   final FolderItem? initialItem;
   final FolderItemInputBlocFactory blocFactory;
@@ -88,7 +88,7 @@ final class _FolderItemInputMenuContentState extends State<_FolderItemInputMenuC
       folderId: widget.folderId,
       initialItem: widget.initialItem,
     ),
-    child: BlocPresentationListener<FolderItemInputBloc, FolderInputEffect>(
+    child: BlocPresentationListener<FolderItemInputBloc, FolderItemInputEffect>(
       listener: (context, effect) async {
         await onFolderItemInputEffect(context: context, effect: effect);
       },

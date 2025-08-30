@@ -119,6 +119,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get folders_field_placeholder => 'Имя папки';
 
   @override
+  String get folder_purpose_label => 'Цель папки';
+
+  @override
+  String get folder_purpose_list => 'Список';
+
+  @override
+  String get folder_purpose_check => 'Выделение';
+
+  @override
   String get folder_item_field_placeholder => 'Название';
 
   @override

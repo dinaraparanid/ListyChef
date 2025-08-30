@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:listy_chef/core/presentation/foundation/app_snackbar.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
-import 'package:listy_chef/feature/main/child/folder_input/presentation/bloc/mod.dart';
+import 'package:listy_chef/feature/main/child/folder_item_input/presentation/bloc/mod.dart';
 
 Future<void>? onFolderItemInputEffect({
   required BuildContext context,
-  required FolderInputEffect effect,
+  required FolderItemInputEffect effect,
 }) => switch (effect) {
   EffectSuccess() => onSuccess(context),
   EffectFailure() => onFailure(context),

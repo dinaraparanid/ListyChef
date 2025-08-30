@@ -117,6 +117,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get folders_field_placeholder => 'Folder\'s name';
 
   @override
+  String get folder_purpose_label => 'Folder purpose';
+
+  @override
+  String get folder_purpose_list => 'List';
+
+  @override
+  String get folder_purpose_check => 'Check';
+
+  @override
   String get folder_item_field_placeholder => 'Title';
 
   @override

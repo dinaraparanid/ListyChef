@@ -7,7 +7,7 @@ import 'package:listy_chef/core/domain/list/folder_diff_delegate.dart';
 import 'package:listy_chef/core/domain/list/list_difference_use_case.dart';
 import 'package:listy_chef/core/domain/text/text_change_use_case.dart';
 import 'package:listy_chef/core/presentation/foundation/ui_state.dart';
-import 'package:listy_chef/feature/main/child/folders/domain/load_folders_event_bus.dart';
+import 'package:listy_chef/feature/main/child/folder/domain/load_folders_event_bus.dart';
 import 'package:listy_chef/feature/main/child/folders/domain/load_folders_use_case.dart';
 import 'package:listy_chef/feature/main/child/folders/presentation/bloc/folders_effect.dart';
 import 'package:listy_chef/feature/main/child/folders/presentation/bloc/folders_event.dart';

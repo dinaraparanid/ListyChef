@@ -11,8 +11,8 @@ import 'package:listy_chef/feature/main/child/folder/presentation/bloc/list/list
 import 'package:listy_chef/feature/main/child/folder/presentation/bloc/list/list_folder_state.dart';
 import 'package:listy_chef/feature/main/child/folder/presentation/widget/list/folder_item_list_node.dart';
 import 'package:listy_chef/feature/main/child/folder/presentation/widget/list/folder_item_node.dart';
-import 'package:listy_chef/feature/main/child/folder_input/presentation/bloc/folder_input_mode.dart';
-import 'package:listy_chef/feature/main/child/folder_input/presentation/folder_item_input_menu.dart';
+import 'package:listy_chef/feature/main/child/folder_item_input/presentation/bloc/folder_item_input_mode.dart';
+import 'package:listy_chef/feature/main/child/folder_item_input/presentation/folder_item_input_menu.dart';
 
 const _moveDuration = Duration(milliseconds: 400);
 
@@ -105,7 +105,7 @@ Future<void> _showUpdateFolderItemMenu({
 }) => showFolderItemInputMenu(
   context: context,
   folderId: item.data.folderId,
-  mode: FolderInputMode.update,
+  mode: FolderItemInputMode.update,
   initialItem: item,
 );
 

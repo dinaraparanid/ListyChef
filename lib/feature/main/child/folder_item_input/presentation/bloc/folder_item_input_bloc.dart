@@ -7,18 +7,18 @@ import 'package:listy_chef/core/domain/text/text_change_use_case.dart';
 import 'package:listy_chef/core/domain/text/text_container.dart';
 import 'package:listy_chef/core/presentation/foundation/ui_state.dart';
 import 'package:listy_chef/feature/main/child/folder/domain/load_folder_items_event_bus.dart';
-import 'package:listy_chef/feature/main/child/folder_input/domain/add_folder_item_use_case.dart';
-import 'package:listy_chef/feature/main/child/folder_input/domain/update_folder_item_title_use_case.dart';
-import 'package:listy_chef/feature/main/child/folder_input/presentation/bloc/folder_input_effect.dart';
-import 'package:listy_chef/feature/main/child/folder_input/presentation/bloc/folder_item_input_event.dart';
-import 'package:listy_chef/feature/main/child/folder_input/presentation/bloc/folder_input_mode.dart';
-import 'package:listy_chef/feature/main/child/folder_input/presentation/bloc/folder_item_input_state.dart';
+import 'package:listy_chef/feature/main/child/folder_item_input/domain/add_folder_item_use_case.dart';
+import 'package:listy_chef/feature/main/child/folder_item_input/domain/update_folder_item_title_use_case.dart';
+import 'package:listy_chef/feature/main/child/folder_item_input/presentation/bloc/folder_item_input_effect.dart';
+import 'package:listy_chef/feature/main/child/folder_item_input/presentation/bloc/folder_item_input_event.dart';
+import 'package:listy_chef/feature/main/child/folder_item_input/presentation/bloc/folder_item_input_mode.dart';
+import 'package:listy_chef/feature/main/child/folder_item_input/presentation/bloc/folder_item_input_state.dart';
 
 final class FolderItemInputBloc extends Bloc<FolderItemInputEvent, FolderItemInputState>
-  with BlocPresentationMixin<FolderItemInputState, FolderInputEffect> {
+  with BlocPresentationMixin<FolderItemInputState, FolderItemInputEffect> {
 
   FolderItemInputBloc({
-    required FolderInputMode mode,
+    required FolderItemInputMode mode,
     required FolderId folderId,
     FolderItem? initialItem,
     required TextChangeUseCase textChangeUseCase,
@@ -46,7 +46,7 @@ final class FolderItemInputBloc extends Bloc<FolderItemInputEvent, FolderItemInp
 
     on<EventConfirm>((event, emit) async {
       await switch (state.mode) {
-        FolderInputMode.create => addFolderItemUseCase(
+        FolderItemInputMode.create => addFolderItemUseCase(
           title: state.title.value,
           folderId: state.folderId,
           purpose: state.purpose!,
@@ -54,7 +54,7 @@ final class FolderItemInputBloc extends Bloc<FolderItemInputEvent, FolderItemInp
           onError: () => emitPresentation(EffectSuccess()),
         ),
 
-        FolderInputMode.update => updateFolderItemTitleUseCase(
+        FolderItemInputMode.update => updateFolderItemTitleUseCase(
           id: state.id!,
           previousData: state.previousData!,
           newTitle: state.title.value,

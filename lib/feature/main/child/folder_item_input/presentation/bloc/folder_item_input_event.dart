@@ -1,7 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:listy_chef/core/domain/folders/entity/mod.dart';
-import 'package:listy_chef/feature/main/child/folder_input/presentation/bloc/folder_item_input_bloc.dart';
+import 'package:listy_chef/feature/main/child/folder_item_input/presentation/bloc/folder_item_input_bloc.dart';
 
 sealed class FolderItemInputEvent {}
 

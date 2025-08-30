@@ -22,6 +22,8 @@ final class EventNavigateToRoute extends MainEvent {
   EventNavigateToRoute({required this.route});
 }
 
+final class EventShowAddFolderMenu extends MainEvent {}
+
 final class EventShowAddFolderItemMenu extends MainEvent {
   final FolderId folderId;
   EventShowAddFolderItemMenu({required this.folderId});
