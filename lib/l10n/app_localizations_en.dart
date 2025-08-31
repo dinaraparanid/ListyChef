@@ -33,6 +33,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get copied_to_clipboard => 'Copied to clipboard';
 
   @override
+  String selection_row_label(int selected) {
+    return 'Selected: $selected';
+  }
+
+  @override
   String get auth_welcome_title => 'Welcome to Listy Chef!';
 
   @override
@@ -115,6 +120,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get folders_field_placeholder => 'Folder\'s name';
+
+  @override
+  String get folders_error_delete => 'Failed to delete folders';
+
+  @override
+  String get folders_error_update => 'Failed to update folder';
+
+  @override
+  String get folders_action_delete => 'Delete';
+
+  @override
+  String get folders_action_edit => 'Edit';
 
   @override
   String get folder_purpose_label => 'Folder purpose';

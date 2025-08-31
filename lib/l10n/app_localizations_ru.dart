@@ -33,6 +33,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get copied_to_clipboard => 'Скопировано в буффер обмена';
 
   @override
+  String selection_row_label(int selected) {
+    return 'Выбрано: $selected';
+  }
+
+  @override
   String get auth_welcome_title => 'Добро пожаловать в Listy Chef!';
 
   @override
@@ -117,6 +122,18 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get folders_field_placeholder => 'Имя папки';
+
+  @override
+  String get folders_error_delete => 'Не получилось удалить папки';
+
+  @override
+  String get folders_error_update => 'Не получилось обновить папку';
+
+  @override
+  String get folders_action_delete => 'Удалить';
+
+  @override
+  String get folders_action_edit => 'Редактировать';
 
   @override
   String get folder_purpose_label => 'Цель папки';

@@ -120,6 +120,7 @@ final class _FolderInputMenuContentState extends State<_FolderInputMenuContent> 
               CommonPadding(
                 child: AppDropdownMenu<FolderPurpose>(
                   label: context.strings.folder_purpose_label,
+                  isEnabled: widget.mode != FolderInputMode.update,
                   currentlySelected: state.purpose,
                   entries: IList(FolderPurpose.values),
                   entryLabel: (purpose) => switch (purpose) {

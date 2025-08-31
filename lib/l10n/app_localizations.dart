@@ -146,6 +146,12 @@ abstract class AppLocalizations {
   /// **'Copied to clipboard'**
   String get copied_to_clipboard;
 
+  /// No description provided for @selection_row_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected: {selected}'**
+  String selection_row_label(int selected);
+
   /// No description provided for @auth_welcome_title.
   ///
   /// In en, this message translates to:
@@ -295,6 +301,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Folder\'s name'**
   String get folders_field_placeholder;
+
+  /// No description provided for @folders_error_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete folders'**
+  String get folders_error_delete;
+
+  /// No description provided for @folders_error_update.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update folder'**
+  String get folders_error_update;
+
+  /// No description provided for @folders_action_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get folders_action_delete;
+
+  /// No description provided for @folders_action_edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get folders_action_edit;
 
   /// No description provided for @folder_purpose_label.
   ///

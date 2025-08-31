@@ -9,6 +9,15 @@
 
   "copied_to_clipboard": "Copied to clipboard",
 
+  "selection_row_label": "Selected: {selected}",
+  "@selection_row_label": {
+    "placeholders": {
+      "selected": {
+        "type": "int"
+      }
+    }
+  },
+
   "auth_welcome_title": "Welcome to Listy Chef!",
   "auth_email_label": "Email",
   "auth_nickname_label": "Nickname",
@@ -50,6 +59,10 @@
   "main_action_add": "Add",
 
   "folders_field_placeholder": "Folder's name",
+  "folders_error_delete": "Failed to delete folders",
+  "folders_error_update": "Failed to update folder",
+  "folders_action_delete": "Delete",
+  "folders_action_edit": "Edit",
 
   "folder_purpose_label": "Folder purpose",
   "folder_purpose_list": "List",

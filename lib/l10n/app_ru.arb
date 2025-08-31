@@ -9,6 +9,15 @@
 
   "copied_to_clipboard": "Скопировано в буффер обмена",
 
+  "selection_row_label": "Выбрано: {selected}",
+  "@selection_row_label": {
+    "placeholders": {
+      "selected": {
+        "type": "int"
+      }
+    }
+  },
+
   "auth_welcome_title": "Добро пожаловать в Listy Chef!",
   "auth_email_label": "Электронная почта",
   "auth_nickname_label": "Никнейм",
@@ -50,6 +59,10 @@
   "main_action_add": "Добавить",
 
   "folders_field_placeholder": "Имя папки",
+  "folders_error_delete": "Не получилось удалить папки",
+  "folders_error_update": "Не получилось обновить папку",
+  "folders_action_delete": "Удалить",
+  "folders_action_edit": "Редактировать",
 
   "folder_purpose_label": "Цель папки",
   "folder_purpose_list": "Список",

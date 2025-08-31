@@ -1,13 +1,19 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:listy_chef/core/presentation/foundation/selection/app_selection_action.dart';
+import 'package:listy_chef/core/presentation/foundation/selection/app_selection_action_row.dart';
 import 'package:listy_chef/core/presentation/foundation/text/app_search_field.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
+import 'package:listy_chef/core/presentation/theme/images.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
 import 'package:listy_chef/core/utils/functions/distinct_state.dart';
 import 'package:listy_chef/feature/main/child/folders/presentation/bloc/mod.dart';
 import 'package:listy_chef/feature/main/child/folders/presentation/widget/folder_grid_node.dart';
 
 final class FoldersScreen extends StatelessWidget {
+  static const _selectionAnimDuration = Duration(milliseconds: 300);
+
   final FoldersBlocFactory blocFactory;
 
   const FoldersScreen({
@@ -19,8 +25,8 @@ final class FoldersScreen extends StatelessWidget {
   Widget build(BuildContext context) => BlocProvider(
     create: (context) => blocFactory(),
     child: BlocBuilder<FoldersBloc, FoldersState>(
-      buildWhen: ignoreState(),
-      builder: (context, _) => Container(
+      buildWhen: distinctState((s) => s.selectedFolders),
+      builder: (context, state) => Container(
         color: context.appTheme.colors.background.primary,
         child: SafeArea(
           child: Stack(
@@ -37,10 +43,37 @@ final class FoldersScreen extends StatelessWidget {
                     ),
                     child: Wrap(
                       children: [
-                        AppSearchField(
-                          placeholder: context.strings.folders_field_placeholder,
-                          onChange: (query) => context.addFoldersEvent(
-                            EventSearchQueryChange(query: query),
+                        AnimatedCrossFade(
+                          duration: _selectionAnimDuration,
+                          crossFadeState: state.isFoldersActionsVisible
+                            ? CrossFadeState.showSecond
+                            : CrossFadeState.showFirst,
+                          firstChild: AppSearchField(
+                            placeholder: context.strings.folders_field_placeholder,
+                            onChange: (query) => context.addFoldersEvent(
+                              EventSearchQueryChange(query: query),
+                            ),
+                          ),
+                          secondChild: AppSelectionActionRow(
+                            selectedItems: state.selectedFolders.length,
+                            actions: IList([
+                              AppSelectionAction(
+                                icon: AppImages.loadSvg('ic_edit'),
+                                isEnabled: state.isFolderActionEditEnabled,
+                                onClick: () => context.addFoldersEvent(
+                                  EventEditFolder(),
+                                ),
+                              ),
+                              AppSelectionAction(
+                                icon: AppImages.loadSvg('ic_delete'),
+                                onClick: () => context.addFoldersEvent(
+                                  EventDeleteFolders(),
+                                ),
+                              ),
+                            ]),
+                            onCancel: () => context.addFoldersEvent(
+                              EventCancelSelection(),
+                            ),
                           ),
                         ),
                       ],

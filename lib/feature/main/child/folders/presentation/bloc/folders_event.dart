@@ -25,6 +25,17 @@ final class EventUpdateShownFoldersList extends FoldersEvent {
   EventUpdateShownFoldersList({required this.snapshot});
 }
 
+final class EventSelectFolder extends FoldersEvent {
+  final FolderId folderId;
+  EventSelectFolder({required this.folderId});
+}
+
+final class EventCancelSelection extends FoldersEvent {}
+
+final class EventDeleteFolders extends FoldersEvent {}
+
+final class EventEditFolder extends FoldersEvent {}
+
 extension AddFoldersEvent on BuildContext {
   void addFoldersEvent(FoldersEvent event) =>
     BlocProvider.of<FoldersBloc>(this).add(event);

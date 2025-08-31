@@ -22,12 +22,19 @@ abstract class FoldersState with _$FoldersState {
 
     @Default(UiState.initial())
     UiState<IList<Folder>> shownFoldersState,
+
+    @Default(ISet<FolderId>.empty())
+    ISet<FolderId> selectedFolders,
   }) = _FoldersState;
 }
 
 extension Properties on FoldersState {
   UiState<IList<Folder>> get filteredFoldersState =>
     foldersState.mapData((list) => list.where(_matchesQuery).toIList());
+
+  bool get isFoldersActionsVisible => selectedFolders.isNotEmpty;
+
+  bool get isFolderActionEditEnabled => selectedFolders.length == 1;
 
   bool _matchesQuery(Folder item) => switch (searchQuery.value.isBlank) {
     true => true,

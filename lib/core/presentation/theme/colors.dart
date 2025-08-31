@@ -7,6 +7,7 @@ const _Crayola = Color(0xFF2667FF);
 const _SlateBlue = Color(0xFF6C5ED9);
 const _Independence = Color(0xFF465362);
 const _Independence75 = Color(0xBF465362);
+const _Independence50 = Color(0x80465362);
 const _InterdimensionalBlue = Color(0xFF3B28CC);
 const _InterdimensionalBlue75 = Color(0xBF3B28CC);
 const _InterdimensionalBlue50 = Color(0x803B28CC);
@@ -124,9 +125,13 @@ final class AppSearchFieldColors {
 @immutable
 final class AppIconColors {
   final Color primary;
+  final Color enabled;
+  final Color disabled;
 
   const AppIconColors({
     this.primary = _ChineseBlack,
+    this.enabled = _Independence,
+    this.disabled = _Independence50,
   });
 }
 

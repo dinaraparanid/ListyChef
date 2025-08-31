@@ -6,6 +6,7 @@ import 'package:listy_chef/core/presentation/foundation/app_text_button.dart';
 import 'package:listy_chef/core/presentation/foundation/platform_call.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
+import 'package:listy_chef/core/utils/ext/bool_ext.dart';
 import 'package:listy_chef/core/utils/ext/general.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:pull_down_button/pull_down_button.dart';
@@ -17,12 +18,14 @@ final class AppDropdownMenu<T> extends StatelessWidget {
   final IList<T> entries;
   final String Function(T) entryLabel;
   final String label;
+  final bool isEnabled;
   final Color? background;
   final Color? textColor;
   final double? textSize;
   final FontWeight? fontWeight;
   final Color? focusedColor;
   final Color? unfocusedColor;
+  final Color? disabledColor;
   final void Function(T?)? onChange;
 
   const AppDropdownMenu({
@@ -31,12 +34,14 @@ final class AppDropdownMenu<T> extends StatelessWidget {
     required this.entries,
     required this.entryLabel,
     required this.label,
+    this.isEnabled = true,
     this.background,
     this.textColor,
     this.textSize,
     this.fontWeight,
     this.focusedColor,
     this.unfocusedColor,
+    this.disabledColor,
     this.onChange,
   });
 
@@ -55,14 +60,17 @@ final class AppDropdownMenu<T> extends StatelessWidget {
   Color _unfocusedColor(AppTheme theme) =>
     unfocusedColor ?? theme.colors.text.unfocused;
 
-  Color _borderColor(AppTheme theme) => _focusedColor(theme);
+  Color _disabledColor(AppTheme theme) =>
+    disabledColor ?? theme.colors.text.disabled;
 
-  Color _textColor(AppTheme theme) =>
-    textColor ?? theme.colors.text.primary;
+  Color _borderColor(AppTheme theme) =>
+    isEnabled ? _unfocusedColor(theme) : _disabledColor(theme);
+
+  Color _textColor(AppTheme theme) => textColor ?? theme.colors.text.primary;
 
   TextStyle _textStyle(AppTheme theme) =>
     theme.typography.body.copyWith(
-      color: _textColor(theme),
+      color: isEnabled ? _textColor(theme) : _disabledColor(theme),
       fontSize: textSize,
       fontWeight: fontWeight,
     );
@@ -101,6 +109,7 @@ final class AppDropdownMenu<T> extends StatelessWidget {
         ),
       )],
       onSelected: onChange,
+      enabled: isEnabled,
       textStyle: _textStyle(theme),
       requestFocusOnTap: false,
       label: _label(theme),
@@ -122,10 +131,10 @@ final class AppDropdownMenu<T> extends StatelessWidget {
             width: theme.dimensions.size.line.small,
           ),
         ),
-        errorBorder: OutlineInputBorder(
+        disabledBorder: OutlineInputBorder(
           borderRadius: _borderRadius(theme),
           borderSide: BorderSide(
-            color: theme.colors.error,
+            color: _disabledColor(theme),
             width: theme.dimensions.size.line.small,
           ),
         ),
@@ -140,15 +149,17 @@ final class AppDropdownMenu<T> extends StatelessWidget {
         onTap: () => onChange?.call(e),
         title: entryLabel(e),
         icon: currentlySelected == e ? CupertinoIcons.check_mark : null,
-        iconColor: _focusedColor(theme),
+        iconColor: _textColor(theme),
         itemTheme: PullDownMenuItemTheme(
           textStyle: _textStyle(theme),
         ),
       ))],
       buttonBuilder: (context, showMenu) => AppTextButton(
+        isEnabled: isEnabled,
         text: '$label${currentlySelected?.let((it) => '\n${entryLabel(it)}') ?? ''}',
         onClick: () => showMenu(),
         enabledColor: _textColor(theme),
+        disabledColor: _disabledColor(theme),
       ),
     ),
   );
@@ -162,10 +173,14 @@ final class AppDropdownMenu<T> extends StatelessWidget {
       ),
     ),
     child: MacosPopupButton<T>(
-      value: currentlySelected,
-      onChanged: onChange,
-      hint: _label(theme),
-      items: [...entries.map((e) => MacosPopupMenuItem(
+      value: isEnabled ? currentlySelected : null,
+      onChanged: isEnabled ? onChange : null,
+      hint: isEnabled
+        ? _label(theme)
+        : currentlySelected
+          ?.let((it) => Text(entryLabel(it)))
+          ?? _label(theme),
+      items: isEnabled.not ? [] : [...entries.map((e) => MacosPopupMenuItem(
         value: e,
         child: Text(entryLabel(e)),
       ))],
@@ -176,14 +191,16 @@ final class AppDropdownMenu<T> extends StatelessWidget {
     data: YaruThemeData(themeMode: ThemeMode.dark),
     child: YaruPopupMenuButton<T>(
       initialValue: currentlySelected,
+      enabled: isEnabled,
       padding: _contentPadding(theme),
       style: OutlinedButton.styleFrom(
         foregroundColor: _unfocusedColor(theme),
         backgroundColor: background,
+        disabledForegroundColor: _disabledColor(theme),
         shape: RoundedRectangleBorder(
           borderRadius: _borderRadius(theme),
           side: BorderSide(
-            color: _unfocusedColor(theme),
+            color: isEnabled ? _unfocusedColor(theme) : _disabledColor(theme),
             width: theme.dimensions.size.line.small,
           ),
         ),
@@ -191,6 +208,7 @@ final class AppDropdownMenu<T> extends StatelessWidget {
       itemBuilder: (context) => [...entries.map((e) =>
         PopupMenuItem<T>(
           value: e,
+          enabled: isEnabled,
           textStyle: _textStyle(theme),
           child: Text(entryLabel(e), style: _textStyle(theme)),
         ),
@@ -207,6 +225,7 @@ final class AppDropdownMenu<T> extends StatelessWidget {
     data: win.FluentThemeData(brightness: Brightness.dark),
     child: win.DropDownButton(
       title: _label(theme),
+      disabled: isEnabled.not,
       items: [...entries.map((e) => win.MenuFlyoutItem(
         selected: currentlySelected == e,
         text: Text(entryLabel(e), style: _textStyle(theme)),

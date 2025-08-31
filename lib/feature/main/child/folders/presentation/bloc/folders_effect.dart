@@ -13,3 +13,12 @@ final class EffectRemoveFolder extends FoldersEffect {
   final Folder folder;
   EffectRemoveFolder({required this.index, required this.folder});
 }
+
+final class EffectShowUpdateFolderMenu extends FoldersEffect {
+  final Folder item;
+  EffectShowUpdateFolderMenu({required this.item});
+}
+
+final class EffectFailedToDeleteFolders extends FoldersEffect {}
+
+final class EffectFailedToUpdateFolder extends FoldersEffect {}

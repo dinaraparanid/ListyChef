@@ -1,8 +1,12 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:listy_chef/core/domain/folders/entity/mod.dart';
+import 'package:listy_chef/core/presentation/foundation/app_snackbar.dart';
 import 'package:listy_chef/core/presentation/foundation/ui_state.dart';
+import 'package:listy_chef/core/presentation/theme/strings.dart';
 import 'package:listy_chef/core/utils/ext/ilist_ext.dart';
+import 'package:listy_chef/feature/main/child/folder_input/presentation/bloc/folder_input_mode.dart';
+import 'package:listy_chef/feature/main/child/folder_input/presentation/folder_input_menu.dart';
 import 'package:listy_chef/feature/main/child/folders/presentation/bloc/mod.dart';
 import 'package:listy_chef/feature/main/child/folders/presentation/widget/folder_grid_node.dart';
 import 'package:listy_chef/feature/main/child/folders/presentation/widget/folder_node.dart';
@@ -20,11 +24,27 @@ Future<void>? onFoldersEffect({
     item: effect.folder,
   ),
 
-  EffectRemoveFolder() => _onRemoteFolder(
+  EffectRemoveFolder() => _onRemoveFolder(
     context: context,
     snapshot: context.foldersState.shownFoldersState.getOrNull.orEmpty,
     index: effect.index,
     item: effect.folder,
+  ),
+
+  EffectShowUpdateFolderMenu() => showFolderInputMenu(
+    context: context,
+    mode: FolderInputMode.update,
+    initialItem: effect.item,
+  ),
+
+  EffectFailedToDeleteFolders() => _showErrorSnackBar(
+    context: context,
+    message: context.strings.folders_error_delete,
+  ),
+
+  EffectFailedToUpdateFolder() => _showErrorSnackBar(
+    context: context,
+    message: context.strings.folders_error_update,
   ),
 };
 
@@ -49,7 +69,7 @@ Future<void>? _onInsertFolder({
   return null;
 }
 
-Future<void>? _onRemoteFolder({
+Future<void>? _onRemoveFolder({
   required BuildContext context,
   required IList<Folder> snapshot,
   required int index,
@@ -68,3 +88,13 @@ Future<void>? _onRemoteFolder({
 
   return null;
 }
+
+Future<void> _showErrorSnackBar({
+  required BuildContext context,
+  required String message,
+}) => showAppSnackBar(
+  context: context,
+  title: context.strings.error,
+  message: message,
+  mode: AppSnackBarMode.error,
+);
