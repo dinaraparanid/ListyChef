@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:listy_chef/core/domain/folders/entity/mod.dart';
 import 'package:listy_chef/core/presentation/foundation/scaffold/app_scaffold.dart';
@@ -26,35 +27,41 @@ final class FolderScreen extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => MultiBlocProvider(
-    providers: [
-      BlocProvider(create: (context) => checkFolderBlocFactory(folderId: folderId)),
-      BlocProvider(create: (context) => listFolderBlocFactory(folderId: folderId)),
-    ],
-    child: FutureBuilder(
-      future: loadFolderUseCase(id: folderId).then((state) =>
-        state.mapData((it) => it.data),
-      ),
-      builder: (context, future) {
-        final (title, content) = switch ((future.data, future.error)) {
-          (_, final Object _) || (final Error<FolderPurpose> _, _) =>
+  Widget build(BuildContext context) => AnnotatedRegion(
+    value: SystemUiOverlayStyle(
+      systemNavigationBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: context.appTheme.colors.background.primary,
+    ),
+    child: MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => checkFolderBlocFactory(folderId: folderId)),
+        BlocProvider(create: (context) => listFolderBlocFactory(folderId: folderId)),
+      ],
+      child: FutureBuilder(
+        future: loadFolderUseCase(id: folderId).then((state) =>
+          state.mapData((it) => it.data),
+        ),
+        builder: (context, future) {
+          final (title, content) = switch ((future.data, future.error)) {
+            (_, final Object _) || (final Error<FolderPurpose> _, _) =>
             ('', Text('TODO: Error stub')),
 
-          (final Data<FolderData> data, _) => switch (data.value.purpose) {
-            FolderPurpose.check => (data.value.title, CheckFolderContent()),
-            FolderPurpose.list => (data.value.title, ListFolderContent()),
-          },
+            (final Data<FolderData> data, _) => switch (data.value.purpose) {
+              FolderPurpose.check => (data.value.title, CheckFolderContent()),
+              FolderPurpose.list => (data.value.title, ListFolderContent()),
+            },
 
-          (_, _) => ('', Text('TODO: Loading')),
-        };
+            (_, _) => ('', Text('TODO: Loading')),
+          };
 
-        return AppScaffold(
-          title: title,
-          backgroundColor: context.appTheme.colors.background.primary,
-          onBack: () => context.addMainEvent(EventNavigateToFolders()),
-          body: content,
-        );
-      },
+          return AppScaffold(
+            title: title,
+            backgroundColor: context.appTheme.colors.background.primary,
+            onBack: () => context.addMainEvent(EventNavigateToFolders()),
+            body: content,
+          );
+        },
+      ),
     ),
   );
 }

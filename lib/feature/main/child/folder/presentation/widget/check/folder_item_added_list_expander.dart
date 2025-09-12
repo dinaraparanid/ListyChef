@@ -1,8 +1,8 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:listy_chef/assets/assets.gen.dart';
 import 'package:listy_chef/core/presentation/foundation/app_clickable.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
-import 'package:listy_chef/core/presentation/theme/images.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
 import 'package:listy_chef/core/utils/ext/bool_ext.dart';
 import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_event.dart';
@@ -38,7 +38,7 @@ final class FolderItemAddedListExpander extends StatelessWidget {
               turns: isAddedListExpanded ? 0 : 0.5,
               duration: FolderItemCheckLists.expandDuration,
               child: SvgPicture.asset(
-                AppImages.loadSvg('ic_arrow_down').value,
+                Assets.images.icArrowDown.path,
                 width: context.appTheme.dimensions.size.extraSmall,
                 height: context.appTheme.dimensions.size.extraSmall,
                 colorFilter: ColorFilter.mode(

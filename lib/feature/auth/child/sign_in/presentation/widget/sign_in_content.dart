@@ -1,11 +1,11 @@
 import 'package:bloc_presentation/bloc_presentation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:listy_chef/assets/assets.gen.dart';
 import 'package:listy_chef/core/presentation/foundation/app_filled_button.dart';
 import 'package:listy_chef/core/presentation/foundation/text/app_outlined_text_field.dart';
 import 'package:listy_chef/core/presentation/foundation/app_text_button.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
-import 'package:listy_chef/core/presentation/theme/images.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
 import 'package:listy_chef/core/utils/ext/bool_ext.dart';
 import 'package:listy_chef/feature/auth/child/sign_in/presentation/bloc/mod.dart';
@@ -79,7 +79,7 @@ final class _SignInContentState extends State<SignInContent> {
                 label: strings.auth_email_label,
                 error: state.email.error.ifTrue(strings.auth_error_email_empty),
                 suffixIcon: state.isEmailClearIconVisible.ifTrue(
-                  AppImages.loadSvg('ic_close'),
+                  Assets.images.icClose,
                 ),
                 onChange: (input) => BlocProvider
                   .of<SignInBloc>(context)
@@ -98,9 +98,9 @@ final class _SignInContentState extends State<SignInContent> {
               obscureText: state.isPasswordVisible.not,
               label: strings.auth_password_label,
               error: state.password.error.ifTrue(strings.auth_error_short_password),
-              suffixIcon: AppImages.loadSvg(
-                state.isPasswordVisible ? 'ic_eye' : 'ic_eye_closed',
-              ),
+              suffixIcon: state.isPasswordVisible
+                ? Assets.images.icEye
+                : Assets.images.icEyeClosed,
               onChange: (input) => BlocProvider
                 .of<SignInBloc>(context)
                 .add(EventPasswordChange(password: input)),

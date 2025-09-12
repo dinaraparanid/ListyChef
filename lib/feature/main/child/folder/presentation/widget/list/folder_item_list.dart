@@ -4,9 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:listy_chef/core/domain/folders/entity/mod.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/utils/functions/distinct_state.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_bloc.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_event.dart';
-import 'package:listy_chef/feature/main/child/folder/presentation/bloc/check/check_folder_state.dart';
+import 'package:listy_chef/feature/main/child/folder/presentation/bloc/list/mod.dart';
 import 'package:listy_chef/feature/main/child/folder/presentation/widget/list/folder_item_list_node.dart';
 import 'package:listy_chef/feature/main/child/folder/presentation/widget/list/folder_item_node.dart';
 
@@ -19,7 +17,7 @@ final class FolderItemList extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<CheckFolderBloc, CheckFolderState>(
+  Widget build(BuildContext context) => BlocBuilder<ListFolderBloc, ListFolderState>(
     buildWhen: distinctState((s) => s.draggingItemId),
     builder: (context, state) => AnimatedList.separated(
       key: listKey,
@@ -60,13 +58,13 @@ final class FolderItemList extends StatelessWidget {
             item: product,
             isPositionKept: product.id == draggingItemId,
             callbacks: FolderItemNodeCallbacks(
-              onDragStart: () => context.addCheckFolderEvent(
+              onDragStart: () => context.addListFolderEvent(
                 EventStartItemDrag(id: product.id),
               ),
-              onEdit: () => context.addCheckFolderEvent(
+              onEdit: () => context.addListFolderEvent(
                 EventEditItem(item: product),
               ),
-              onDelete: () => context.addCheckFolderEvent(
+              onDelete: () => context.addListFolderEvent(
                 EventDeleteFolderItem(id: product.id),
               ),
             ),

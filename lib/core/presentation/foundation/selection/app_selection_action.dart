@@ -1,11 +1,11 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:listy_chef/assets/assets.gen.dart';
 import 'package:listy_chef/core/presentation/foundation/app_clickable.dart';
-import 'package:listy_chef/core/presentation/foundation/image_asset.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 
 final class AppSelectionAction extends StatelessWidget {
-  final SvgImageAsset icon;
+  final SvgGenImage icon;
   final bool isEnabled;
   final EdgeInsets? contentPadding;
   final void Function() onClick;
@@ -27,7 +27,7 @@ final class AppSelectionAction extends StatelessWidget {
         context.appTheme.dimensions.padding.small,
       ),
       child: SvgPicture.asset(
-        icon.value,
+        icon.path,
         width: context.appTheme.dimensions.size.medium,
         height: context.appTheme.dimensions.size.medium,
         colorFilter: ColorFilter.mode(

@@ -1,10 +1,10 @@
 import 'package:bloc_presentation/bloc_presentation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:listy_chef/assets/assets.gen.dart';
 import 'package:listy_chef/core/presentation/foundation/app_filled_button.dart';
 import 'package:listy_chef/core/presentation/foundation/text/app_outlined_text_field.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
-import 'package:listy_chef/core/presentation/theme/images.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
 import 'package:listy_chef/core/utils/ext/bool_ext.dart';
 import 'package:listy_chef/feature/auth/child/sign_up/presentation/bloc/mod.dart';
@@ -82,7 +82,7 @@ final class _SignUpContentState extends State<SignUpContent> {
                   label: strings.auth_email_label,
                   error: state.email.error.ifTrue(strings.auth_error_email_empty),
                   suffixIcon: state.isEmailClearIconVisible.ifTrue(
-                    AppImages.loadSvg('ic_close'),
+                    Assets.images.icClose,
                   ),
                   onChange: (input) => BlocProvider
                     .of<SignUpBloc>(context)
@@ -108,7 +108,7 @@ final class _SignUpContentState extends State<SignUpContent> {
                   label: strings.auth_nickname_label,
                   error: state.nickname.error.ifTrue(strings.auth_error_nickname_empty),
                   suffixIcon: state.isNicknameClearIconVisible.ifTrue(
-                    AppImages.loadSvg('ic_close'),
+                    Assets.images.icClose,
                   ),
                   onChange: (input) => BlocProvider
                     .of<SignUpBloc>(context)
@@ -127,9 +127,9 @@ final class _SignUpContentState extends State<SignUpContent> {
                 obscureText: true,
                 label: strings.auth_password_label,
                 error: state.password.error.ifTrue(strings.auth_error_short_password),
-                suffixIcon: AppImages.loadSvg(
-                  state.isPasswordVisible ? 'ic_eye' : 'ic_eye_closed',
-                ),
+                suffixIcon: state.isPasswordVisible
+                  ? Assets.images.icEye
+                  : Assets.images.icEyeClosed,
                 onChange: (input) => BlocProvider
                   .of<SignUpBloc>(context)
                   .add(EventPasswordChange(password: input)),

@@ -1,10 +1,10 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:listy_chef/assets/assets.gen.dart';
 import 'package:listy_chef/core/domain/folders/entity/mod.dart';
 import 'package:listy_chef/core/presentation/foundation/app_clickable.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
-import 'package:listy_chef/core/presentation/theme/images.dart';
 import 'package:listy_chef/core/utils/functions/distinct_state.dart';
 import 'package:listy_chef/feature/main/child/folders/presentation/bloc/mod.dart';
 import 'package:listy_chef/feature/main/presentation/bloc/main_event.dart';
@@ -52,9 +52,9 @@ final class FolderNode extends StatelessWidget {
             children: [
               SvgPicture.asset(
                 switch (folder.data.purpose) {
-                  FolderPurpose.check => AppImages.loadSvg('folder_check'),
-                  FolderPurpose.list => AppImages.loadSvg('folder_list'),
-                }.value,
+                  FolderPurpose.check => Assets.images.folderCheck,
+                  FolderPurpose.list => Assets.images.folderList,
+                }.path,
                 width: context.appTheme.dimensions.size.big,
                 height: context.appTheme.dimensions.size.big,
               ),

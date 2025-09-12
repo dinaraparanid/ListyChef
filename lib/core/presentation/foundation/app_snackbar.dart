@@ -57,6 +57,10 @@ Future<void> _showMaterialSnackBar({
           Radius.circular(theme.dimensions.radius.medium),
         ),
       ),
+      margin: EdgeInsets.only(
+        left: theme.dimensions.padding.extraMedium,
+        right: theme.dimensions.padding.extraMedium,
+      ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

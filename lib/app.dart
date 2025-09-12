@@ -32,7 +32,7 @@ final class App extends StatelessWidget {
           systemNavigationBarColor: Colors.transparent,
           systemNavigationBarDividerColor: Colors.transparent,
           systemNavigationBarIconBrightness: Brightness.light,
-          systemNavigationBarContrastEnforced: false,
+          systemNavigationBarContrastEnforced: true,
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.dark,
           systemStatusBarContrastEnforced: false,

@@ -18,6 +18,8 @@ import 'package:sizer/sizer.dart';
 import 'package:yaru/widgets.dart';
 
 final class AppScaffold extends StatelessWidget {
+  static const _fabPositionDuration = Duration(milliseconds: 300);
+
   final String? title;
   final Color? backgroundColor;
   final Widget body;
@@ -69,7 +71,7 @@ final class AppScaffold extends StatelessWidget {
       backgroundColor: theme.colors.unique.fabBackground,
       onPressed: act.onPressed,
       child: SvgPicture.asset(
-        act.icon.value,
+        act.icon.path,
         width: theme.dimensions.size.small,
         height: theme.dimensions.size.small,
         colorFilter: ColorFilter.mode(
@@ -79,6 +81,9 @@ final class AppScaffold extends StatelessWidget {
       ),
     ),
   );
+
+  double fabBottomPadding(BuildContext context) =>
+    isBottomNavigationBarVisible ? 0 : MediaQuery.of(context).padding.bottom;
 
   Widget? FooterAction(AppTheme theme) => action?.let((act) =>
     AppClickable(
@@ -92,7 +97,7 @@ final class AppScaffold extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            act.icon.value,
+            act.icon.path,
             width: theme.dimensions.size.small,
             height: theme.dimensions.size.small,
             colorFilter: ColorFilter.mode(
@@ -132,8 +137,6 @@ final class AppScaffold extends StatelessWidget {
         ),
       ),
     ) : null,
-    floatingActionButton: FAB(context.appTheme),
-    floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     bottomNavigationBar: items?.let((items) => Sizer(
       builder: (context, orientation, screenType) =>
         switch ((orientation, screenType)) {
@@ -144,19 +147,36 @@ final class AppScaffold extends StatelessWidget {
         },
     )),
     body: Sizer(
-      builder: (context, orientation, screenType) =>
-        switch ((orientation, screenType, items)) {
-          (Orientation.portrait, ScreenType.mobile, _) => body,
+      builder: (ctx, orientation, screenType) => Stack(
+        children: [
+          switch ((orientation, screenType, items)) {
+            (Orientation.portrait, ScreenType.mobile, _) => body,
 
-          (_, _, final IList<AppNavigationMenuItemData> items) => Row(
-            children: [
-              _MaterialNavigationRail(context: context, items: items),
-              Expanded(child: body),
-            ],
+            (_, _, final IList<AppNavigationMenuItemData> items) => Row(
+              children: [
+                _MaterialNavigationRail(context: ctx, items: items),
+                Expanded(child: body),
+              ],
+            ),
+
+            _ => body,
+          },
+
+          if (action != null) AnimatedPadding(
+            duration: _fabPositionDuration,
+            padding: EdgeInsets.only(
+              left: ctx.appTheme.dimensions.padding.extraMedium,
+              right: ctx.appTheme.dimensions.padding.extraMedium,
+              bottom: ctx.appTheme.dimensions.padding.extraMedium +
+                fabBottomPadding(context),
+            ),
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: FAB(ctx.appTheme),
+            ),
           ),
-
-          _ => body,
-      },
+        ],
+      ),
     ),
   );
 
@@ -182,7 +202,7 @@ final class AppScaffold extends StatelessWidget {
         onTap: onItemClick,
         items: items.mapIndexed((index, item) => BottomNavigationBarItem(
           icon: SvgPicture.asset(
-            item.icon.value,
+            item.icon.path,
             width: context.appTheme.dimensions.size.small,
             height: context.appTheme.dimensions.size.small,
             colorFilter: ColorFilter.mode(
@@ -221,7 +241,7 @@ final class AppScaffold extends StatelessWidget {
     useIndicator: false,
     destinations: items.mapIndexed((index, item) => NavigationRailDestination(
       icon: SvgPicture.asset(
-        item.icon.value,
+        item.icon.path,
         width: context.appTheme.dimensions.size.small,
         height: context.appTheme.dimensions.size.small,
         colorFilter: ColorFilter.mode(
@@ -252,9 +272,13 @@ final class AppScaffold extends StatelessWidget {
         children: [
           body,
 
-          if (action != null) Padding(
-            padding: EdgeInsets.all(
-              context.appTheme.dimensions.padding.extraMedium,
+          if (action != null) AnimatedPadding(
+            duration: _fabPositionDuration,
+            padding: EdgeInsets.only(
+              left: context.appTheme.dimensions.padding.extraMedium,
+              right: context.appTheme.dimensions.padding.extraMedium,
+              bottom: context.appTheme.dimensions.padding.extraMedium +
+                fabBottomPadding(context),
             ),
             child: Align(
               alignment: Alignment.bottomRight,
@@ -318,8 +342,6 @@ final class AppScaffold extends StatelessWidget {
     (final IList items, false) => Scaffold(
       backgroundColor: backgroundColor
         ?? context.appTheme.colors.background.primary,
-      floatingActionButton: FAB(context.appTheme),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: AppAnimatedTabBarSize(
         isVisible: isBottomNavigationBarVisible,
         child: CupertinoTabBar(
@@ -344,7 +366,24 @@ final class AppScaffold extends StatelessWidget {
           )).toList(growable: false),
         ),
       ),
-      body: body,
+      body: Stack(
+        children: [
+          body,
+          if (action != null) AnimatedPadding(
+            duration: _fabPositionDuration,
+            padding: EdgeInsets.only(
+              left: context.appTheme.dimensions.padding.extraMedium,
+              right: context.appTheme.dimensions.padding.extraMedium,
+              bottom: context.appTheme.dimensions.padding.extraMedium +
+                fabBottomPadding(context),
+            ),
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: FAB(context.appTheme),
+            ),
+          ),
+        ],
+      ),
     ),
   };
 
@@ -359,8 +398,6 @@ final class AppScaffold extends StatelessWidget {
         style: YaruBackButtonStyle.rounded,
       ),
     ) : null,
-    floatingActionButton: FAB(context.appTheme),
-    floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     bottomNavigationBar: items?.let((items) => Sizer(
       builder: (context, orientation, screenType) => switch ((orientation, screenType)) {
         (Orientation.portrait, ScreenType.mobile) =>
@@ -370,19 +407,36 @@ final class AppScaffold extends StatelessWidget {
       },
     )),
     body: Sizer(
-      builder: (context, orientation, screenType) =>
-        switch ((orientation, screenType, items)) {
-          (Orientation.portrait, ScreenType.mobile, _) => body,
+      builder: (ctx, orientation, screenType) => Stack(
+        children: [
+          switch ((orientation, screenType, items)) {
+            (Orientation.portrait, ScreenType.mobile, _) => body,
 
-          (_, _, final IList<AppNavigationMenuItemData> items) => Row(
-            children: [
-              _MaterialNavigationRail(context: context, items: items),
-              Expanded(child: body),
-            ],
+            (_, _, final IList<AppNavigationMenuItemData> items) => Row(
+              children: [
+                _MaterialNavigationRail(context: ctx, items: items),
+                Expanded(child: body),
+              ],
+            ),
+
+            _ => body,
+          },
+
+          if (action != null) AnimatedPadding(
+            duration: _fabPositionDuration,
+            padding: EdgeInsets.only(
+              left: ctx.appTheme.dimensions.padding.extraMedium,
+              right: ctx.appTheme.dimensions.padding.extraMedium,
+              bottom: ctx.appTheme.dimensions.padding.extraMedium +
+                fabBottomPadding(context),
+            ),
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: FAB(ctx.appTheme),
+            ),
           ),
-
-          _ => body,
-      },
+        ],
+      ),
     ),
   );
 
@@ -418,7 +472,7 @@ final class AppScaffold extends StatelessWidget {
         for (final (index, item) in items.indexed)
           win.PaneItem(
             icon: SvgPicture.asset(
-              item.icon.value,
+              item.icon.path,
               width: context.appTheme.dimensions.size.small,
               height: context.appTheme.dimensions.size.small,
               colorFilter: ColorFilter.mode(
@@ -453,7 +507,7 @@ final class AppScaffold extends StatelessWidget {
             ),
           ),
           icon: SvgPicture.asset(
-            action!.icon.value,
+            action!.icon.path,
             width: context.appTheme.dimensions.size.small,
             height: context.appTheme.dimensions.size.small,
             colorFilter: ColorFilter.mode(

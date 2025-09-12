@@ -46,6 +46,7 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   build_runner: ^2.4.15
   json_serializable: ^6.9.5
+  flutter_gen_runner: ^5.11.0
 
 flutter:
   uses-material-design: true
@@ -58,3 +59,8 @@ flutter:
         - asset: assets/fonts/NunitoSans-VariableFont_YTLC,opsz,wdth,wght.ttf
         - asset: assets/fonts/NunitoSans-Italic-VariableFont_YTLC,opsz,wdth,wght.ttf
           style: italic
+
+flutter_gen:
+  output: lib/assets/
+  integrations:
+    flutter_svg: true

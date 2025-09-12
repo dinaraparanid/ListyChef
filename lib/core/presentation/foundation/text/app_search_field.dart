@@ -3,12 +3,11 @@ import 'package:fluent_ui/fluent_ui.dart' hide Colors;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:listy_chef/assets/assets.gen.dart';
 import 'package:listy_chef/core/presentation/foundation/app_clickable.dart';
-import 'package:listy_chef/core/presentation/foundation/image_asset.dart';
 import 'package:listy_chef/core/presentation/foundation/platform_call.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
-import 'package:listy_chef/core/presentation/theme/images.dart';
 
 const _iconDuration = Duration(milliseconds: 300);
 
@@ -101,7 +100,7 @@ final class _AppSearchFieldState extends State<AppSearchField> {
 
   Widget textIcon({
     required AppTheme theme,
-    required SvgImageAsset? asset,
+    required SvgGenImage? asset,
     required void Function() onClick,
   }) => AnimatedOpacity(
     opacity: asset == null ? 0 : 1,
@@ -112,7 +111,7 @@ final class _AppSearchFieldState extends State<AppSearchField> {
       child: Padding(
         padding: EdgeInsets.all(theme.dimensions.padding.small),
         child: SvgPicture.asset(
-          asset.value,
+          asset.path,
           width: theme.dimensions.size.small,
           height: theme.dimensions.size.small,
           colorFilter: ColorFilter.mode(
@@ -126,13 +125,13 @@ final class _AppSearchFieldState extends State<AppSearchField> {
 
   Widget prefix(AppTheme theme) => textIcon(
     theme: theme,
-    asset: AppImages.loadSvg('ic_search'),
+    asset: Assets.images.icSearch,
     onClick: () => focusNode.requestFocus(),
   );
 
   Widget suffix(AppTheme theme) => textIcon(
     theme: theme,
-    asset: isClearVisible ? AppImages.loadSvg('ic_close') : null,
+    asset: isClearVisible ? Assets.images.icClose : null,
     onClick: onClear,
   );
 

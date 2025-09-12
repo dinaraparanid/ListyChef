@@ -3,8 +3,8 @@ import 'package:fluent_ui/fluent_ui.dart' hide Colors;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:listy_chef/assets/assets.gen.dart';
 import 'package:listy_chef/core/presentation/foundation/app_clickable.dart';
-import 'package:listy_chef/core/presentation/foundation/image_asset.dart';
 import 'package:listy_chef/core/presentation/foundation/platform_call.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
@@ -26,8 +26,8 @@ final class AppOutlineTextField extends StatefulWidget {
   final FontWeight? fontWeight;
   final Color? focusedColor;
   final Color? unfocusedColor;
-  final SvgImageAsset? prefixIcon;
-  final SvgImageAsset? suffixIcon;
+  final SvgGenImage? prefixIcon;
+  final SvgGenImage? suffixIcon;
   final void Function(String)? onChange;
   final void Function()? onSuffixClick;
   final void Function()? onPrefixClick;
@@ -133,7 +133,7 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
 
   Widget animatedTextIcon({
     required AppTheme theme,
-    required SvgImageAsset? asset,
+    required SvgGenImage? asset,
     void Function()? onClick,
   }) => AnimatedOpacity(
     opacity: asset == null || onClick == null ? 0 : 1,
@@ -144,7 +144,7 @@ final class _AppOutlineTextFieldState extends State<AppOutlineTextField> {
       child: Padding(
         padding: EdgeInsets.all(theme.dimensions.padding.small),
         child: SvgPicture.asset(
-          asset.value,
+          asset.path,
           width: theme.dimensions.size.small,
           height: theme.dimensions.size.small,
           colorFilter: ColorFilter.mode(

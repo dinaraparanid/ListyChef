@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:listy_chef/assets/assets.gen.dart';
 import 'package:listy_chef/core/domain/folders/entity/mod.dart';
 import 'package:listy_chef/core/presentation/foundation/app_clickable.dart';
 import 'package:listy_chef/core/presentation/foundation/app_underlay_action_row.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
-import 'package:listy_chef/core/presentation/theme/images.dart';
 import 'package:listy_chef/feature/main/child/folder/presentation/bloc/list/list_folder_event.dart';
 
 const _animationDuration = Duration(milliseconds: 300);
@@ -47,12 +47,12 @@ final class FolderItemNode extends StatelessWidget {
         onDragStart: callbacks?.onDragStart,
         actions: [
           AppUnderlayAction(
-            icon: AppImages.loadSvg('ic_edit'),
+            icon: Assets.images.icEdit,
             backgroundColor: _actionColorEdit,
             onClick: cb.onEdit,
           ),
           AppUnderlayAction(
-            icon: AppImages.loadSvg('ic_delete'),
+            icon: Assets.images.icDelete,
             backgroundColor: _actionColorDelete,
             onClick: cb.onDelete,
           ),
@@ -69,10 +69,10 @@ final class FolderItemNode extends StatelessWidget {
 
     return AnimatedContainer(
       duration: _animationDuration,
-      height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
         color: context.appTheme.colors.unique.todoProductBackground,
       ),
+      constraints: BoxConstraints(minHeight: 58),
       child: AppClickable(
         onLongClick: () => Clipboard
           .setData(ClipboardData(text: item.data.title))

@@ -1,11 +1,11 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:listy_chef/assets/assets.gen.dart';
 import 'package:listy_chef/core/presentation/foundation/selection/app_selection_action.dart';
 import 'package:listy_chef/core/presentation/foundation/selection/app_selection_action_row.dart';
 import 'package:listy_chef/core/presentation/foundation/text/app_search_field.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
-import 'package:listy_chef/core/presentation/theme/images.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
 import 'package:listy_chef/core/utils/functions/distinct_state.dart';
 import 'package:listy_chef/feature/main/child/folders/presentation/bloc/mod.dart';
@@ -58,14 +58,14 @@ final class FoldersScreen extends StatelessWidget {
                             selectedItems: state.selectedFolders.length,
                             actions: IList([
                               AppSelectionAction(
-                                icon: AppImages.loadSvg('ic_edit'),
+                                icon: Assets.images.icEdit,
                                 isEnabled: state.isFolderActionEditEnabled,
                                 onClick: () => context.addFoldersEvent(
                                   EventEditFolder(),
                                 ),
                               ),
                               AppSelectionAction(
-                                icon: AppImages.loadSvg('ic_delete'),
+                                icon: Assets.images.icDelete,
                                 onClick: () => context.addFoldersEvent(
                                   EventDeleteFolders(),
                                 ),

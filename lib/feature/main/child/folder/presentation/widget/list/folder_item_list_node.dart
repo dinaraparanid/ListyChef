@@ -22,8 +22,10 @@ final class FolderItemListNode extends StatelessWidget {
       child: switch (state.shownItemsState) {
         final Data<IList<FolderItem>> items when items.value.isNotEmpty =>
           Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appTheme.dimensions.padding.extraMedium,
+            padding: EdgeInsets.only(
+              left: context.appTheme.dimensions.padding.extraMedium,
+              right: context.appTheme.dimensions.padding.extraMedium,
+              bottom: context.appTheme.dimensions.padding.extraLarge,
             ),
             child: FolderItemList(items: items.value),
           ),

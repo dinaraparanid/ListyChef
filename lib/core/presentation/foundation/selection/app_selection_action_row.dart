@@ -2,10 +2,10 @@ import 'package:dartx/dartx.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:listy_chef/assets/assets.gen.dart';
 import 'package:listy_chef/core/presentation/foundation/app_clickable.dart';
 import 'package:listy_chef/core/presentation/foundation/selection/app_selection_action.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
-import 'package:listy_chef/core/presentation/theme/images.dart';
 import 'package:listy_chef/core/presentation/theme/strings.dart';
 
 final class AppSelectionActionRow extends StatelessWidget {
@@ -30,7 +30,7 @@ final class AppSelectionActionRow extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(context.appTheme.dimensions.padding.small),
           child: SvgPicture.asset(
-            AppImages.loadSvg('ic_close').value,
+            Assets.images.icClose.path,
             width: context.appTheme.dimensions.size.medium,
             height: context.appTheme.dimensions.size.medium,
             colorFilter: ColorFilter.mode(

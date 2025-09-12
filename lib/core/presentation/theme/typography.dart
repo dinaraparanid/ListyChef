@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 
-const _NunitoSans = 'NunitoSans';
-
 @immutable
 class AppTypography {
   final AppHTypo h;
@@ -15,7 +13,6 @@ class AppTypography {
     this.body = const TextStyle(
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w400,
-      fontFamily: _NunitoSans,
       fontSize: 16,
       letterSpacing: 0,
       decoration: TextDecoration.none,
@@ -23,7 +20,6 @@ class AppTypography {
     this.regular = const TextStyle(
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w400,
-      fontFamily: _NunitoSans,
       fontSize: 14,
       letterSpacing: 0.4,
       decoration: TextDecoration.none,
@@ -31,7 +27,6 @@ class AppTypography {
     this.caption = const TextStyle(
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w400,
-      fontFamily: _NunitoSans,
       fontSize: 12,
       letterSpacing: 0.4,
       decoration: TextDecoration.none,
@@ -39,7 +34,6 @@ class AppTypography {
     this.captionSm = const TextStyle(
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w400,
-      fontFamily: _NunitoSans,
       fontSize: 10,
       letterSpacing: 0,
       decoration: TextDecoration.none,
@@ -58,7 +52,6 @@ class AppHTypo {
     this.h1 = const TextStyle(
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w400,
-      fontFamily: _NunitoSans,
       fontSize: 32,
       letterSpacing: 0,
       decoration: TextDecoration.none,
@@ -66,7 +59,6 @@ class AppHTypo {
     this.h2 = const TextStyle(
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w400,
-      fontFamily: _NunitoSans,
       fontSize: 24,
       letterSpacing: 0,
       decoration: TextDecoration.none,
@@ -74,7 +66,6 @@ class AppHTypo {
     this.h3 = const TextStyle(
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w400,
-      fontFamily: _NunitoSans,
       fontSize: 20,
       letterSpacing: 0,
       decoration: TextDecoration.none,
@@ -82,7 +73,6 @@ class AppHTypo {
     this.h4 = const TextStyle(
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w400,
-      fontFamily: _NunitoSans,
       fontSize: 18,
       letterSpacing: 0,
       decoration: TextDecoration.none,

@@ -77,8 +77,10 @@ final class FolderItemCheckLists extends StatelessWidget {
       SliverVisibility(
         visible: isAddedListExpanded,
         sliver: SliverPadding(
-          padding: EdgeInsets.symmetric(
-            horizontal: context.appTheme.dimensions.padding.extraMedium,
+          padding: EdgeInsets.only(
+            left: context.appTheme.dimensions.padding.extraMedium,
+            right: context.appTheme.dimensions.padding.extraMedium,
+            bottom: context.appTheme.dimensions.padding.extraLarge,
           ),
           sliver: FolderItemCheckList(
             items: addedItems,

@@ -2,8 +2,8 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:listy_chef/assets/assets.gen.dart';
 import 'package:listy_chef/core/presentation/foundation/app_clickable.dart';
-import 'package:listy_chef/core/presentation/foundation/image_asset.dart';
 import 'package:listy_chef/core/presentation/theme/app_theme_provider.dart';
 import 'package:listy_chef/core/utils/ext/general.dart';
 
@@ -16,7 +16,7 @@ const _animationDuration = Duration(milliseconds: 300);
 abstract class AppUnderlayAction with _$AppUnderlayAction {
   const factory AppUnderlayAction({
     String? name,
-    required SvgImageAsset icon,
+    required SvgGenImage icon,
     required Color backgroundColor,
     required void Function() onClick,
   }) = _AppUnderlayAction;
@@ -80,7 +80,7 @@ final class _AppUnderlayActionRowState extends State<AppUnderlayActionRow> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       SvgPicture.asset(
-                        act.icon.value,
+                        act.icon.path,
                         width: context.appTheme.dimensions.size.small,
                         height: context.appTheme.dimensions.size.small,
                         colorFilter: ColorFilter.mode(
